@@ -1,33 +1,100 @@
-import React from 'react';
+const colorMap = {
+  cyan: {
+    bg: 'from-accent-cyan/5 to-transparent',
+    border: 'group-hover:border-accent-cyan/30',
+    text: 'text-accent-cyan',
+    glow: 'glow-cyan',
+  },
+  emerald: {
+    bg: 'from-accent-emerald/5 to-transparent',
+    border: 'group-hover:border-accent-emerald/30',
+    text: 'text-accent-emerald',
+    glow: 'glow-emerald',
+  },
+  amber: {
+    bg: 'from-accent-amber/5 to-transparent',
+    border: 'group-hover:border-accent-amber/30',
+    text: 'text-accent-amber',
+    glow: 'glow-amber',
+  },
+  rose: {
+    bg: 'from-accent-rose/5 to-transparent',
+    border: 'group-hover:border-accent-rose/30',
+    text: 'text-accent-rose',
+    glow: 'glow-rose',
+  },
+  violet: {
+    bg: 'from-accent-violet/5 to-transparent',
+    border: 'group-hover:border-accent-violet/30',
+    text: 'text-accent-violet',
+    glow: 'glow-violet',
+  },
+};
 
-const MetricCard = ({ icon: Icon, label, value, unit, trend, className = '' }) => {
-  return (
-    <div className={`backdrop-blur-xl bg-white/60 rounded-xl p-3 border border-white/60 hover:bg-white/80 hover:border-primary-200/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 ${className}`}>
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <div className="flex items-center gap-1 text-gray-500 text-xs mb-1.5">
-            {Icon && <Icon className="w-3.5 h-3.5" />}
-            <span className="font-medium">{label}</span>
+const MetricCard = ({ icon: Icon, label, value, unit, trend, accent = 'cyan', compact = false }) => {
+  const c = colorMap[accent] || colorMap.cyan;
+
+  if (compact) {
+    return (
+      <div
+        className={`group relative overflow-hidden rounded-lg bg-surface-card/80 border border-surface-border/30
+          transition-all duration-200 ${c.glow} h-full flex items-center`}
+      >
+        <div className={`absolute inset-0 bg-gradient-to-br ${c.bg} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+        <div className="relative w-full px-2.5 py-2 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5 min-w-0">
+            {Icon && <Icon className={`w-3 h-3 shrink-0 ${c.text}`} />}
+            <span className="text-[10px] font-medium text-ink-muted truncate">{label}</span>
           </div>
-          <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-bold bg-gradient-to-br from-gray-900 to-primary-700 bg-clip-text text-transparent">{value}</span>
-            {unit && <span className="text-sm text-gray-500 font-medium">{unit}</span>}
+          <div className="flex items-baseline gap-1 shrink-0">
+            <span className={`text-xs font-bold font-mono-num text-ink tracking-tight`}>
+              {value ?? '--'}
+            </span>
+            {unit && <span className="text-[9px] text-ink-muted">{unit}</span>}
           </div>
           {trend && (
-            <div className={`mt-1.5 text-xs font-bold inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full ${
-              trend.direction === 'up' ? 'text-green-600 bg-green-50 ring-1 ring-green-200' : 
-              trend.direction === 'down' ? 'text-red-600 bg-red-50 ring-1 ring-red-200' : 
-              'text-gray-600 bg-gray-50'
+            <span className={`text-[9px] font-semibold shrink-0 ${
+              trend.direction === 'up' ? 'text-accent-emerald' : 'text-accent-rose'
             }`}>
-              {trend.direction === 'up' && '↑'}
-              {trend.direction === 'down' && '↓'}
-              {trend.value}
+              {trend.direction === 'up' ? '\u2191' : '\u2193'}{trend.value}
+            </span>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`group relative overflow-hidden rounded-xl bg-surface-card/90 border border-surface-border/30
+        transition-all duration-300 hover:border-surface-border/60 hover:-translate-y-[1px] shadow-card ${c.glow}`}
+    >
+      <div className={`absolute inset-0 bg-gradient-to-br ${c.bg} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+      <div className="relative p-3.5 flex flex-col gap-1.5">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] font-semibold text-ink-muted uppercase tracking-widest">
+            {label}
+          </span>
+          {Icon && (
+            <div className={`p-1.5 rounded-lg bg-surface-hover/30 border border-surface-border/30 group-hover:scale-110 transition-all duration-300 ${c.text}`}>
+              <Icon className="w-3 h-3" />
             </div>
           )}
         </div>
-        {Icon && (
-          <div className="p-2.5 bg-gradient-to-br from-primary-100 to-primary-50 rounded-xl shadow-sm">
-            <Icon className="w-4 h-4 text-primary-600" />
+        <div className="flex items-baseline gap-1.5">
+          <span className={`text-xl font-bold font-mono-num text-ink tracking-tight`}>
+            {value ?? '--'}
+          </span>
+          {unit && <span className="text-xs font-medium text-ink-muted">{unit}</span>}
+        </div>
+        {trend && (
+          <div className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-semibold
+            ${trend.direction === 'up'
+              ? 'bg-accent-emerald/10 text-accent-emerald'
+              : 'bg-accent-rose/10 text-accent-rose'}`}
+          >
+            <span>{trend.direction === 'up' ? '\u2191' : '\u2193'}</span>
+            {trend.value}
           </div>
         )}
       </div>
