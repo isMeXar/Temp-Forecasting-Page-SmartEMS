@@ -1,14 +1,20 @@
-import { horizonOptions } from '../utils/mockData';
+const horizonOptions = [
+  { value: '1h', label: '1H', labelLong: '1 Hour Ahead' },
+  { value: '1d', label: '1D', labelLong: '1 Day Ahead' },
+  { value: '3d', label: '3D', labelLong: '3 Days Ahead' },
+  { value: '1w', label: '1W', labelLong: '1 Week Ahead' },
+  { value: '1m', label: '1M', labelLong: '1 Month Ahead' },
+];
 
-const HorizonSelector = ({ selected, onChange, loading }) => {
+const HorizonSelector = ({ selectedHorizon, onHorizonChange, loading }) => {
   return (
     <div className="inline-flex items-center gap-1 p-1 rounded-xl bg-surface-hover/30 border border-surface-border/40">
       {horizonOptions.map((option) => {
-        const isActive = selected === option.value;
+        const isActive = selectedHorizon === option.value;
         return (
           <button
             key={option.value}
-            onClick={() => onChange(option.value)}
+            onClick={() => onHorizonChange(option.value)}
             disabled={loading}
             className={`
               relative px-3.5 py-2 rounded-lg text-xs font-semibold transition-all duration-300

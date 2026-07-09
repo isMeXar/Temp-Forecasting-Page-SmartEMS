@@ -1,165 +1,130 @@
-# SmartEMS Forecasting Platform
+# SmartEMS - Foum Tizi Energy Forecasting Platform
 
-**SmartEMS (Energy Management System)** is an AI-powered energy forecasting dashboard that monitors and predicts energy consumption across multiple sites. It combines a polished React frontend with interactive time-series visualizations and a FastAPI backend designed to serve predictions from pre-trained ML models (LightGBM, XGBoost).
+AI-powered energy consumption forecasting using XGBoost for the Foum Tizi site with 10-minute interval predictions.
 
-The project is a **monorepo** with three main areas:
+## 🚀 Quick Start
 
-- **Frontend** — Fully functional React + Vite + Tailwind CSS dashboard with interactive charts, KPI cards, and realistic synthetic mock data.
-- **Backend** — FastAPI skeleton (placeholder) ready for ML model integration, with planned REST endpoints for serving forecasts.
-- **Models** — Pre-trained `.joblib` models referenced by the backend (LightGBM and XGBoost, with/without CEEMD feature decomposition).
+### Backend Setup
 
----
-
-## Architecture & Data Flow
-
-1. **Entry** — `index.html` loads the Vite-bundled React app via `src/main.jsx`.
-2. **Dashboard Layout** — `App.jsx` renders a header and a list of `<ForecastSection>` components — one per energy site.
-3. **Per-Site State** — Each `<ForecastSection>` manages its own forecast horizon, loading state, generated data, and computed metrics.
-4. **Data Simulation** — On mount or horizon change, `generateEnergyData()` produces synthetic time-series with realistic daily seasonality (higher during business hours), weekly patterns (lower on weekends), random noise, and accuracy degradation over time.
-5. **KPI Calculation** — `calculateMetrics()` derives metrics like current consumption, min/max forecast, accuracy, and data point count from the generated data.
-6. **Rendering** — Data flows into `<ForecastChart>` (Recharts ComposedChart with brush zoom/pan) and 6 `<MetricCard>` components per site.
-7. **Future Backend** — Mock data is a placeholder; planned API endpoints will replace it with real ML model predictions.
-
----
-
-## Features
-
-### Dashboard
-
-- **4 Energy Sites** — Solar Farm Alpha (50 MW), Wind Park Beta (75 MW), Hydro Station Gamma (100 MW), Industrial Complex Delta (200 MW)
-- **Collapsible Site Sections** — Expand/collapse per site to keep the interface clean
-- **5 Forecast Horizons** — Toggle between 1 hour, 1 day, 3 days, 1 week, and 1 month
-- **Interactive Charts** — Recharts ComposedChart with:
-  - Area fills for historical (blue) and forecast (green) data
-  - Solid line for historical values, dashed line for forecast
-  - Reference line marking "Now"
-  - Brush slider for time-range zoom/pan
-  - Custom tooltip with colored indicator dots
-- **6 KPI Metric Cards** per site:
-  - Current Consumption (MW)
-  - Average Forecast (MW)
-  - Min / Max Forecast (MW)
-  - Forecast Accuracy (%) with trend badge
-  - Data Points (hours)
-- **Simulated Loading States** — 800ms API delay emulation with spinner animations
-- **Live Status Indicator** — Header shows online/offline status, last-updated timestamp, and live accuracy reading
-
-### Visual Design
-
-- **Professional Green Theme** — Custom Tailwind `primary` color palette (emerald/green shades)
-- **Glassmorphism Effects** — `backdrop-blur`, semi-transparent backgrounds, soft shadow layers
-- **Smooth Animations** — Fade-in, slide-up, blob floating backgrounds, shimmer loading effects, pulse status indicators
-- **Responsive Layout** — Max-width container, flex-based chart/metrics layout, mobile-friendly collapsible sections
-
----
-
-## Tech Stack
-
-| Layer | Technology | Version |
-|---|---|---|
-| **UI Framework** | React | ^19.2.6 |
-| **Build Tool** | Vite | ^8.0.12 |
-| **Styling** | Tailwind CSS | ^3.4.19 |
-| **Charts** | Recharts | ^2.15.4 |
-| **Icons** | Lucide React | ^0.468.0 |
-| **Linting** | ESLint | ^10.3.0 |
-| **Backend (planned)** | FastAPI | 0.115.0 |
-| **ML Models** | LightGBM, XGBoost (with CEEMD features) | — |
-
----
-
-## Project Structure
-
-```
-├── frontend/                    # React + Vite frontend
-│   ├── src/
-│   │   ├── main.jsx             # App entry point
-│   │   ├── App.jsx              # Root component (layout, sections)
-│   │   ├── index.css            # Tailwind + custom animations
-│   │   ├── utils/
-│   │   │   └── mockData.js      # Synthetic data generator & site configs
-│   │   └── components/
-│   │       ├── Header.jsx            # App header with status/accuracy
-│   │       ├── MetricCard.jsx        # KPI card component
-│   │       ├── HorizonSelector.jsx   # Forecast horizon toggle buttons
-│   │       ├── ForecastChart.jsx     # Interactive Recharts chart
-│   │       ├── ForecastSection.jsx   # Collapsible per-site section
-│   │       └── LoadingSkeleton.jsx   # Placeholder loading UI
-│   ├── public/                  # Static assets
-│   ├── index.html               # Vite HTML entry
-│   ├── tailwind.config.js       # Custom green theme + animations
-│   ├── vite.config.js           # Vite + React config
-│   └── package.json             # Dependencies & scripts
-├── backend/                     # FastAPI backend (placeholder)
-│   ├── main.py                  # API skeleton with CORS + health endpoint
-│   └── requirements.txt         # Python dependencies
-├── Models/                      # Pre-trained .joblib ML models (referenced)
-├── INSTALL.md                   # Installation guide
-└── Readme.md                    # This file
-```
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- **Node.js** >= 18
-- **npm** >= 9
-
-### Install & Run
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-### Build for Production
-
-```bash
-cd frontend
-npm run build
-npm run preview    # Serve the production build locally
-```
-
-### Backend (Placeholder)
-
-The backend is a minimal FastAPI skeleton. To run it:
-
+1. Install Python dependencies:
 ```bash
 cd backend
 pip install -r requirements.txt
-uvicorn main:app --reload
+```
+
+2. Start the backend server:
+```bash
+# Option 1: Using the batch script (Windows)
+start-backend.bat
+
+# Option 2: Manual start
+cd backend
+python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+Backend will run at: `http://localhost:8000`
+
+### Frontend Setup
+
+1. Install Node dependencies:
+```bash
+cd frontend
+npm install
+```
+
+2. Start the development server:
+```bash
+# Option 1: Using the batch script (Windows)
+start-frontend.bat
+
+# Option 2: Manual start
+cd frontend
+npm run dev
+```
+
+Frontend will run at: `http://localhost:5173`
+
+## 📊 Features
+
+- **Real-time Forecasting**: XGBoost model predicting energy consumption
+- **Multiple Horizons**: 1 hour, 1 day, 3 days, 1 week, 1 month ahead
+- **Rolling Forecast**: Model continues from where training stopped
+- **10-min Intervals**: High-resolution time series data
+- **Cached Results**: JSON-based caching for faster retrieval
+- **Interactive Charts**: Visualize actual vs forecasted data
+
+## 🔧 Model Details
+
+- **Model**: XGBoost (`xgb_NoCeemd&lookback_10_ft.joblib`)
+- **Lookback Window**: 4320 steps (30 days)
+- **Features**: Hour, day of week, weekend, winter, cycle, season
+- **Site**: Foum Tizi
+- **Data**: 2024 full year with 10-minute intervals
+
+## 📡 API Endpoints
+
+- `GET /` - API status
+- `GET /api/health` - Health check
+- `GET /api/forecast/{horizon}` - Get forecast for specific horizon
+  - Horizons: `1h`, `1d`, `3d`, `1w`, `1m`
+- `GET /api/horizons` - List available horizons
+- `POST /api/forecast/clear-cache` - Clear forecast cache
+
+## 🎨 Frontend
+
+Built with:
+- React + Vite
+- Tailwind CSS
+- Recharts for visualization
+- Lucide icons
+
+## 📁 Project Structure
+
+```
+.
+├── backend/
+│   ├── main.py                 # FastAPI server with forecasting logic
+│   ├── requirements.txt        # Python dependencies
+│   ├── Data/
+│   │   └── CourbeDeCharge_10min_24.csv
+│   └── Models/
+│       └── xgb_NoCeemd&lookback_10_ft.joblib
+├── frontend/
+│   ├── src/
+│   │   ├── App.jsx            # Main app component
+│   │   ├── components/
+│   │   │   ├── ForecastChart.jsx
+│   │   │   ├── HorizonSelector.jsx
+│   │   │   └── MetricCard.jsx
+│   │   └── ...
+│   └── package.json
+├── start-backend.bat          # Backend startup script
+└── start-frontend.bat         # Frontend startup script
+```
+
+## 🔄 How It Works
+
+1. Backend loads the XGBoost model and historical data on startup
+2. Model generates forecasts using rolling horizon approach
+3. Features are extracted (hour, day of week, seasonal patterns, etc.)
+4. Frontend fetches forecasts from API and displays them
+5. Charts show actual historical data + forecasted values
+6. Results are cached for faster subsequent requests
+
+## 💡 Usage
+
+1. Start backend server (port 8000)
+2. Start frontend dev server (port 5173)
+3. Open browser to `http://localhost:5173`
+4. Select forecast horizon (default: 1 day)
+5. View actual vs forecasted energy consumption
+
+## 📈 Data Flow
+
+```
+Historical Data → Feature Engineering → XGBoost Model → Predictions → API → Frontend → Chart
 ```
 
 ---
 
-## Backend & ML Model Integration
-
-The backend is structured but not yet fully implemented. Planned endpoints:
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/api/sites` | List all energy sites |
-| `GET` | `/api/forecast/{site_id}` | Get forecast for a specific site |
-| `POST` | `/api/forecast/generate` | Generate a new forecast |
-
-The backend is designed to load pre-trained `.joblib` models:
-- `lgbm_ceemd&lookback_10_ft.joblib` (LightGBM with CEEMD features)
-- `lgbm_NoCeemd&lookback_10_of.joblib` (LightGBM without CEEMD)
-- `xgb_ceemd&lookback_10_ft.joblib` (XGBoost with CEEMD)
-- `xgb_NoCeemd&lookback_10_of.joblib` (XGBoost without CEEMD)
-
----
-
-## Scripts
-
-| Command | Description |
-|---|---|
-| `npm run dev` | Start Vite dev server with HMR |
-| `npm run build` | Production build |
-| `npm run preview` | Preview production build |
-| `npm run lint` | Run ESLint |
+**Powered by XGBoost** • **Foum Tizi Energy Site** • **10-min Intervals**

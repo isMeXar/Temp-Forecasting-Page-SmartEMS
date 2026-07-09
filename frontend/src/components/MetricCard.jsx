@@ -34,6 +34,10 @@ const colorMap = {
 const MetricCard = ({ icon: Icon, label, value, unit, trend, accent = 'cyan', compact = false }) => {
   const c = colorMap[accent] || colorMap.cyan;
 
+  // Normalize trend - can be 'up', 'down', or an object with direction/value
+  const trendDirection = typeof trend === 'string' ? trend : trend?.direction;
+  const trendValue = typeof trend === 'string' ? null : trend?.value;
+
   if (compact) {
     return (
       <div
@@ -52,11 +56,11 @@ const MetricCard = ({ icon: Icon, label, value, unit, trend, accent = 'cyan', co
             </span>
             {unit && <span className="text-[9px] text-ink-muted">{unit}</span>}
           </div>
-          {trend && (
+          {trendDirection && (
             <span className={`text-[9px] font-semibold shrink-0 ${
-              trend.direction === 'up' ? 'text-accent-emerald' : 'text-accent-rose'
+              trendDirection === 'up' ? 'text-accent-emerald' : 'text-accent-rose'
             }`}>
-              {trend.direction === 'up' ? '\u2191' : '\u2193'}{trend.value}
+              {trendDirection === 'up' ? '\u2191' : '\u2193'}{trendValue || ''}
             </span>
           )}
         </div>
@@ -87,14 +91,14 @@ const MetricCard = ({ icon: Icon, label, value, unit, trend, accent = 'cyan', co
           </span>
           {unit && <span className="text-xs font-medium text-ink-muted">{unit}</span>}
         </div>
-        {trend && (
-          <div className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-semibold
-            ${trend.direction === 'up'
+        {trendDirection && (
+          <div className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-semibold w-fit
+            ${trendDirection === 'up'
               ? 'bg-accent-emerald/10 text-accent-emerald'
               : 'bg-accent-rose/10 text-accent-rose'}`}
           >
-            <span>{trend.direction === 'up' ? '\u2191' : '\u2193'}</span>
-            {trend.value}
+            <span>{trendDirection === 'up' ? '\u2191' : '\u2193'}</span>
+            {trendValue && <span>{trendValue}</span>}
           </div>
         )}
       </div>

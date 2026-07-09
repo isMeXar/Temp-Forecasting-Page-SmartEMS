@@ -9,7 +9,6 @@ import {
   Legend,
   ResponsiveContainer,
   ReferenceLine,
-  Brush,
 } from 'recharts';
 
 const accentColors = {
@@ -26,7 +25,7 @@ const formatTS = (ts) => {
 
 const formatShort = (ts) => {
   const d = new Date(ts);
-  return d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit' });
+  return d.toLocaleString('en-US', { month: 'short', day: 'numeric' });
 };
 
 const CustomTooltip = ({ active, payload, label }) => {
@@ -34,35 +33,52 @@ const CustomTooltip = ({ active, payload, label }) => {
   return (
     <div className="bg-surface-card/95 backdrop-blur-xl p-3.5 rounded-xl border border-surface-border/60 shadow-card">
       <p className="text-xs font-semibold text-ink-faded mb-2">{formatTS(label)}</p>
-      {payload.map((entry) => (
-        <div key={entry.name} className="flex items-center gap-2 text-[11px] py-0.5">
-          <span className="w-2 h-2 rounded-full" style={{ background: entry.color }} />
-          <span className="text-ink-muted">{entry.name}:</span>
-          <span className="font-mono-num font-bold text-ink">{Number(entry.value).toFixed(1)} MW</span>
-        </div>
-      ))}
+      {payload.map((entry) => {
+        if (entry.value === null || entry.value === undefined) return null;
+        return (
+          <div key={entry.name} className="flex items-center gap-2 text-[11px] py-0.5">
+            <span className="w-2 h-2 rounded-full" style={{ background: entry.color }} />
+            <span className="text-ink-muted">{entry.name}:</span>
+            <span className="font-mono-num font-bold text-ink">{Number(entry.value).toFixed(1)} MW</span>
+          </div>
+        );
+      })}
     </div>
   );
 };
 
-const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 260 }) => {
+const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400 }) => {
   const c = accentColors[accent] || accentColors.cyan;
 
   if (loading) {
     return (
-      <div className="h-full flex items-center justify-center rounded-2xl bg-surface-card/40 border border-surface-border/30">
-        <div className="text-center">
-          <div className="relative w-10 h-10 mx-auto">
-            <div className="absolute inset-0 border-2 border-accent-cyan/30 rounded-full" />
-            <div className="absolute inset-0 border-2 border-transparent border-t-accent-cyan rounded-full animate-spin" />
+      <div className="rounded-2xl bg-surface-card/40 border border-surface-border/30 p-4" style={{ height: chartHeight + 50 }}>
+        <div className="h-full flex items-center justify-center">
+          <div className="text-center">
+            <div className="relative w-10 h-10 mx-auto">
+              <div className="absolute inset-0 border-2 border-accent-cyan/30 rounded-full" />
+              <div className="absolute inset-0 border-2 border-transparent border-t-accent-cyan rounded-full animate-spin" />
+            </div>
+            <p className="mt-4 text-xs text-ink-muted font-medium">Loading forecast data...</p>
           </div>
-          <p className="mt-4 text-xs text-ink-muted font-medium">Loading forecast...</p>
         </div>
       </div>
     );
   }
 
-  const now = new Date().toISOString();
+  if (!data || data.length === 0) {
+    return (
+      <div className="rounded-2xl bg-surface-card/40 border border-surface-border/30 p-4" style={{ height: chartHeight + 50 }}>
+        <div className="h-full flex items-center justify-center">
+          <p className="text-xs text-ink-muted">No data available</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Find the split between historical and forecast
+  const splitIndex = data.findIndex(d => d.forecasted !== null);
+  const splitTimestamp = splitIndex >= 0 ? data[splitIndex].timestamp : null;
 
   return (
     <div className="rounded-2xl bg-surface-card/40 border border-surface-border/30 p-4">
@@ -101,6 +117,7 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 260 }) =>
               tickLine={false}
               axisLine={false}
               width={48}
+              label={{ value: 'MW', angle: -90, position: 'insideLeft', style: { fill: 'var(--chart-text, #64748b)', fontSize: 10 } }}
             />
 
             <Tooltip content={<CustomTooltip />} cursor={{ stroke: 'var(--chart-grid, rgba(148,163,184,0.15))', strokeWidth: 1 }} />
@@ -114,19 +131,21 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 260 }) =>
               )}
             />
 
-            <ReferenceLine
-              x={now}
-              stroke="rgba(244,63,94,0.5)"
-              strokeDasharray="4 4"
-              strokeWidth={1.5}
-              label={{
-                value: 'Now',
-                position: 'top',
-                fill: '#f43f5e',
-                fontSize: 9,
-                fontFamily: 'JetBrains Mono',
-              }}
-            />
+            {splitTimestamp && (
+              <ReferenceLine
+                x={splitTimestamp}
+                stroke="rgba(244,63,94,0.5)"
+                strokeDasharray="4 4"
+                strokeWidth={1.5}
+                label={{
+                  value: 'Forecast Start',
+                  position: 'top',
+                  fill: '#f43f5e',
+                  fontSize: 9,
+                  fontFamily: 'JetBrains Mono',
+                }}
+              />
+            )}
 
             <Area
               type="monotone"
@@ -155,9 +174,9 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 260 }) =>
               type="monotone"
               dataKey="actual"
               stroke="#3b82f6"
-              strokeWidth={1.5}
+              strokeWidth={2}
               dot={false}
-              name="Historical"
+              name="Actual"
               connectNulls={false}
               animationDuration={600}
             />
@@ -166,21 +185,12 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 260 }) =>
               type="monotone"
               dataKey="forecasted"
               stroke={c.main}
-              strokeWidth={1.5}
+              strokeWidth={2}
               strokeDasharray="6 3"
               dot={false}
               name="Forecast"
               connectNulls={false}
               animationDuration={600}
-            />
-
-            <Brush
-              dataKey="timestamp"
-              height={20}
-              stroke={c.main}
-              fill="var(--brush-fill, rgba(15,23,42,0.4))"
-              tickFormatter={formatShort}
-              travellerWidth={8}
             />
           </ComposedChart>
         </ResponsiveContainer>
