@@ -37,7 +37,7 @@ Ensure these files exist:
 
 ```bash
 # Start the server
-python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
+python -m uvicorn main:app --reload --host 0.0.0.0 --port 8001
 ```
 
 Open browser to `http://localhost:8000` - you should see:

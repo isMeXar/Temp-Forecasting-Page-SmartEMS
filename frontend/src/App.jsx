@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import Header from './components/Header';
 import ForecastChart from './components/ForecastChart';
+import ErrorBoundary from './components/ErrorBoundary';
 import HorizonSelector from './components/HorizonSelector';
 import MetricCard from './components/MetricCard';
-import { Activity, Zap, TrendingUp, TrendingDown, Calendar, PlayCircle } from 'lucide-react';
+import { Zap, TrendingUp, Calendar, PlayCircle } from 'lucide-react';
 
 const WS_BASE = 'ws://localhost:8001';
 
@@ -12,12 +13,14 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [streaming, setStreaming] = useState(false);
   const [forecastData, setForecastData] = useState(null);
-  const [prevForecastData, setPrevForecastData] = useState(null);
+  const [allHistorical, setAllHistorical] = useState([]);
+  const [prevForecasts, setPrevForecasts] = useState([]);
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState({ current: 0, total: 0 });
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [cacheStatus, setCacheStatus] = useState(null);
   const wsRef = useRef(null);
+  // Refs to avoid stale closures in WebSocket handler
+  const forecastDataRef = useRef(null);
 
   // Check cache status when horizon changes
   useEffect(() => {
@@ -47,11 +50,10 @@ function App() {
     // Don't reset forecast data if resuming
     if (!cacheStatus?.can_resume) {
       setForecastData(null);
-      setPrevForecastData(null);
+      setAllHistorical([]);
+      setPrevForecasts([]);
       setProgress({ current: 0, total: 0 });
     }
-    
-    setIsTransitioning(false);
     
     const ws = new WebSocket(`${WS_BASE}/ws/forecast/${horizon}`);
     wsRef.current = ws;
@@ -61,7 +63,13 @@ function App() {
     };
     
     ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
+      let data;
+      try {
+        data = JSON.parse(event.data);
+      } catch (e) {
+        console.error('Failed to parse WebSocket message:', e);
+        return;
+      }
       
       if (data.type === 'init') {
         setProgress({ current: data.resume_from || 0, total: data.max_horizons });
@@ -79,26 +87,22 @@ function App() {
           stats: data.stats
         };
         
-        // If resuming from cache, just set data without transition
-        if (data.is_resume) {
-          setForecastData(newData);
-        } else if (forecastData) {
-          // Normal transition for new forecasts
-          setPrevForecastData(forecastData);
-          setIsTransitioning(true);
-          
-          setTimeout(() => {
-            setForecastData(newData);
-            
-            setTimeout(() => {
-              setIsTransitioning(false);
-              setPrevForecastData(null);
-            }, 50);
-          }, 500);
-        } else {
-          // First forecast, just show it
-          setForecastData(newData);
+        // Accumulate previous horizon's data if we have one
+        const lastForecastData = forecastDataRef.current;
+        if (lastForecastData) {
+          setAllHistorical(prev => {
+            const existing = new Map(prev.map(d => [d.timestamp, d]));
+            lastForecastData.historical.forEach(d => {
+              if (!existing.has(d.timestamp)) existing.set(d.timestamp, d);
+            });
+            return Array.from(existing.values())
+              .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+          });
+          setPrevForecasts(prev => [...prev, lastForecastData.forecast]);
         }
+        setForecastData(newData);
+        // Sync ref immediately so the next message sees the updated value
+        forecastDataRef.current = newData;
       } else if (data.type === 'complete') {
         setStreaming(false);
         console.log('Forecasting complete');
@@ -109,7 +113,7 @@ function App() {
       }
     };
     
-    ws.onerror = (error) => {
+    ws.onerror = () => {
       setError('WebSocket error');
       setStreaming(false);
       setLoading(false);
@@ -137,45 +141,58 @@ function App() {
     };
   }, []);
 
-  // Prepare chart data for current forecast
-  const chartData = forecastData ? [
-    ...forecastData.historical.map(d => ({
-      timestamp: d.timestamp,
-      actual: d.actual,
-      forecasted: null,
-      confidenceUpper: null,
-      confidenceLower: null,
-      isHistorical: true
-    })),
-    ...forecastData.forecast.map(d => ({
-      timestamp: d.timestamp,
-      actual: d.actual,
-      forecasted: d.forecasted,
-      confidenceUpper: d.forecasted * 1.05,
-      confidenceLower: d.forecasted * 0.95,
-      isHistorical: false
-    }))
-  ] : [];
+  // Sync ref with latest forecastData to avoid stale closures in WebSocket handler
+  useEffect(() => {
+    forecastDataRef.current = forecastData;
+  }, [forecastData]);
 
-  // Prepare chart data for previous forecast (during transition)
-  const prevChartData = prevForecastData ? [
-    ...prevForecastData.historical.map(d => ({
-      timestamp: d.timestamp,
-      actual: d.actual,
-      forecasted: null,
-      confidenceUpper: null,
-      confidenceLower: null,
-      isHistorical: true
-    })),
-    ...prevForecastData.forecast.map(d => ({
-      timestamp: d.timestamp,
-      actual: d.actual,
-      forecasted: d.forecasted,
-      confidenceUpper: d.forecasted * 1.05,
-      confidenceLower: d.forecasted * 0.95,
-      isHistorical: false
-    }))
-  ] : [];
+  // Merge actual + previous forecasts + current forecast into one dataset
+  const chartData = forecastData ? (() => {
+    const dataMap = new Map();
+
+    // 1. Accumulated historical actual values
+    allHistorical.forEach(d => {
+      if (d.actual != null) {
+        dataMap.set(d.timestamp, { ...(dataMap.get(d.timestamp) || {}), timestamp: d.timestamp, actual: d.actual });
+      }
+    });
+
+    // 2. Current window's historical actual values (any not yet accumulated)
+    forecastData.historical.forEach(d => {
+      if (d.actual != null && !dataMap.has(d.timestamp)) {
+        dataMap.set(d.timestamp, { timestamp: d.timestamp, actual: d.actual });
+      }
+    });
+
+    // 3. Previous forecasts
+    prevForecasts.forEach(segment => {
+      segment.forEach(d => {
+        const entry = dataMap.get(d.timestamp) || { timestamp: d.timestamp };
+        entry.prevForecast = d.forecasted;
+        dataMap.set(d.timestamp, entry);
+      });
+    });
+
+    // 4. Current forecast
+    forecastData.forecast.forEach(d => {
+      const entry = dataMap.get(d.timestamp) || { timestamp: d.timestamp };
+      entry.forecasted = d.forecasted;
+      entry.confidenceUpper = d.forecasted * 1.05;
+      entry.confidenceLower = d.forecasted * 0.95;
+      dataMap.set(d.timestamp, entry);
+    });
+
+    return Array.from(dataMap.values())
+      .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+      .map(d => ({
+        timestamp: d.timestamp,
+        actual: d.actual ?? null,
+        prevForecast: d.prevForecast ?? null,
+        forecasted: d.forecasted ?? null,
+        confidenceUpper: d.confidenceUpper ?? null,
+        confidenceLower: d.confidenceLower ?? null,
+      }));
+  })() : [];
 
   const stats = forecastData?.stats || {};
   const meanForecast = stats.mean_forecast || 0;
@@ -295,11 +312,11 @@ function App() {
           </div>
 
           {/* Chart and Metrics Grid - 80/20 split */}
-          <div className="flex gap-4">
-            {/* Chart Carousel - 80% */}
-            <div className="flex-[80] relative h-[500px] overflow-hidden">
+          <div className="flex gap-4 items-stretch">
+            {/* Chart Area - 80% */}
+            <div className="flex-[80] min-h-0">
               {loading ? (
-                <div className="absolute inset-0 rounded-2xl bg-surface-card/40 border border-surface-border/30 p-4 flex items-center justify-center">
+                <div className="h-full rounded-2xl bg-surface-card/40 border border-surface-border/30 p-4 flex items-center justify-center" style={{ minHeight: 500 }}>
                   <div className="text-center">
                     <div className="relative w-10 h-10 mx-auto mb-4">
                       <div className="absolute inset-0 border-2 border-accent-cyan/30 rounded-full" />
@@ -308,52 +325,28 @@ function App() {
                     <p className="text-sm text-ink-muted">Initializing forecast...</p>
                   </div>
                 </div>
-              ) : !forecastData && !prevForecastData ? (
-                <div className="absolute inset-0 rounded-2xl bg-surface-card/40 border border-surface-border/30 p-4 flex items-center justify-center">
+              ) : !forecastData ? (
+                <div className="h-full rounded-2xl bg-surface-card/40 border border-surface-border/30 p-4 flex items-center justify-center" style={{ minHeight: 500 }}>
                   <div className="text-center">
                     <PlayCircle className="w-12 h-12 text-ink-muted/50 mx-auto mb-3" />
                     <p className="text-sm text-ink-muted">Select a horizon and click "Start Forecast"</p>
                   </div>
                 </div>
               ) : (
-                <>
-                  {/* Previous chart - slides out to the left */}
-                  {prevForecastData && (
-                    <div
-                      className="absolute inset-0 transition-transform duration-500 ease-in-out"
-                      style={{
-                        transform: isTransitioning ? 'translateX(-100%)' : 'translateX(0)',
-                      }}
-                    >
-                      <ForecastChart
-                        data={prevChartData}
-                        loading={false}
-                        accent="cyan"
-                        chartHeight={450}
-                      />
-                    </div>
-                  )}
-                  
-                  {/* Current chart - slides in from the right */}
-                  <div
-                    className="absolute inset-0 transition-transform duration-500 ease-in-out"
-                    style={{
-                      transform: isTransitioning ? 'translateX(0)' : prevForecastData ? 'translateX(100%)' : 'translateX(0)',
-                    }}
-                  >
-                    <ForecastChart
-                      data={chartData}
-                      loading={false}
-                      accent="cyan"
-                      chartHeight={450}
-                    />
-                  </div>
-                </>
+                <ErrorBoundary>
+                  <ForecastChart
+                    data={chartData}
+                    loading={false}
+                    accent="cyan"
+                    chartHeight={320}
+                    horizon={horizon}
+                  />
+                </ErrorBoundary>
               )}
             </div>
 
             {/* Forecast Metrics Panel - 20% */}
-            <div className="flex-[20] h-[500px]">
+            <div className="flex-[20]">
               {forecastData ? (
                 <div className="rounded-xl bg-surface-card/60 border border-surface-border/30 h-full flex flex-col">
                   {/* Header */}

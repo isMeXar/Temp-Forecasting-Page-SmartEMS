@@ -3,7 +3,8 @@ FastAPI Backend for SmartEMS Forecasting Platform
 Real-time streaming forecasting with WebSocket
 """
 
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect, Request
+from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 import joblib
@@ -20,6 +21,10 @@ app = FastAPI(
     description="AI-Powered Energy Management & Prediction System",
     version="1.0.0"
 )
+
+
+
+templates = Jinja2Templates(directory="templates")
 
 app.add_middleware(
     CORSMiddleware,
@@ -55,7 +60,7 @@ HORIZON_MAP = {
 
 def load_cache():
     """Load entire cache from single JSON file"""
-    if CACHE_FILE.exists():
+    if CACHE_FILE.exists() and CACHE_FILE.stat().st_size > 0:
         with open(CACHE_FILE, 'r') as f:
             return json.load(f)
     return {}
@@ -168,16 +173,20 @@ async def startup_event():
         load_model_and_data()
     except Exception as e:
         print(f"ERROR loading model: {e}")
+    
 
 @app.get("/")
-async def root():
-    return {
-        "message": "SmartEMS Forecasting API - Foum Tizi",
-        "status": "online",
-        "version": "1.0.0",
-        "site": "Foum Tizi",
-        "model": "XGBoost"
-    }
+async def root(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={
+            "site": "Foum Tizi",
+            "model": "XGBoost",
+            "version": "1.0.0",
+            "status": "Online",
+        },
+    )
 
 @app.get("/api/health")
 async def health_check():
@@ -278,15 +287,16 @@ async def websocket_forecast(websocket: WebSocket, horizon: str):
             "cached_count": len(cached_forecasts)
         })
         
-        # If resuming, send the last cached forecast to display current state
+        # If resuming, replay all cached forecasts so the client accumulates them
         if cached_forecasts:
-            last_cached = cached_forecasts[-1]
-            await websocket.send_json({
-                "type": "horizon_update",
-                "from_cache": True,
-                "is_resume": True,
-                **last_cached
-            })
+            for cached in cached_forecasts:
+                await websocket.send_json({
+                    "type": "horizon_update",
+                    "from_cache": True,
+                    "is_resume": True,
+                    **cached
+                })
+                await asyncio.sleep(0.02)
         
         # Continue from where cache left off
         horizon_index = start_index
@@ -380,9 +390,15 @@ async def websocket_forecast(websocket: WebSocket, horizon: str):
     except WebSocketDisconnect:
         print(f"Client disconnected at horizon {horizon_index}")
     except Exception as e:
-        await websocket.send_json({"type": "error", "message": str(e)})
+        try:
+            await websocket.send_json({"type": "error", "message": str(e)})
+        except RuntimeError:
+            pass
     finally:
-        await websocket.close()
+        try:
+            await websocket.close()
+        except RuntimeError:
+            pass
 
 @app.get("/api/horizons")
 async def get_horizons():
