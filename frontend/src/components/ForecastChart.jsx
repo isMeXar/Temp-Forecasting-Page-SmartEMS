@@ -6,13 +6,15 @@ const SLIDER_HEIGHT = 42;
 const HORIZON_STEPS = {
   "1h": 6, "1d": 144, "3d": 432, "1w": 1008, "1m": 4320
 };
-const HISTORY_WINDOW = {
-  "1h": 144, "1d": 288, "3d": 864, "1w": 2016, "1m": 8640
+const WINDOW_SIZE = {
+  "1h": 150, "1d": 432, "3d": 1296, "1w": 3024, "1m": 12960
 };
 const SLIDER_TO_LEGEND_GAP = 10;
 const LEGEND_HEIGHT = 24;
 const LEGEND_BOTTOM = SLIDER_HEIGHT + SLIDER_TO_LEGEND_GAP;
 const GRID_BOTTOM = LEGEND_BOTTOM + LEGEND_HEIGHT + 6;
+
+const TS2MS = (ts) => new Date(ts).getTime();
 
 const formatTS = (ts) => {
   const d = new Date(ts);
@@ -22,6 +24,27 @@ const formatTS = (ts) => {
 const formatShort = (ts) => {
   const d = new Date(ts);
   return d.toLocaleString('en-US', { month: 'short', day: 'numeric' });
+};
+
+const formatTimeOnly = (d) => d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+
+const formatDayLabel = (d) => {
+  const month = d.toLocaleString('en-US', { month: 'short' });
+  return `${d.getDate()} ${month}`;
+};
+
+const smartAxisFormatter = () => {
+  let lastDayKey = null;
+  return (value) => {
+    const d = new Date(value);
+    const dayKey = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    const time = formatTimeOnly(d);
+    if (dayKey !== lastDayKey) {
+      lastDayKey = dayKey;
+      return `${formatDayLabel(d)}\n${time}`;
+    }
+    return time;
+  };
 };
 
 const accentColors = {
@@ -37,32 +60,36 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
   const splitIndex = useMemo(() => data.findIndex(d => d.forecasted !== null), [data]);
 
   const defaultZoom = useMemo(() => {
-    if (splitIndex < 0 || !data.length) return {};
-    const histWindow = HISTORY_WINDOW[horizon] || 144;
-    const fcSteps = HORIZON_STEPS[horizon] || 144;
+    if (!data.length) return {};
+    const ws = WINDOW_SIZE[horizon] || 300;
+    const startIdx = Math.max(0, data.length - ws);
     return {
-      startValue: Math.max(0, splitIndex - histWindow),
-      endValue: Math.min(data.length - 1, splitIndex + fcSteps),
+      startValue: TS2MS(data[startIdx].timestamp),
+      endValue: TS2MS(data[data.length - 1].timestamp),
     };
-  }, [data.length, splitIndex, horizon]);
+  }, [data.length, horizon]);
 
   const option = useMemo(() => {
     if (!data || data.length === 0) return {};
 
     try {
-      const timestamps = data.map(d => d.timestamp);
-      const actualValues = data.map(d => d.actual ?? null);
-      const prevForecastValues = data.map(d => d.prevForecast ?? null);
-      const forecastValues = data.map(d => d.forecasted ?? null);
-      const upperValues = data.map(d => d.confidenceUpper ?? null);
-      const lowerValues = data.map(d => d.confidenceLower ?? null);
+      const timestampsMs = data.map(d => TS2MS(d.timestamp));
+
+      const mkData = (values) => values.map((v, i) => v != null ? [timestampsMs[i], v] : null);
+
+      const actualData = mkData(data.map(d => d.actual ?? null));
+      const prevForecastData = mkData(data.map(d => d.prevForecast ?? null));
+      const forecastData = mkData(data.map(d => d.forecasted ?? null));
+      const upperData = mkData(data.map(d => d.confidenceUpper ?? null));
+      const lowerData = mkData(data.map(d => d.confidenceLower ?? null));
 
       const series = [
         {
           name: 'Actual',
           type: 'line',
-          data: actualValues,
+          data: actualData,
           lineStyle: { color: '#000000', width: 1 },
+          itemStyle: { color: '#000000' },
           showSymbol: false,
           connectNulls: false,
           smooth: true,
@@ -72,8 +99,9 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
         {
           name: 'Previous Forecast',
           type: 'line',
-          data: prevForecastValues,
+          data: prevForecastData,
           lineStyle: { color: '#3b82f6', width: 2 },
+          itemStyle: { color: '#3b82f6' },
           showSymbol: false,
           connectNulls: false,
           smooth: true,
@@ -83,8 +111,9 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
         {
           name: 'Forecast',
           type: 'line',
-          data: forecastValues,
-          lineStyle: { color: c.main, width: 2, type: 'dashed' },
+          data: forecastData,
+          lineStyle: { color: '#10b981', width: 2, type: 'dashed' },
+          itemStyle: { color: '#10b981' },
           showSymbol: false,
           connectNulls: false,
           smooth: true,
@@ -93,16 +122,16 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
         },
       ];
 
-      if (upperValues.some(v => v != null) && lowerValues.some(v => v != null)) {
-        const bandData = upperValues.map((u, i) => {
-          const l = lowerValues[i];
+      if (upperData.some(v => v != null) && lowerData.some(v => v != null)) {
+        const bandData = upperData.map((u, i) => {
+          const l = lowerData[i];
           if (u == null || l == null) return null;
-          return u - l;
+          return [u[0], u[1] - l[1]];
         });
         series.push({
           name: 'Confidence Lower',
           type: 'line',
-          data: lowerValues,
+          data: lowerData,
           lineStyle: { opacity: 0 },
           stack: 'confBand',
           showSymbol: false,
@@ -124,8 +153,38 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
         });
       }
 
-      const out = {
-        animationDuration: 400,
+      if (splitIndex >= 0 && data[splitIndex]) {
+        series.push({
+          name: 'Forecast Start',
+          type: 'line',
+          data: [],
+          lineStyle: { color: '#f43f5e', width: 1.5, type: 'dashed' },
+          itemStyle: { color: '#f43f5e' },
+          showSymbol: false,
+          legendHoverLink: false,
+          z: 5,
+        });
+      }
+
+      const fcSeries = series.map(s => {
+        if (s.name === 'Forecast' && splitIndex >= 0 && data[splitIndex]) {
+          return {
+            ...s,
+            markLine: {
+              silent: true,
+              symbol: 'none',
+              lineStyle: { color: '#f43f5e', width: 1.5, type: 'dashed' },
+              label: { show: false },
+              data: [{ xAxis: timestampsMs[splitIndex] }],
+            },
+          };
+        }
+        return s;
+      });
+
+      return {
+        animationDuration: 500,
+        animationEasing: 'cubicOut',
         animationDurationUpdate: 0,
         tooltip: {
           trigger: 'axis',
@@ -147,7 +206,7 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
               html += `<div style="display:flex;align-items:center;gap:6px;padding:1px 0">
                 <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${p.color}"></span>
                 <span style="color:#94a3b8">${label}:</span>
-                <span style="font-family:JetBrains Mono,monospace;font-weight:700;color:#e2e8f0">${Number(p.value).toFixed(1)} MW</span>
+                <span style="font-family:JetBrains Mono,monospace;font-weight:700;color:#e2e8f0">${Number(Array.isArray(p.value) ? p.value[1] : p.value).toFixed(1)} MW</span>
               </div>`;
             });
             return html;
@@ -160,7 +219,7 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
           itemHeight: 3,
           textStyle: { color: '#94a3b8', fontSize: 11, fontFamily: 'DM Sans, sans-serif' },
           inactiveColor: '#475569',
-          selected: { 'Confidence Lower': false, 'Confidence Band': false },
+          data: ['Actual', 'Previous Forecast', 'Forecast', 'Forecast Start'],
         },
         grid: {
           left: 8,
@@ -170,16 +229,16 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
           containLabel: true,
         },
         xAxis: {
-          type: 'category',
-          data: timestamps,
+          type: 'time',
           axisLine: { show: false },
           axisTick: { show: false },
           axisLabel: {
             color: '#64748b',
             fontSize: 9,
             fontFamily: 'JetBrains Mono, monospace',
-            rotate: 35,
             margin: 8,
+            formatter: smartAxisFormatter(),
+            hideOverlap: true,
           },
           splitLine: { show: false },
         },
@@ -205,7 +264,7 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
             zoomOnMouseWheel: true,
             moveOnMouseMove: true,
             moveOnMouseWheel: false,
-            minSpan: 5,
+            minValueSpan: 3600000,
             ...defaultZoom,
           },
           {
@@ -226,42 +285,13 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
               fontSize: 9,
               fontFamily: 'JetBrains Mono, monospace',
             },
-            labelFormatter: (v) => {
-              const idx = Math.round(v);
-              return data[idx] ? formatShort(data[idx].timestamp) : String(v);
-            },
-            minSpan: 5,
+            labelFormatter: (v) => formatShort(new Date(v)),
+            minValueSpan: 3600000,
             ...defaultZoom,
           },
         ],
-        series,
+        series: fcSeries,
       };
-
-      if (splitIndex >= 0 && data[splitIndex]) {
-        out.series = series.map(s => {
-          if (s.name === 'Forecast') {
-            return {
-              ...s,
-              markLine: {
-                silent: true,
-                symbol: 'none',
-                lineStyle: { color: '#f43f5e', width: 1.5, type: 'dashed' },
-                label: {
-                  formatter: 'Forecast Start',
-                  color: '#f43f5e',
-                  fontSize: 9,
-                  fontFamily: 'JetBrains Mono, monospace',
-                  position: 'start',
-                },
-                data: [{ xAxis: data[splitIndex].timestamp }],
-              },
-            };
-          }
-          return s;
-        });
-      }
-
-      return out;
     } catch (e) {
       console.error('Chart option error:', e);
       return {};
