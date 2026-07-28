@@ -1,6 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
-import { RotateCcw } from 'lucide-react';
+import { RotateCcw, Search, Download } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 const SLIDER_HEIGHT = 42;
 
@@ -26,7 +27,7 @@ const TS2MS = (ts) => new Date(ts).getTime();
 
 const formatTS = (ts) => {
   const d = new Date(ts);
-  return d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  return d.toLocaleString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 };
 
 const formatShort = (ts) => {
@@ -62,11 +63,16 @@ const accentColors = {
   violet: { main: '#8b5cf6', band: 'rgba(139,92,246,0.15)' },
 };
 
-const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, horizon = '1d' }) => {
+const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, horizon = '1d', toolbarLeft, toolbarCenter, emptyMessage }) => {
   const c = accentColors[accent] || accentColors.cyan;
+  const { isDark } = useTheme();
+  const actualColor = isDark ? '#f1f5f9' : '#000000';
   const zoomRef = useRef(null);
   const dataExtentRef = useRef({ min: 0, max: 0 });
+  const chartRef = useRef(null);
   const [zoomEpoch, setZoomEpoch] = useState(0);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   const splitIndex = useMemo(() => data.findIndex(d => d.forecasted !== null), [data]);
 
@@ -77,17 +83,37 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
     };
   }
 
+  const getDefaultZoom = () => {
+    if (!data.length) return null;
+    const forecastIdx = data.findIndex(d => d.forecasted !== null);
+    if (forecastIdx >= 0) {
+      const forecastStart = TS2MS(data[forecastIdx].timestamp);
+      const forecastEnd = TS2MS(data[data.length - 1].timestamp);
+      const horizonMs = (HORIZON_STEPS[horizon] || 144) * 10 * 60 * 1000;
+      return {
+        startValue: forecastStart - 2 * horizonMs,
+        endValue: forecastEnd,
+      };
+    }
+    const ws = WINDOW_SIZE[horizon] || 300;
+    const startIdx = Math.max(0, data.length - ws);
+    return {
+      startValue: TS2MS(data[startIdx].timestamp),
+      endValue: TS2MS(data[data.length - 1].timestamp),
+    };
+  };
+
   const zoomConfig = useMemo(() => {
     if (!data.length) return {};
 
     if (!zoomRef.current || zoomRef.current.horizon !== horizon) {
-      const ws = WINDOW_SIZE[horizon] || 300;
-      const startIdx = Math.max(0, data.length - ws);
-      zoomRef.current = {
-        horizon,
-        startValue: TS2MS(data[startIdx].timestamp),
-        endValue: TS2MS(data[data.length - 1].timestamp),
-      };
+      // First load or horizon change
+      const def = getDefaultZoom();
+      if (def) zoomRef.current = { horizon, interacted: false, ...def };
+    } else if (!zoomRef.current.interacted) {
+      // User hasn't interacted — keep tracking the end
+      const def = getDefaultZoom();
+      if (def) zoomRef.current = { ...zoomRef.current, ...def };
     }
 
     return {
@@ -98,14 +124,38 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
 
   const handleReset = () => {
     if (!data.length) return;
-    const ws = WINDOW_SIZE[horizon] || 300;
-    const startIdx = Math.max(0, data.length - ws);
+    const def = getDefaultZoom();
+    if (def) {
+      zoomRef.current = { horizon, interacted: false, ...def };
+      setZoomEpoch(n => n + 1);
+    }
+  };
+
+  const applyDateRange = () => {
+    if (!startDate || !endDate) return;
+    const start = new Date(`${startDate}T00:00`);
+    const end = new Date(`${endDate}T23:59`);
     zoomRef.current = {
-      horizon,
-      startValue: TS2MS(data[startIdx].timestamp),
-      endValue: TS2MS(data[data.length - 1].timestamp),
+      ...zoomRef.current,
+      interacted: true,
+      startValue: start.getTime(),
+      endValue: end.getTime(),
     };
     setZoomEpoch(n => n + 1);
+  };
+
+  const handleDateKeyDown = (e) => {
+    if (e.key === 'Enter') applyDateRange();
+  };
+
+  const saveAsPng = () => {
+    const instance = chartRef.current?.getEchartsInstance();
+    if (!instance) return;
+    const url = instance.getDataURL({ type: 'png', pixelRatio: 2, backgroundColor: '#fff' });
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `forecast-${horizon}-${new Date().toISOString().slice(0, 10)}.png`;
+    a.click();
   };
 
   const onEvents = useMemo(() => ({
@@ -113,21 +163,26 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
       const batch = params.batch ? params.batch[0] : params;
       if (!zoomRef.current) return;
 
+      let startValue, endValue;
+
       if (batch.startValue != null && batch.endValue != null) {
-        zoomRef.current = {
-          ...zoomRef.current,
-          startValue: batch.startValue,
-          endValue: batch.endValue,
-        };
+        startValue = batch.startValue;
+        endValue = batch.endValue;
       } else if (batch.start != null && batch.end != null) {
         const { min, max } = dataExtentRef.current;
         const range = max - min;
-        zoomRef.current = {
-          ...zoomRef.current,
-          startValue: Math.round(min + range * batch.start / 100),
-          endValue: Math.round(min + range * batch.end / 100),
-        };
+        startValue = Math.round(min + range * batch.start / 100);
+        endValue = Math.round(min + range * batch.end / 100);
+      } else {
+        return;
       }
+
+      zoomRef.current = {
+        ...zoomRef.current,
+        interacted: true,
+        startValue,
+        endValue,
+      };
     },
   }), []);
 
@@ -150,8 +205,8 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
           name: 'Actual',
           type: 'line',
           data: actualData,
-          lineStyle: { color: '#000000', width: 1 },
-          itemStyle: { color: '#000000' },
+          lineStyle: { color: actualColor, width: 1 },
+          itemStyle: { color: actualColor },
           showSymbol: false,
           connectNulls: false,
           smooth: true,
@@ -284,9 +339,9 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
           data: ['Actual', 'Previous Forecast', 'Forecast', 'Forecast Start'],
         },
         grid: {
-          left: 8,
-          right: 8,
-          top: 12,
+          left: 44,
+          right: 24,
+          top: 30,
           bottom: GRID_BOTTOM,
           containLabel: true,
         },
@@ -307,8 +362,10 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
         },
         yAxis: {
           type: 'value',
-          name: 'MW',
-          nameTextStyle: { color: '#64748b', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' },
+          name: 'Power (kW)',
+          nameTextStyle: { color: '#64748b', fontSize: 10, fontFamily: 'JetBrains Mono, monospace', rotate: 90 },
+          nameLocation: 'middle',
+          nameGap: 48,
           axisLine: { show: false },
           axisTick: { show: false },
           axisLabel: {
@@ -359,51 +416,84 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
       console.error('Chart option error:', e);
       return {};
     }
-  }, [data, c, splitIndex, zoomConfig]);
-
-  if (loading) {
-    return (
-      <div className="rounded-2xl bg-surface-card/40 border border-surface-border/30 p-4" style={{ height: chartHeight + 80 }}>
-        <div className="h-full flex items-center justify-center">
-          <div className="text-center">
-            <div className="relative w-10 h-10 mx-auto">
-              <div className="absolute inset-0 border-2 border-accent-cyan/30 rounded-full" />
-              <div className="absolute inset-0 border-2 border-transparent border-t-accent-cyan rounded-full animate-spin" />
-            </div>
-            <p className="mt-4 text-xs text-ink-muted font-medium">Loading forecast data...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!data || data.length === 0) {
-    return (
-      <div className="rounded-2xl bg-surface-card/40 border border-surface-border/30 p-4" style={{ height: chartHeight + 80 }}>
-        <div className="h-full flex items-center justify-center">
-          <p className="text-xs text-ink-muted">No data available</p>
-        </div>
-      </div>
-    );
-  }
+  }, [data, c, splitIndex, zoomConfig, actualColor]);
 
   return (
-    <div className="rounded-2xl bg-surface-card/40 border border-surface-border/30 p-4 overflow-hidden">
-      <div className="relative" style={{ height: chartHeight + 80 }}>
-        <button
-          onClick={handleReset}
-          className="absolute top-1 right-1 z-10 p-1 rounded-md bg-surface-card/70 border border-surface-border/30 text-ink-muted hover:text-ink hover:bg-surface-card transition-colors"
-          title="Reset view to default"
-        >
-          <RotateCcw className="w-3.5 h-3.5" />
-        </button>
-        <ReactECharts
-          option={option}
-          notMerge={false}
-          lazyUpdate
-          onEvents={onEvents}
-          style={{ width: '100%', height: '100%' }}
-        />
+    <div className="rounded-2xl bg-surface-card/40 border border-surface-border/30 overflow-hidden">
+      {/* Toolbar */}
+      {(toolbarLeft || toolbarCenter) && (
+        <div className="flex items-center px-4 py-2 border-b border-surface-border/30 bg-surface-card/20 gap-2">
+          <div className="flex items-center gap-3 flex-1 min-w-0">{toolbarLeft}</div>
+          <div className="flex items-center gap-1.5 flex-1 justify-center">
+            <input
+              type="date"
+              value={startDate}
+              onChange={e => setStartDate(e.target.value)}
+              onKeyDown={handleDateKeyDown}
+              className="px-2 py-1 rounded-lg bg-surface-hover/30 border border-surface-border/40 text-ink text-xs font-mono-num w-28"
+            />
+            <span className="text-ink-muted text-xs font-mono-num">→</span>
+            <input
+              type="date"
+              value={endDate}
+              onChange={e => setEndDate(e.target.value)}
+              onKeyDown={handleDateKeyDown}
+              className="px-2 py-1 rounded-lg bg-surface-hover/30 border border-surface-border/40 text-ink text-xs font-mono-num w-28"
+            />
+            <button
+              onClick={applyDateRange}
+              className="p-1.5 rounded-lg bg-accent-cyan/15 hover:bg-accent-cyan/25 border border-accent-cyan/30 text-accent-cyan transition-colors"
+              title="Jump to range"
+            >
+              <Search className="w-3.5 h-3.5" />
+            </button>
+          </div>
+          <div className="flex items-center gap-2 flex-1 justify-end">
+            {toolbarCenter}
+            <button
+              onClick={saveAsPng}
+              className="p-1.5 rounded-lg bg-surface-hover/30 hover:bg-surface-hover/60 border border-surface-border/40 text-ink-muted hover:text-ink transition-colors"
+              title="Save as PNG"
+            >
+              <Download className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={handleReset}
+              className="p-1.5 rounded-lg bg-surface-hover/30 hover:bg-surface-hover/60 border border-surface-border/40 text-ink-muted hover:text-ink transition-colors"
+              title="Reset view to default"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Chart area */}
+      <div className="relative pb-3" style={{ height: chartHeight + 80 }}>
+        {loading ? (
+          <div className="h-full flex items-center justify-center">
+            <div className="text-center">
+              <div className="relative w-10 h-10 mx-auto">
+                <div className="absolute inset-0 border-2 border-accent-cyan/30 rounded-full" />
+                <div className="absolute inset-0 border-2 border-transparent border-t-accent-cyan rounded-full animate-spin" />
+              </div>
+              <p className="mt-4 text-xs text-ink-muted font-medium">Loading forecast data...</p>
+            </div>
+          </div>
+        ) : !data || data.length === 0 ? (
+          <div className="h-full flex items-center justify-center">
+            {emptyMessage || <p className="text-xs text-ink-muted">No data available</p>}
+          </div>
+        ) : (
+          <ReactECharts
+            ref={chartRef}
+            option={option}
+            notMerge={false}
+            lazyUpdate
+            onEvents={onEvents}
+            style={{ width: '100%', height: '100%' }}
+          />
+        )}
       </div>
     </div>
   );

@@ -270,79 +270,64 @@ function App() {
             />
           </div>
 
-          {/* Horizon Selector + Start Button */}
-          <div className="flex items-center gap-3 animate-fade-in" style={{ animationDelay: '0.15s' }}>
-            <HorizonSelector
-              selectedHorizon={horizon}
-              onHorizonChange={setHorizon}
-              loading={streaming}
-            />
-            
-            {!streaming ? (
-              <>
-                <button
-                  onClick={startForecast}
-                  disabled={loading}
-                  className="px-6 py-2.5 rounded-xl bg-accent-cyan/15 hover:bg-accent-cyan/25 border border-accent-cyan/30 text-accent-cyan font-semibold text-sm transition-all duration-200 flex items-center gap-2 disabled:opacity-50"
-                >
-                  <PlayCircle className="w-4 h-4" />
-                  {cacheStatus?.can_resume ? 'Resume' : 'Start Forecast'}
-                </button>
-                
-                {cacheStatus?.can_resume && (
-                  <button
-                    onClick={async () => {
-                      await fetch(`http://localhost:8001/api/cache/clear/${horizon}`, { method: 'POST' });
-                      setCacheStatus({ ...cacheStatus, can_resume: false, cached_count: 0 });
-                    }}
-                    className="px-4 py-2.5 rounded-xl bg-surface-hover/50 hover:bg-surface-hover border border-surface-border/40 text-ink-muted hover:text-ink font-semibold text-xs transition-all duration-200"
-                  >
-                    Clear Cache
-                  </button>
-                )}
-              </>
-            ) : (
-              <button
-                onClick={stopForecast}
-                className="px-6 py-2.5 rounded-xl bg-red-500/15 hover:bg-red-500/25 border border-red-500/30 text-red-400 font-semibold text-sm transition-all duration-200"
-              >
-                Stop
-              </button>
-            )}
-          </div>
-
           {/* Chart and Metrics Grid - 80/20 split */}
           <div className="flex gap-4 items-stretch">
             {/* Chart Area - 80% */}
             <div className="flex-[80] min-h-0">
-              {loading ? (
-                <div className="h-full rounded-2xl bg-surface-card/40 border border-surface-border/30 p-4 flex items-center justify-center" style={{ minHeight: 500 }}>
-                  <div className="text-center">
-                    <div className="relative w-10 h-10 mx-auto mb-4">
-                      <div className="absolute inset-0 border-2 border-accent-cyan/30 rounded-full" />
-                      <div className="absolute inset-0 border-2 border-transparent border-t-accent-cyan rounded-full animate-spin" />
+              <ErrorBoundary>
+                <ForecastChart
+                  data={chartData}
+                  loading={loading && !cacheStatus?.can_resume}
+                  accent="cyan"
+                  chartHeight={320}
+                  horizon={horizon}
+                  emptyMessage={
+                    <div className="text-center">
+                      <PlayCircle className="w-12 h-12 text-ink-muted/50 mx-auto mb-3" />
+                      <p className="text-sm text-ink-muted">Select a horizon and click "Start Forecast"</p>
                     </div>
-                    <p className="text-sm text-ink-muted">Initializing forecast...</p>
-                  </div>
-                </div>
-              ) : !forecastData ? (
-                <div className="h-full rounded-2xl bg-surface-card/40 border border-surface-border/30 p-4 flex items-center justify-center" style={{ minHeight: 500 }}>
-                  <div className="text-center">
-                    <PlayCircle className="w-12 h-12 text-ink-muted/50 mx-auto mb-3" />
-                    <p className="text-sm text-ink-muted">Select a horizon and click "Start Forecast"</p>
-                  </div>
-                </div>
-              ) : (
-                <ErrorBoundary>
-                  <ForecastChart
-                    data={chartData}
-                    loading={false}
-                    accent="cyan"
-                    chartHeight={320}
-                    horizon={horizon}
-                  />
-                </ErrorBoundary>
-              )}
+                  }
+                  toolbarLeft={
+                    <HorizonSelector
+                      selectedHorizon={horizon}
+                      onHorizonChange={setHorizon}
+                      loading={streaming}
+                    />
+                  }
+                  toolbarCenter={
+                    !streaming ? (
+                      <>
+                        <button
+                          onClick={startForecast}
+                          disabled={loading}
+                          className="px-4 py-1.5 rounded-lg bg-accent-cyan/15 hover:bg-accent-cyan/25 border border-accent-cyan/30 text-accent-cyan font-semibold text-xs transition-all duration-200 flex items-center gap-1.5 disabled:opacity-50"
+                        >
+                          <PlayCircle className="w-3.5 h-3.5" />
+                          {cacheStatus?.can_resume ? 'Resume' : 'Start'}
+                        </button>
+                        {cacheStatus?.can_resume && (
+                          <button
+                            onClick={async () => {
+                              await fetch(`http://localhost:8001/api/cache/clear/${horizon}`, { method: 'POST' });
+                              setCacheStatus({ ...cacheStatus, can_resume: false, cached_count: 0 });
+                            }}
+                            className="px-3 py-1.5 rounded-lg bg-surface-hover/50 hover:bg-surface-hover border border-surface-border/40 text-ink-muted hover:text-ink font-semibold text-xs transition-all duration-200"
+                          >
+                            Clear
+                          </button>
+                        )}
+                      </>
+                    ) : (
+                      <button
+                        onClick={stopForecast}
+                        className="px-4 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 border border-red-500/30 text-red-400 font-semibold text-xs transition-all duration-200"
+                      >
+                        Stop
+                      </button>
+                    )
+                  }
+                />
+              </ErrorBoundary>
             </div>
 
             {/* Forecast Metrics Panel - 20% */}

@@ -8,7 +8,7 @@ const horizonOptions = [
 
 const HorizonSelector = ({ selectedHorizon, onHorizonChange, loading }) => {
   return (
-    <div className="inline-flex items-center gap-1 p-1 rounded-xl bg-surface-hover/30 border border-surface-border/40">
+    <div className="inline-flex items-center gap-1 p-0.5 rounded-xl bg-surface-hover/30 border border-surface-border/40">
       {horizonOptions.map((option) => {
         const isActive = selectedHorizon === option.value;
         return (
@@ -17,7 +17,7 @@ const HorizonSelector = ({ selectedHorizon, onHorizonChange, loading }) => {
             onClick={() => onHorizonChange(option.value)}
             disabled={loading}
             className={`
-              relative px-3.5 py-2 rounded-lg text-xs font-semibold transition-all duration-300
+              relative px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-300
               ${isActive
                 ? 'bg-accent-cyan/15 text-accent-cyan shadow-[0_0_20px_rgba(6,182,212,0.1)]'
                 : 'text-ink-muted hover:text-ink hover:bg-surface-hover/50'
