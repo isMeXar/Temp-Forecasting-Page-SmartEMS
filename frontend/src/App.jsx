@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import Header from './components/Header';
 import ForecastChart from './components/ForecastChart';
 import ErrorBoundary from './components/ErrorBoundary';
 import HorizonSelector from './components/HorizonSelector';
 import MetricCard from './components/MetricCard';
-import { Zap, TrendingUp, Calendar, PlayCircle } from 'lucide-react';
+import { Zap, TrendingUp, TrendingDown, Calendar, PlayCircle } from 'lucide-react';
 
 const WS_BASE = 'ws://localhost:8001';
 
@@ -197,6 +197,31 @@ function App() {
   const stats = forecastData?.stats || {};
   const meanForecast = stats.mean_forecast || 0;
 
+  const mae = useMemo(() => {
+    const errors = [];
+    for (const d of chartData) {
+      if (d.actual != null && d.prevForecast != null) {
+        errors.push(Math.abs(d.actual - d.prevForecast));
+      }
+    }
+    if (!errors.length) return null;
+    return errors.reduce((a, b) => a + b, 0) / errors.length;
+  }, [chartData]);
+
+  const trend = useMemo(() => {
+    const points = chartData.filter(d => d.forecasted != null);
+    if (points.length < 4) return null;
+    const half = Math.floor(points.length / 2);
+    const sum = (arr, key) => arr.reduce((s, d) => s + d[key], 0);
+    const firstAvg = sum(points.slice(0, half), 'forecasted') / half;
+    const lastAvg = sum(points.slice(-half), 'forecasted') / half;
+    const diff = lastAvg - firstAvg;
+    const mean = (firstAvg + lastAvg) / 2;
+    return Math.abs(diff) / mean > 0.01
+      ? diff > 0 ? 'increasing' : 'decreasing'
+      : 'stable';
+  }, [chartData]);
+
   return (
     <div className="min-h-screen bg-surface bg-grid overflow-x-hidden">
       <div className="fixed inset-0 pointer-events-none">
@@ -335,48 +360,45 @@ function App() {
               {forecastData ? (
                 <div className="rounded-xl bg-surface-card/60 border border-surface-border/30 h-full flex flex-col">
                   {/* Header */}
-                  <div className="px-3 py-3 border-b border-surface-border/20">
-                    <div className="flex items-center gap-2 mb-1">
-                      <TrendingUp className="w-3.5 h-3.5 text-accent-cyan flex-shrink-0" />
-                      <h3 className="text-xs font-bold text-ink">Metrics</h3>
+                  <div className="px-4 py-2.5 border-b border-surface-border/30">
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="w-4 h-4 text-accent-cyan flex-shrink-0" />
+                      <h3 className="text-base font-bold text-ink tracking-tight">Metrics</h3>
                     </div>
-                    <span className="text-[10px] font-mono-num text-ink-muted">
-                      {horizon.toUpperCase()} #{forecastData.horizon_index + 1}
-                    </span>
                   </div>
                   
                   {/* Metrics List */}
-                  <div className="flex-1 px-3 py-3 space-y-3 overflow-y-auto">
+                  <div className="flex-1 px-3 py-5 flex flex-col justify-center space-y-3 overflow-y-auto">
                     <div className="flex justify-between items-center">
-                      <span className="text-[10px] text-ink-muted">Average</span>
+                      <span className="text-xs text-ink-muted font-medium">Average</span>
                       <span className="text-xs font-bold font-mono-num text-ink">{stats.mean_forecast?.toFixed(1)} MW</span>
                     </div>
                     
                     <div className="h-px bg-surface-border/20"></div>
                     
                     <div className="flex justify-between items-center">
-                      <span className="text-[10px] text-ink-muted">Maximum</span>
+                      <span className="text-xs text-ink-muted font-medium">Maximum</span>
                       <span className="text-xs font-bold font-mono-num text-accent-emerald">{stats.max_forecast?.toFixed(1)} MW</span>
                     </div>
                     
                     <div className="h-px bg-surface-border/20"></div>
                     
                     <div className="flex justify-between items-center">
-                      <span className="text-[10px] text-ink-muted">Minimum</span>
+                      <span className="text-xs text-ink-muted font-medium">Minimum</span>
                       <span className="text-xs font-bold font-mono-num text-accent-violet">{stats.min_forecast?.toFixed(1)} MW</span>
                     </div>
                     
                     <div className="h-px bg-surface-border/20"></div>
                     
                     <div className="flex justify-between items-center">
-                      <span className="text-[10px] text-ink-muted">Range</span>
+                      <span className="text-xs text-ink-muted font-medium">Range</span>
                       <span className="text-xs font-bold font-mono-num text-ink">{(stats.max_forecast - stats.min_forecast)?.toFixed(1)} MW</span>
                     </div>
                     
                     <div className="h-px bg-surface-border/20"></div>
                     
                     <div className="flex justify-between items-center">
-                      <span className="text-[10px] text-ink-muted">Std Dev</span>
+                      <span className="text-xs text-ink-muted font-medium">Std Dev</span>
                       <span className="text-xs font-bold font-mono-num text-ink">
                         {stats.std_forecast ? stats.std_forecast.toFixed(1) : '—'} MW
                       </span>
@@ -385,18 +407,42 @@ function App() {
                     <div className="h-px bg-surface-border/20"></div>
                     
                     <div className="flex justify-between items-center">
-                      <span className="text-[10px] text-ink-muted">MAPE</span>
+                      <span className="text-xs text-ink-muted font-medium">MAPE</span>
                       <span className="text-xs font-bold font-mono-num text-accent-amber">
                         {stats.mape ? stats.mape.toFixed(2) : '—'}%
+                      </span>
+                    </div>
+                    
+                    <div className="h-px bg-surface-border/20"></div>
+                    
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-ink-muted font-medium">MAE</span>
+                      <span className="text-xs font-bold font-mono-num text-ink">
+                        {mae != null ? `${mae.toFixed(0)} kW` : '—'}
+                      </span>
+                    </div>
+                    
+                    <div className="h-px bg-surface-border/20"></div>
+                    
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-ink-muted font-medium">Trend</span>
+                      <span className="text-xs font-bold font-mono-num flex items-center gap-1">
+                        {trend === 'increasing' ? (
+                          <><TrendingUp className="w-3.5 h-3.5 text-accent-emerald" /><span className="text-accent-emerald">↗ Increasing</span></>
+                        ) : trend === 'decreasing' ? (
+                          <><TrendingDown className="w-3.5 h-3.5 text-red-400" /><span className="text-red-400">↘ Decreasing</span></>
+                        ) : (
+                          <span className="text-ink-muted">—</span>
+                        )}
                       </span>
                     </div>
                   </div>
 
                   {/* Footer - Period Info */}
-                  <div className="px-3 py-3 border-t border-surface-border/20 space-y-2">
+                  <div className="px-3 py-1.5 border-t border-surface-border/20 space-y-0.5">
                     <div className="flex justify-between items-center">
-                      <span className="text-[9px] text-ink-muted">Start</span>
-                      <span className="text-[10px] font-mono-num text-ink">
+                      <span className="text-[10px] text-ink-muted font-medium">Start</span>
+                      <span className="text-[11px] font-mono-num text-ink">
                         {new Date(forecastData.forecast_start).toLocaleString('en-US', { 
                           month: 'short', 
                           day: 'numeric', 
@@ -406,8 +452,8 @@ function App() {
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-[9px] text-ink-muted">End</span>
-                      <span className="text-[10px] font-mono-num text-ink">
+                      <span className="text-[10px] text-ink-muted font-medium">End</span>
+                      <span className="text-[11px] font-mono-num text-ink">
                         {new Date(forecastData.forecast_end).toLocaleString('en-US', { 
                           month: 'short', 
                           day: 'numeric', 
