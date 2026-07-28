@@ -1,10 +1,18 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
+import { RotateCcw } from 'lucide-react';
 
 const SLIDER_HEIGHT = 42;
 
 const HORIZON_STEPS = {
   "1h": 6, "1d": 144, "3d": 432, "1w": 1008, "1m": 4320
+};
+const AXIS_INTERVAL = {
+  "1h": 10 * 60 * 1000,
+  "1d": 3 * 3600000,
+  "3d": 6 * 3600000,
+  "1w": 12 * 3600000,
+  "1m": 86400000,
 };
 const WINDOW_SIZE = {
   "1h": 150, "1d": 432, "3d": 1296, "1w": 3024, "1m": 12960
@@ -56,18 +64,72 @@ const accentColors = {
 
 const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, horizon = '1d' }) => {
   const c = accentColors[accent] || accentColors.cyan;
+  const zoomRef = useRef(null);
+  const dataExtentRef = useRef({ min: 0, max: 0 });
+  const [zoomEpoch, setZoomEpoch] = useState(0);
 
   const splitIndex = useMemo(() => data.findIndex(d => d.forecasted !== null), [data]);
 
-  const defaultZoom = useMemo(() => {
+  if (data.length > 0) {
+    dataExtentRef.current = {
+      min: TS2MS(data[0].timestamp),
+      max: TS2MS(data[data.length - 1].timestamp),
+    };
+  }
+
+  const zoomConfig = useMemo(() => {
     if (!data.length) return {};
+
+    if (!zoomRef.current || zoomRef.current.horizon !== horizon) {
+      const ws = WINDOW_SIZE[horizon] || 300;
+      const startIdx = Math.max(0, data.length - ws);
+      zoomRef.current = {
+        horizon,
+        startValue: TS2MS(data[startIdx].timestamp),
+        endValue: TS2MS(data[data.length - 1].timestamp),
+      };
+    }
+
+    return {
+      startValue: zoomRef.current.startValue,
+      endValue: zoomRef.current.endValue,
+    };
+  }, [data.length, horizon, zoomEpoch]);
+
+  const handleReset = () => {
+    if (!data.length) return;
     const ws = WINDOW_SIZE[horizon] || 300;
     const startIdx = Math.max(0, data.length - ws);
-    return {
+    zoomRef.current = {
+      horizon,
       startValue: TS2MS(data[startIdx].timestamp),
       endValue: TS2MS(data[data.length - 1].timestamp),
     };
-  }, [data.length, horizon]);
+    setZoomEpoch(n => n + 1);
+  };
+
+  const onEvents = useMemo(() => ({
+    dataZoom: (params) => {
+      const batch = params.batch ? params.batch[0] : params;
+      if (!zoomRef.current) return;
+
+      if (batch.startValue != null && batch.endValue != null) {
+        zoomRef.current = {
+          ...zoomRef.current,
+          startValue: batch.startValue,
+          endValue: batch.endValue,
+        };
+      } else if (batch.start != null && batch.end != null) {
+        const { min, max } = dataExtentRef.current;
+        const range = max - min;
+        zoomRef.current = {
+          ...zoomRef.current,
+          startValue: Math.round(min + range * batch.start / 100),
+          endValue: Math.round(min + range * batch.end / 100),
+        };
+      }
+    },
+  }), []);
 
   const option = useMemo(() => {
     if (!data || data.length === 0) return {};
@@ -238,7 +300,8 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
             fontFamily: 'JetBrains Mono, monospace',
             margin: 8,
             formatter: smartAxisFormatter(),
-            hideOverlap: true,
+            interval: AXIS_INTERVAL[horizon] || 'auto',
+            hideOverlap: false,
           },
           splitLine: { show: false },
         },
@@ -265,7 +328,7 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
             moveOnMouseMove: true,
             moveOnMouseWheel: false,
             minValueSpan: 3600000,
-            ...defaultZoom,
+            ...zoomConfig,
           },
           {
             type: 'slider',
@@ -287,7 +350,7 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
             },
             labelFormatter: (v) => formatShort(new Date(v)),
             minValueSpan: 3600000,
-            ...defaultZoom,
+            ...zoomConfig,
           },
         ],
         series: fcSeries,
@@ -296,7 +359,7 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
       console.error('Chart option error:', e);
       return {};
     }
-  }, [data, c, splitIndex]);
+  }, [data, c, splitIndex, zoomConfig]);
 
   if (loading) {
     return (
@@ -326,11 +389,19 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
 
   return (
     <div className="rounded-2xl bg-surface-card/40 border border-surface-border/30 p-4 overflow-hidden">
-      <div style={{ height: chartHeight + 80 }}>
+      <div className="relative" style={{ height: chartHeight + 80 }}>
+        <button
+          onClick={handleReset}
+          className="absolute top-1 right-1 z-10 p-1 rounded-md bg-surface-card/70 border border-surface-border/30 text-ink-muted hover:text-ink hover:bg-surface-card transition-colors"
+          title="Reset view to default"
+        >
+          <RotateCcw className="w-3.5 h-3.5" />
+        </button>
         <ReactECharts
           option={option}
           notMerge={false}
           lazyUpdate
+          onEvents={onEvents}
           style={{ width: '100%', height: '100%' }}
         />
       </div>

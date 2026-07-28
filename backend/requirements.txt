@@ -3,11 +3,12 @@ uvicorn[standard]==0.32.0
 pydantic==2.9.0
 python-multipart==0.0.12
 joblib==1.4.2
-numpy==2.0.0
+
+numpy>=2.2.0
 pandas==2.2.3
-scikit-learn==1.5.0
-xgboost==2.0.3
-lightgbm==4.3.0
+scikit-learn>=1.7.0
+xgboost>=3.0.0
+lightgbm>=4.6.0
+
 requests==2.31.0
 websockets==15.0.1
-requests
