@@ -314,15 +314,17 @@ function App() {
               onClick={() => setFoumTiziOpen(!foumTiziOpen)}
             >
               <div className="flex items-center gap-3">
-                <div className={`p-1 rounded-lg transition-all duration-300 ${foumTiziOpen ? 'bg-accent-cyan/10' : 'bg-surface-hover/30'}`}>
-                  {foumTiziOpen ? (
-                    <ChevronDown className="w-4 h-4 text-accent-cyan transition-transform duration-300" />
-                  ) : (
-                    <ChevronRight className="w-4 h-4 text-ink-muted transition-transform duration-300" />
-                  )}
-                </div>
-                <div className="inline-block">
-                  <h2 className="text-base font-heading font-bold text-ink">Foum Tizi Energy Forecast</h2>
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-3">
+                    <div className="p-1 rounded-lg transition-all duration-300">
+                      {foumTiziOpen ? (
+                        <ChevronDown className="w-4 h-4 text-accent-cyan transition-transform duration-300" />
+                      ) : (
+                        <ChevronRight className="w-4 h-4 text-ink-muted transition-transform duration-300" />
+                      )}
+                    </div>
+                    <h2 className="text-base font-heading font-bold text-ink">Foum Tizi - 10 min Interval</h2>
+                  </div>
                   <div className="mt-1.5 h-0.5 rounded-full bg-accent-emerald" style={{ width: 'calc(100% + 20px)' }} />
                 </div>
               </div>
@@ -394,7 +396,7 @@ function App() {
 
                   {/* Forecast Metrics Panel - 20% */}
                   <div className="flex-[20]">
-                    <div className="rounded-xl bg-surface-card/70 shadow-card h-full flex flex-col">
+                    <div className="rounded-xl bg-surface-card/70 shadow-card dark:border dark:border-surface-border/10 h-full flex flex-col">
                       {/* Header */}
                       <div className="px-4 py-2.5 border-b border-surface-border/30">
                         <div className="flex items-center gap-2">
@@ -512,7 +514,7 @@ function App() {
 
                  {/* Info Section */}
                 {forecastData && (
-                  <div className="animate-fade-in bg-surface-card/50 shadow-card rounded-xl p-4">
+                  <div className="animate-fade-in bg-surface-card/50 shadow-card dark:border dark:border-surface-border/10 rounded-xl p-4">
                     <div className="grid grid-cols-2 md:grid-cols-6 gap-4 text-xs">
                       <div>
                         <p className="text-ink-muted mb-1">Model</p>

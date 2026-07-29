@@ -456,7 +456,7 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
   }, [data, c, splitIndex, zoomConfig, actualColor]);
 
   return (
-    <div className="rounded-2xl bg-surface-card/60 shadow-card overflow-hidden">
+    <div className="rounded-2xl bg-surface-card/60 shadow-card dark:border dark:border-surface-border/10 overflow-hidden">
       {/* Toolbar */}
       {(toolbarLeft || toolbarCenter) && (
         <div className="flex items-center px-4 py-2 border-b border-surface-border/30 bg-surface-card/20 gap-2">
