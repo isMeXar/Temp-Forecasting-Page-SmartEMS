@@ -1,5 +1,6 @@
 import Header from './components/Header';
 import ForecastSite from './components/ForecastSite';
+import GlobalStats from './components/GlobalStats';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
 
       <main className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 pb-8">
         <div className="py-6 space-y-8">
+          <GlobalStats />
           <ForecastSite site="ft" label="Foum Tizi" modelName="XGBoost" accent="cyan" />
           <ForecastSite site="of" label="Oulad Fares" modelName="XGBoost" accent="emerald" />
         </div>

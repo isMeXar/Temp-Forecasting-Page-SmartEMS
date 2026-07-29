@@ -208,10 +208,30 @@ async def root(request: Request):
 
 @app.get("/api/health")
 async def health_check():
+    site_details = {}
+    total_cached = 0
+    for site_id, cfg in sites.items():
+        cached_count = 0
+        for horizon in HORIZON_MAP:
+            forecasts = load_forecasts_from_cache(site_id, horizon)
+            cached_count += len(forecasts)
+        total_cached += cached_count
+        config = SITES_CONFIG[site_id]
+        site_details[site_id] = {
+            "label": cfg["label"],
+            "model": config["model_path"],
+            "loaded": True,
+            "forecasts_cached": cached_count,
+        }
     return {
         "status": "healthy",
-        "sites": {k: {"label": v["label"], "loaded": True} for k, v in sites.items()},
-        "cache_dir": str(CACHE_DIR),
+        "models_loaded": len(sites),
+        "sites": site_details,
+        "total_forecasts_cached": total_cached,
+        "horizons_available": list(HORIZON_MAP.keys()),
+        "data_interval_minutes": 10,
+        "posts": 2,
+        "processes": 0,
     }
 
 @app.get("/api/cache/status/{site}/{horizon}")
@@ -363,8 +383,7 @@ async def websocket_forecast(websocket: WebSocket, site: str, horizon: str):
                 p = model.predict(X)[0]
                 p = scaler.inverse_transform([[p]])[0, 0]
                 preds.append(float(p))
-                memory.append(y[t])
-                await asyncio.sleep(0.001)
+                memory.append(p)
 
             forecast = [
                 {

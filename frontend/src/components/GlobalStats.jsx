@@ -1,72 +1,97 @@
-import { Zap, BarChart3, Target, Activity, TrendingUp } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Brain, Factory, Zap, CheckCircle } from 'lucide-react';
 
-const GlobalStats = ({ siteData }) => {
-  const allCurrent = Object.values(siteData).map(d => d.currentConsumption || 0);
-  const totalCurrent = allCurrent.reduce((s, v) => s + v, 0);
-  const totalCapacity = 425;
-  const avgAccuracy = Object.values(siteData).reduce((s, d) => s + (d.accuracy || 0), 0) / Math.max(1, Object.keys(siteData).length);
+const API_BASE = 'http://localhost:8001';
 
-  const stats = [
+function GlobalStats() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    let mounted = true;
+    const fetchHealth = async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/health`);
+        const json = await res.json();
+        if (mounted) {
+          setData({
+            posts: json.posts,
+            processes: json.processes,
+            models: json.models_loaded,
+            modelsUnit: 'loaded',
+            status: json.status.charAt(0).toUpperCase() + json.status.slice(1),
+            statusOk: true,
+          });
+        }
+      } catch {
+        if (mounted)
+          setData({ posts: 0, processes: 0, models: 0, modelsUnit: '', status: 'Offline', statusOk: false });
+      }
+    };
+    fetchHealth();
+    const intv = setInterval(fetchHealth, 15000);
+    return () => { mounted = false; clearInterval(intv); };
+  }, []);
+
+  const cards = [
     {
-      icon: Zap,
-      label: 'Total Load',
-      value: `${totalCurrent.toFixed(0)}`,
-      unit: 'MW',
-      sub: `${((totalCurrent / totalCapacity) * 100).toFixed(0)}% capacity`,
-      accent: 'text-accent-cyan',
+      key: 'posts', label: 'Posts', icon: Zap, accent: 'text-accent-cyan',
+      value: data?.posts, unit: 'active',
     },
     {
-      icon: BarChart3,
-      label: 'Total Capacity',
-      value: `${totalCapacity}`,
-      unit: 'MW',
-      accent: 'text-accent-emerald',
+      key: 'processes', label: 'Processes', icon: Factory, accent: 'text-accent-amber',
+      value: data?.processes, unit: 'running',
     },
     {
-      icon: Target,
-      label: 'Avg Accuracy',
-      value: `${avgAccuracy.toFixed(1)}`,
-      unit: '%',
-      accent: 'text-accent-amber',
+      key: 'models', label: 'Models', icon: Brain, accent: 'text-accent-emerald',
+      value: data?.models, unit: data?.modelsUnit ?? '',
     },
     {
-      icon: Activity,
-      label: 'Active Sites',
-      value: `${Object.keys(siteData).length}`,
-      unit: '/ 4',
-      accent: 'text-accent-emerald',
+      key: 'status', label: 'System Status', icon: CheckCircle, accent: data?.statusOk ? 'text-accent-emerald' : 'text-red-400',
+      custom: data && (
+        <span className="flex items-center gap-1.5">
+          <span className="relative flex h-2 w-2">
+            <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${data.statusOk ? 'bg-accent-emerald' : 'bg-red-400'} opacity-75`} />
+            <span className={`relative inline-flex rounded-full h-2 w-2 ${data.statusOk ? 'bg-accent-emerald' : 'bg-red-400'}`} />
+          </span>
+          {data.status}
+        </span>
+      ),
     },
   ];
 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-      {stats.map((stat) => (
+      {cards.map((card) => (
         <div
-          key={stat.label}
+          key={card.key}
           className="relative overflow-hidden rounded-xl bg-surface-card/60 border border-surface-border/40 p-4 shadow-card"
         >
           <div className="flex items-start justify-between mb-2">
             <span className="text-[10px] font-semibold text-ink-muted uppercase tracking-widest">
-              {stat.label}
+              {card.label}
             </span>
-            <stat.icon className={`w-4 h-4 ${stat.accent} opacity-70`} />
+            <card.icon className={`w-4 h-4 ${card.accent} opacity-70`} />
           </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="text-2xl font-bold font-mono-num text-ink tracking-tight">
-              {stat.value}
-            </span>
-            <span className="text-xs font-medium text-ink-muted">{stat.unit}</span>
+          <div className="flex items-baseline gap-1.5 min-h-[32px]">
+            {card.value != null ? (
+              <>
+                <span className="text-2xl font-bold font-mono-num text-ink tracking-tight">
+                  {card.value}
+                </span>
+                {card.unit && (
+                  <span className="text-xs font-medium text-ink-muted">{card.unit}</span>
+                )}
+              </>
+            ) : card.custom ? (
+              card.custom
+            ) : (
+              <span className="text-base font-mono-num text-ink-muted/50">—</span>
+            )}
           </div>
-          {stat.sub && (
-            <div className="mt-1.5 flex items-center gap-1 text-[10px] text-ink-muted">
-              <TrendingUp className="w-3 h-3" />
-              {stat.sub}
-            </div>
-          )}
         </div>
       ))}
     </div>
   );
-};
+}
 
 export default GlobalStats;

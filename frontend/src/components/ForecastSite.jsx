@@ -306,9 +306,9 @@ const ForecastSite = ({ site, label, modelName = 'XGBoost', accent = 'cyan' }) =
                     { label: 'Minimum', value: stats.min_forecast != null ? `${stats.min_forecast.toFixed(1)} MW` : '—', cls: 'text-accent-violet' },
                     { label: 'Range', value: stats.max_forecast != null && stats.min_forecast != null ? `${(stats.max_forecast - stats.min_forecast).toFixed(1)} MW` : '—', cls: 'text-ink' },
                     { label: 'Std Dev', value: stats.std_forecast != null ? `${stats.std_forecast.toFixed(1)} MW` : '—', cls: 'text-ink' },
-                    { label: 'MAPE', value: stats.mape != null ? `${stats.mape.toFixed(2)}%` : '—', cls: 'text-accent-amber', mono: true },
-                    { label: 'MAE', value: mae != null ? `${mae.toFixed(0)} kW` : '—', cls: 'text-ink' },
                     { label: 'Trend', value: trend === 'increasing' ? '↗ Increasing' : trend === 'decreasing' ? '↘ Decreasing' : '—', cls: trend === 'increasing' ? 'text-accent-emerald' : trend === 'decreasing' ? 'text-red-400' : 'text-ink-muted' },
+                    { label: 'MAE', value: mae != null ? `${mae.toFixed(0)} kW` : '—', cls: 'text-ink' },
+                    { label: 'MAPE', value: stats.mape != null ? `${stats.mape.toFixed(2)}%` : '—', cls: 'text-accent-amber', mono: true },
                   ].map((m, i) => (
                     <div key={m.label}>
                       {i > 0 && <div className="h-px bg-surface-border/20 mb-3" />}
