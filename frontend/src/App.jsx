@@ -90,13 +90,12 @@ function App() {
     setStreaming(true);
     setError(null);
     
-    // Don't reset forecast data if resuming
-    if (!cacheStatus?.can_resume) {
-      setForecastData(null);
-      setAllHistorical([]);
-      setPrevForecasts([]);
-      setProgress({ current: 0, total: 0 });
-    }
+    // Always clear so WebSocket replay is the sole source of truth
+    setForecastData(null);
+    forecastDataRef.current = null;
+    setAllHistorical([]);
+    setPrevForecasts([]);
+    setProgress({ current: 0, total: 0 });
     
     const ws = new WebSocket(`${WS_BASE}/ws/forecast/${horizon}`);
     wsRef.current = ws;

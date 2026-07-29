@@ -71,14 +71,27 @@ def save_cache(cache):
         json.dump(cache, f, indent=2)
 
 def save_forecast_to_cache(horizon: str, horizon_index: int, data: dict):
-    """Save forecast data to cache"""
+    """Save forecast data to cache by index (no duplicates)"""
     cache = load_cache()
     
     if horizon not in cache:
         cache[horizon] = {"forecasts": []}
     
-    cache[horizon]["forecasts"].append(data)
+    forecasts = cache[horizon]["forecasts"]
+    if horizon_index < len(forecasts):
+        forecasts[horizon_index] = data
+    else:
+        forecasts.append(data)
+    
     save_cache(cache)
+    
+    # Verify the save was written correctly
+    verify = load_cache()
+    v = verify.get(horizon, {}).get("forecasts", [])
+    saved = v[-1] if v else None
+    if saved is None or saved.get("horizon_index") != horizon_index:
+        print(f"⚠ WARNING: Cache verification failed for {horizon}[{horizon_index}], retrying...")
+        save_cache(cache)
     
     print(f"✓ Saved forecast {horizon}[{horizon_index}] to cache")
 
@@ -303,6 +316,14 @@ async def websocket_forecast(websocket: WebSocket, horizon: str):
                     **cached
                 })
                 await asyncio.sleep(0.02)
+        
+        # Safety check: verify the last cached horizon is not missing before advancing
+        if start_index > 0:
+            last_cached = cached_forecasts[-1]
+            if last_cached.get("horizon_index") != start_index - 1:
+                print(f"⚠ Last cached forecast index mismatch (expected {start_index - 1}, got {last_cached.get('horizon_index')}), adjusting...")
+                start_index = last_cached.get("horizon_index", -1) + 1
+                cached_forecasts = load_forecasts_from_cache(horizon)[:start_index]
         
         # Continue from where cache left off
         horizon_index = start_index

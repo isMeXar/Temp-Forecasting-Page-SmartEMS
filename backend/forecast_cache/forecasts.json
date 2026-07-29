@@ -17388,6 +17388,5802 @@
           "median_forecast": 31366.896239455324,
           "mape": 2.6861899440886003
         }
+      },
+      {
+        "horizon_index": 6,
+        "current_position": 43027,
+        "forecast_start": "2024-10-25 19:10:00",
+        "forecast_end": "2024-10-26 19:00:00",
+        "historical": [
+          {
+            "timestamp": "2024-10-22 19:10:00",
+            "actual": 27829.41992,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 19:20:00",
+            "actual": 27404.04102,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 19:30:00",
+            "actual": 29251.89063,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 19:40:00",
+            "actual": 26118.58008,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 19:50:00",
+            "actual": 24993.82422,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 20:00:00",
+            "actual": 23650.5293,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 20:10:00",
+            "actual": 24267.82617,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 20:20:00",
+            "actual": 24695.9375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 20:30:00",
+            "actual": 25043.43555,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 20:40:00",
+            "actual": 24277.41211,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 20:50:00",
+            "actual": 25523.01367,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 21:00:00",
+            "actual": 26342.68945,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 21:10:00",
+            "actual": 25517.33203,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 21:20:00",
+            "actual": 25195.17578,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 21:30:00",
+            "actual": 26903.72852,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 21:40:00",
+            "actual": 27820.74414,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 21:50:00",
+            "actual": 28145.03906,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 22:00:00",
+            "actual": 25424.7832,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 22:10:00",
+            "actual": 24994.01367,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 22:20:00",
+            "actual": 25544.83789,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 22:30:00",
+            "actual": 26524.43359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 22:40:00",
+            "actual": 25981.33203,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 22:50:00",
+            "actual": 25182.6543,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 23:00:00",
+            "actual": 23780.91992,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 23:10:00",
+            "actual": 21446.99023,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 23:20:00",
+            "actual": 18702.40234,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 23:30:00",
+            "actual": 19515.61328,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 23:40:00",
+            "actual": 19334.94531,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-22 23:50:00",
+            "actual": 20532.97461,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 00:00:00",
+            "actual": 22875.73047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 00:10:00",
+            "actual": 22440.7793,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 00:20:00",
+            "actual": 20490.25586,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 00:30:00",
+            "actual": 20213.10742,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 00:40:00",
+            "actual": 21522.37695,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 00:50:00",
+            "actual": 21420.23242,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 01:00:00",
+            "actual": 22538.17578,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 01:10:00",
+            "actual": 22943.69336,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 01:20:00",
+            "actual": 22400.8457,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 01:30:00",
+            "actual": 22196.80664,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 01:40:00",
+            "actual": 22469.0918,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 01:50:00",
+            "actual": 22064.82031,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 02:00:00",
+            "actual": 22480.79297,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 02:10:00",
+            "actual": 22786.81836,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 02:20:00",
+            "actual": 20522.43359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 02:30:00",
+            "actual": 20824.5625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 02:40:00",
+            "actual": 21385.0957,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 02:50:00",
+            "actual": 21637.50781,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 03:00:00",
+            "actual": 22165.30273,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 03:10:00",
+            "actual": 21150.05859,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 03:20:00",
+            "actual": 20694.31641,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 03:30:00",
+            "actual": 22026.75391,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 03:40:00",
+            "actual": 22628.39258,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 03:50:00",
+            "actual": 23300.03516,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 04:00:00",
+            "actual": 23515.99414,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 04:10:00",
+            "actual": 23724.99219,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 04:20:00",
+            "actual": 23418.07617,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 04:30:00",
+            "actual": 23764.84766,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 04:40:00",
+            "actual": 24237.81055,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 04:50:00",
+            "actual": 23149.20313,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 05:00:00",
+            "actual": 24014.0332,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 05:10:00",
+            "actual": 25059.94727,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 05:20:00",
+            "actual": 25370.66992,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 05:30:00",
+            "actual": 25760.125,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 05:40:00",
+            "actual": 24706.1543,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 05:50:00",
+            "actual": 22494.13086,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 06:00:00",
+            "actual": 21322.38086,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 06:10:00",
+            "actual": 22737.92383,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 06:20:00",
+            "actual": 23867.07422,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 06:30:00",
+            "actual": 21899.16992,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 06:40:00",
+            "actual": 19361.99023,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 06:50:00",
+            "actual": 18053.14063,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 07:00:00",
+            "actual": 17178.13867,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 07:10:00",
+            "actual": 17615.96094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 07:20:00",
+            "actual": 16765.48047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 07:30:00",
+            "actual": 16897.03906,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 07:40:00",
+            "actual": 16541.73047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 07:50:00",
+            "actual": 16665.50195,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 08:00:00",
+            "actual": 18229.19141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 08:10:00",
+            "actual": 19404.18359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 08:20:00",
+            "actual": 21479.10547,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 08:30:00",
+            "actual": 22769.5293,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 08:40:00",
+            "actual": 24642.62305,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 08:50:00",
+            "actual": 24430.80469,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 09:00:00",
+            "actual": 23006.0332,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 09:10:00",
+            "actual": 22326.05469,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 09:20:00",
+            "actual": 23799.43945,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 09:30:00",
+            "actual": 23621.76953,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 09:40:00",
+            "actual": 22947.625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 09:50:00",
+            "actual": 21139.54492,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 10:00:00",
+            "actual": 21661.57227,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 10:10:00",
+            "actual": 21042.70117,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 10:20:00",
+            "actual": 17053.26367,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 10:30:00",
+            "actual": 16486.2793,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 10:40:00",
+            "actual": 17523.60547,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 10:50:00",
+            "actual": 18489.00586,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 11:00:00",
+            "actual": 18719.2207,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 11:10:00",
+            "actual": 17982.66406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 11:20:00",
+            "actual": 19159.03711,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 11:30:00",
+            "actual": 19517.73828,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 11:40:00",
+            "actual": 19528.64063,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 11:50:00",
+            "actual": 19611.17578,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 12:00:00",
+            "actual": 21868.25195,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 12:10:00",
+            "actual": 22799.06055,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 12:20:00",
+            "actual": 22307.33594,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 12:30:00",
+            "actual": 23281.95117,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 12:40:00",
+            "actual": 23835.97852,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 12:50:00",
+            "actual": 22198.32617,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 13:00:00",
+            "actual": 22290.97461,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 13:10:00",
+            "actual": 24901.0625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 13:20:00",
+            "actual": 26674.92773,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 13:30:00",
+            "actual": 26404.38477,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 13:40:00",
+            "actual": 26895.95508,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 13:50:00",
+            "actual": 26584.4375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 14:00:00",
+            "actual": 26319.41406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 14:10:00",
+            "actual": 27743.875,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 14:20:00",
+            "actual": 27022.67188,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 14:30:00",
+            "actual": 23488.81836,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 14:40:00",
+            "actual": 24905.07031,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 14:50:00",
+            "actual": 28314.38086,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 15:00:00",
+            "actual": 29454.45313,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 15:10:00",
+            "actual": 29252.65039,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 15:20:00",
+            "actual": 26143.64258,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 15:30:00",
+            "actual": 21834.35938,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 15:40:00",
+            "actual": 24488.57227,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 15:50:00",
+            "actual": 26320.11719,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 16:00:00",
+            "actual": 19551.91406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 16:10:00",
+            "actual": 20591.61133,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 16:20:00",
+            "actual": 26913.29688,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 16:30:00",
+            "actual": 26370.13086,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 16:40:00",
+            "actual": 28219.12305,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 16:50:00",
+            "actual": 27337.56641,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 17:00:00",
+            "actual": 30273.27734,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 17:10:00",
+            "actual": 30294.42969,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 17:20:00",
+            "actual": 24268.29492,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 17:30:00",
+            "actual": 26233.36914,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 17:40:00",
+            "actual": 28007.15039,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 17:50:00",
+            "actual": 28054.5332,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 18:00:00",
+            "actual": 25244.29297,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 18:10:00",
+            "actual": 24123.4375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 18:20:00",
+            "actual": 29701.6543,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 18:30:00",
+            "actual": 30331.79297,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 18:40:00",
+            "actual": 31439.74414,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 18:50:00",
+            "actual": 27333.69141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 19:00:00",
+            "actual": 28385.95313,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 19:10:00",
+            "actual": 29768.5332,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 19:20:00",
+            "actual": 29519.58008,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 19:30:00",
+            "actual": 31000.19922,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 19:40:00",
+            "actual": 31240.70703,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 19:50:00",
+            "actual": 32857.26172,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 20:00:00",
+            "actual": 33294.04688,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 20:10:00",
+            "actual": 33308.71094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 20:20:00",
+            "actual": 32548.41406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 20:30:00",
+            "actual": 31310.48242,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 20:40:00",
+            "actual": 31852.15039,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 20:50:00",
+            "actual": 30336.93359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 21:00:00",
+            "actual": 31509.85742,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 21:10:00",
+            "actual": 28346.25,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 21:20:00",
+            "actual": 31331.66406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 21:30:00",
+            "actual": 33859.69531,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 21:40:00",
+            "actual": 34070.26563,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 21:50:00",
+            "actual": 33824.39844,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 22:00:00",
+            "actual": 34574.48438,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 22:10:00",
+            "actual": 33945.78516,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 22:20:00",
+            "actual": 31872.48242,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 22:30:00",
+            "actual": 31537.0293,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 22:40:00",
+            "actual": 30053.51953,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 22:50:00",
+            "actual": 27514.12695,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 23:00:00",
+            "actual": 27606.5957,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 23:10:00",
+            "actual": 26839.60742,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 23:20:00",
+            "actual": 26465.08594,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 23:30:00",
+            "actual": 26764.90625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 23:40:00",
+            "actual": 27725.6582,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 23:50:00",
+            "actual": 28355.36719,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 00:00:00",
+            "actual": 29452.83984,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 00:10:00",
+            "actual": 29974.83398,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 00:20:00",
+            "actual": 28647.89648,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 00:30:00",
+            "actual": 29740.95703,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 00:40:00",
+            "actual": 31387.91406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 00:50:00",
+            "actual": 31796.17969,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 01:00:00",
+            "actual": 30696.3125,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 01:10:00",
+            "actual": 31812.35352,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 01:20:00",
+            "actual": 33862.875,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 01:30:00",
+            "actual": 34976.92188,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 01:40:00",
+            "actual": 34613.94922,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 01:50:00",
+            "actual": 34873.28906,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 02:00:00",
+            "actual": 34661.48047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 02:10:00",
+            "actual": 35545.44531,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 02:20:00",
+            "actual": 35385.5,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 02:30:00",
+            "actual": 35872.22656,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 02:40:00",
+            "actual": 33907.30859,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 02:50:00",
+            "actual": 32308.90039,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 03:00:00",
+            "actual": 32546.1543,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 03:10:00",
+            "actual": 31378.88281,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 03:20:00",
+            "actual": 30367.37305,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 03:30:00",
+            "actual": 30939.38086,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 03:40:00",
+            "actual": 30440.55273,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 03:50:00",
+            "actual": 33049.37109,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 04:00:00",
+            "actual": 32867.28516,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 04:10:00",
+            "actual": 33583.07031,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 04:20:00",
+            "actual": 31496.49023,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 04:30:00",
+            "actual": 31719.23047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 04:40:00",
+            "actual": 32930.19141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 04:50:00",
+            "actual": 32220.4707,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 05:00:00",
+            "actual": 30823.14648,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 05:10:00",
+            "actual": 30976.4375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 05:20:00",
+            "actual": 32825.00781,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 05:30:00",
+            "actual": 32770.32813,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 05:40:00",
+            "actual": 32237.32617,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 05:50:00",
+            "actual": 31621.25586,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 06:00:00",
+            "actual": 29477.72266,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 06:10:00",
+            "actual": 29664.21289,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 06:20:00",
+            "actual": 31102.44727,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 06:30:00",
+            "actual": 30358.26367,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 06:40:00",
+            "actual": 31310.1875,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 06:50:00",
+            "actual": 30937.41016,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 07:00:00",
+            "actual": 29574.91016,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 07:10:00",
+            "actual": 27043.38477,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 07:20:00",
+            "actual": 23004.4375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 07:30:00",
+            "actual": 22599.59375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 07:40:00",
+            "actual": 23766.56445,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 07:50:00",
+            "actual": 24475.50391,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 08:00:00",
+            "actual": 25802.5293,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 08:10:00",
+            "actual": 25379.88281,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 08:20:00",
+            "actual": 26281.5,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 08:30:00",
+            "actual": 25891.39648,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 08:40:00",
+            "actual": 25990.7832,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 08:50:00",
+            "actual": 26380.33398,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 09:00:00",
+            "actual": 24867.11133,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 09:10:00",
+            "actual": 16735.45508,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 09:20:00",
+            "actual": 16918.19922,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 09:30:00",
+            "actual": 18219.94531,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 09:40:00",
+            "actual": 22166.14258,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 09:50:00",
+            "actual": 26686.8457,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 10:00:00",
+            "actual": 27010.5293,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 10:10:00",
+            "actual": 25483.39844,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 10:20:00",
+            "actual": 20006.54102,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 10:30:00",
+            "actual": 19165.57227,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 10:40:00",
+            "actual": 19094.70117,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 10:50:00",
+            "actual": 18759.61523,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 11:00:00",
+            "actual": 19361.88672,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 11:10:00",
+            "actual": 18897.86133,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 11:20:00",
+            "actual": 17861.29297,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 11:30:00",
+            "actual": 18290.42383,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 11:40:00",
+            "actual": 16085.83496,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 11:50:00",
+            "actual": 17111.70703,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 12:00:00",
+            "actual": 18752.49609,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 12:10:00",
+            "actual": 20376.0332,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 12:20:00",
+            "actual": 21055.19922,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 12:30:00",
+            "actual": 20296.25586,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 12:40:00",
+            "actual": 20429.10938,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 12:50:00",
+            "actual": 24706.77539,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 13:00:00",
+            "actual": 26685.57813,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 13:10:00",
+            "actual": 26669.59375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 13:20:00",
+            "actual": 21382.26758,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 13:30:00",
+            "actual": 21336.38086,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 13:40:00",
+            "actual": 23920.98633,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 13:50:00",
+            "actual": 24067.73242,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 14:00:00",
+            "actual": 23601.55664,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 14:10:00",
+            "actual": 19880.67383,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 14:20:00",
+            "actual": 18342.83984,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 14:30:00",
+            "actual": 19256.72461,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 14:40:00",
+            "actual": 19192.16406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 14:50:00",
+            "actual": 22910.95117,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 15:00:00",
+            "actual": 24019.5957,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 15:10:00",
+            "actual": 23666.06836,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 15:20:00",
+            "actual": 23298.10742,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 15:30:00",
+            "actual": 22838.46094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 15:40:00",
+            "actual": 23398.83984,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 15:50:00",
+            "actual": 21527.9082,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 16:00:00",
+            "actual": 23927.84961,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 16:10:00",
+            "actual": 26930.00586,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 16:20:00",
+            "actual": 28234.38672,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 16:30:00",
+            "actual": 25467.48047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 16:40:00",
+            "actual": 25653.91797,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 16:50:00",
+            "actual": 26187.05469,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 17:00:00",
+            "actual": 22880.26367,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 17:10:00",
+            "actual": 23050.78906,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 17:20:00",
+            "actual": 25744.00977,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 17:30:00",
+            "actual": 27108.95508,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 17:40:00",
+            "actual": 27947.49219,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 17:50:00",
+            "actual": 27649.20508,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 18:00:00",
+            "actual": 26789.35742,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 18:10:00",
+            "actual": 26930.34961,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 18:20:00",
+            "actual": 28586.08398,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 18:30:00",
+            "actual": 29452.81641,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 18:40:00",
+            "actual": 30031.96094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 18:50:00",
+            "actual": 30652.4668,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 19:00:00",
+            "actual": 31554.55078,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 19:10:00",
+            "actual": 30273.89063,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 19:20:00",
+            "actual": 33059.07422,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 19:30:00",
+            "actual": 33073.44141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 19:40:00",
+            "actual": 33461.27734,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 19:50:00",
+            "actual": 33033.62891,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 20:00:00",
+            "actual": 30867.7168,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 20:10:00",
+            "actual": 29416.16016,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 20:20:00",
+            "actual": 28981.24023,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 20:30:00",
+            "actual": 29839.26953,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 20:40:00",
+            "actual": 30506.55078,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 20:50:00",
+            "actual": 30533.05664,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 21:00:00",
+            "actual": 31316.17383,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 21:10:00",
+            "actual": 36169.98828,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 21:20:00",
+            "actual": 36426.6875,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 21:30:00",
+            "actual": 36070.42578,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 21:40:00",
+            "actual": 34742.69922,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 21:50:00",
+            "actual": 35589.22656,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 22:00:00",
+            "actual": 34819.71094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 22:10:00",
+            "actual": 35566.26172,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 22:20:00",
+            "actual": 35879.29688,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 22:30:00",
+            "actual": 35255.59375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 22:40:00",
+            "actual": 34133.19141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 22:50:00",
+            "actual": 31722.83984,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 23:00:00",
+            "actual": 32501.22656,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 23:10:00",
+            "actual": 30890.64258,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 23:20:00",
+            "actual": 28766.9707,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 23:30:00",
+            "actual": 27397.59961,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 23:40:00",
+            "actual": 28503.66406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 23:50:00",
+            "actual": 28254.14258,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 00:00:00",
+            "actual": 30176.06641,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 00:10:00",
+            "actual": 30282.66016,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 00:20:00",
+            "actual": 31999.7168,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 00:30:00",
+            "actual": 34370.02344,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 00:40:00",
+            "actual": 34294.98828,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 00:50:00",
+            "actual": 34841.68359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 01:00:00",
+            "actual": 34487.66406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 01:10:00",
+            "actual": 34799.92188,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 01:20:00",
+            "actual": 35350.24609,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 01:30:00",
+            "actual": 34014.46875,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 01:40:00",
+            "actual": 34853.45703,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 01:50:00",
+            "actual": 35892.90625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 02:00:00",
+            "actual": 34897.49609,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 02:10:00",
+            "actual": 34233.67188,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 02:20:00",
+            "actual": 32713.85352,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 02:30:00",
+            "actual": 32430.0625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 02:40:00",
+            "actual": 33545.68359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 02:50:00",
+            "actual": 33401.04297,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 03:00:00",
+            "actual": 33421.0625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 03:10:00",
+            "actual": 34491.00391,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 03:20:00",
+            "actual": 33661.67188,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 03:30:00",
+            "actual": 34372.98828,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 03:40:00",
+            "actual": 32250.48242,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 03:50:00",
+            "actual": 31899.94336,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 04:00:00",
+            "actual": 32925.23047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 04:10:00",
+            "actual": 34384.07813,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 04:20:00",
+            "actual": 34982.69141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 04:30:00",
+            "actual": 36025.32422,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 04:40:00",
+            "actual": 36006.54297,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 04:50:00",
+            "actual": 35687.99219,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 05:00:00",
+            "actual": 36536.94531,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 05:10:00",
+            "actual": 35905.92969,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 05:20:00",
+            "actual": 36114.65234,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 05:30:00",
+            "actual": 34212.60938,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 05:40:00",
+            "actual": 34839.66797,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 05:50:00",
+            "actual": 37613.30469,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 06:00:00",
+            "actual": 36588.67969,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 06:10:00",
+            "actual": 35903.59766,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 06:20:00",
+            "actual": 34182.96094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 06:30:00",
+            "actual": 31410.37305,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 06:40:00",
+            "actual": 32469.18359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 06:50:00",
+            "actual": 32033.05078,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 07:00:00",
+            "actual": 30225.10938,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 07:10:00",
+            "actual": 27618.03711,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 07:20:00",
+            "actual": 27774.81641,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 07:30:00",
+            "actual": 27134.31445,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 07:40:00",
+            "actual": 25911.13086,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 07:50:00",
+            "actual": 26111.97852,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 08:00:00",
+            "actual": 27488.4043,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 08:10:00",
+            "actual": 30239.09961,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 08:20:00",
+            "actual": 31053.75586,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 08:30:00",
+            "actual": 29255.05078,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 08:40:00",
+            "actual": 28074.9043,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 08:50:00",
+            "actual": 29594.14063,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 09:00:00",
+            "actual": 31127.89648,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 09:10:00",
+            "actual": 31033.97266,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 09:20:00",
+            "actual": 32288.85938,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 09:30:00",
+            "actual": 33232.93359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 09:40:00",
+            "actual": 33272.35938,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 09:50:00",
+            "actual": 32923.69141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 10:00:00",
+            "actual": 31537.02734,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 10:10:00",
+            "actual": 28037.75977,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 10:20:00",
+            "actual": 26871.36914,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 10:30:00",
+            "actual": 28659.21094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 10:40:00",
+            "actual": 29299.83398,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 10:50:00",
+            "actual": 27668.80859,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 11:00:00",
+            "actual": 27768.41016,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 11:10:00",
+            "actual": 27939.30469,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 11:20:00",
+            "actual": 27872.80273,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 11:30:00",
+            "actual": 27734.87695,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 11:40:00",
+            "actual": 27278.99805,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 11:50:00",
+            "actual": 28296.25977,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 12:00:00",
+            "actual": 28568.36328,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 12:10:00",
+            "actual": 28803.00391,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 12:20:00",
+            "actual": 28516.98047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 12:30:00",
+            "actual": 27008.51563,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 12:40:00",
+            "actual": 26815.49609,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 12:50:00",
+            "actual": 26750.92578,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 13:00:00",
+            "actual": 26612.03516,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 13:10:00",
+            "actual": 27295.07813,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 13:20:00",
+            "actual": 27105.0293,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 13:30:00",
+            "actual": 29422.10742,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 13:40:00",
+            "actual": 30457.08984,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 13:50:00",
+            "actual": 26350.4707,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 14:00:00",
+            "actual": 23398.27344,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 14:10:00",
+            "actual": 25801.35938,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 14:20:00",
+            "actual": 26939.33789,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 14:30:00",
+            "actual": 27878.38086,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 14:40:00",
+            "actual": 29796.07031,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 14:50:00",
+            "actual": 30182.61719,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 15:00:00",
+            "actual": 29558.48633,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 15:10:00",
+            "actual": 28482.88281,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 15:20:00",
+            "actual": 22143.66602,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 15:30:00",
+            "actual": 19528.01758,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 15:40:00",
+            "actual": 23623.21094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 15:50:00",
+            "actual": 26349.08203,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 16:00:00",
+            "actual": 27428.58594,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 16:10:00",
+            "actual": 29093.7207,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 16:20:00",
+            "actual": 30956.99414,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 16:30:00",
+            "actual": 32917.375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 16:40:00",
+            "actual": 32431.22266,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 16:50:00",
+            "actual": 31296.80273,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 17:00:00",
+            "actual": 31507.51758,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 17:10:00",
+            "actual": 33960.89844,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 17:20:00",
+            "actual": 33323.96875,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 17:30:00",
+            "actual": 31966.79688,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 17:40:00",
+            "actual": 32158.26953,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 17:50:00",
+            "actual": 32583.56641,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 18:00:00",
+            "actual": 30930.44922,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 18:10:00",
+            "actual": 33535.64453,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 18:20:00",
+            "actual": 33334.36328,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 18:30:00",
+            "actual": 32350.62695,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 18:40:00",
+            "actual": 28898.14258,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 18:50:00",
+            "actual": 28207.11914,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 19:00:00",
+            "actual": 33497.0625,
+            "forecasted": null
+          }
+        ],
+        "forecast": [
+          {
+            "timestamp": "2024-10-25 19:10:00",
+            "actual": null,
+            "forecasted": 33353.49077530548
+          },
+          {
+            "timestamp": "2024-10-25 19:20:00",
+            "actual": null,
+            "forecasted": 33729.127392059156
+          },
+          {
+            "timestamp": "2024-10-25 19:30:00",
+            "actual": null,
+            "forecasted": 34113.369604815074
+          },
+          {
+            "timestamp": "2024-10-25 19:40:00",
+            "actual": null,
+            "forecasted": 34579.32166698661
+          },
+          {
+            "timestamp": "2024-10-25 19:50:00",
+            "actual": null,
+            "forecasted": 34816.35052046342
+          },
+          {
+            "timestamp": "2024-10-25 20:00:00",
+            "actual": null,
+            "forecasted": 33521.76148597575
+          },
+          {
+            "timestamp": "2024-10-25 20:10:00",
+            "actual": null,
+            "forecasted": 33356.46573256596
+          },
+          {
+            "timestamp": "2024-10-25 20:20:00",
+            "actual": null,
+            "forecasted": 32969.38716288781
+          },
+          {
+            "timestamp": "2024-10-25 20:30:00",
+            "actual": null,
+            "forecasted": 33071.71133761337
+          },
+          {
+            "timestamp": "2024-10-25 20:40:00",
+            "actual": null,
+            "forecasted": 32818.08509363007
+          },
+          {
+            "timestamp": "2024-10-25 20:50:00",
+            "actual": null,
+            "forecasted": 31896.719545006756
+          },
+          {
+            "timestamp": "2024-10-25 21:00:00",
+            "actual": null,
+            "forecasted": 32543.921249524075
+          },
+          {
+            "timestamp": "2024-10-25 21:10:00",
+            "actual": null,
+            "forecasted": 33482.05248906463
+          },
+          {
+            "timestamp": "2024-10-25 21:20:00",
+            "actual": null,
+            "forecasted": 35170.840685608484
+          },
+          {
+            "timestamp": "2024-10-25 21:30:00",
+            "actual": null,
+            "forecasted": 35035.53458038942
+          },
+          {
+            "timestamp": "2024-10-25 21:40:00",
+            "actual": null,
+            "forecasted": 33533.656365005605
+          },
+          {
+            "timestamp": "2024-10-25 21:50:00",
+            "actual": null,
+            "forecasted": 33142.877661297156
+          },
+          {
+            "timestamp": "2024-10-25 22:00:00",
+            "actual": null,
+            "forecasted": 33917.57930198232
+          },
+          {
+            "timestamp": "2024-10-25 22:10:00",
+            "actual": null,
+            "forecasted": 32732.95478586672
+          },
+          {
+            "timestamp": "2024-10-25 22:20:00",
+            "actual": null,
+            "forecasted": 32269.628705103984
+          },
+          {
+            "timestamp": "2024-10-25 22:30:00",
+            "actual": null,
+            "forecasted": 31318.669509256382
+          },
+          {
+            "timestamp": "2024-10-25 22:40:00",
+            "actual": null,
+            "forecasted": 31174.0103562109
+          },
+          {
+            "timestamp": "2024-10-25 22:50:00",
+            "actual": null,
+            "forecasted": 32730.561455025716
+          },
+          {
+            "timestamp": "2024-10-25 23:00:00",
+            "actual": null,
+            "forecasted": 32116.02488022873
+          },
+          {
+            "timestamp": "2024-10-25 23:10:00",
+            "actual": null,
+            "forecasted": 32211.594763470217
+          },
+          {
+            "timestamp": "2024-10-25 23:20:00",
+            "actual": null,
+            "forecasted": 29781.762533383702
+          },
+          {
+            "timestamp": "2024-10-25 23:30:00",
+            "actual": null,
+            "forecasted": 29202.717545205116
+          },
+          {
+            "timestamp": "2024-10-25 23:40:00",
+            "actual": null,
+            "forecasted": 30670.96042850079
+          },
+          {
+            "timestamp": "2024-10-25 23:50:00",
+            "actual": null,
+            "forecasted": 31236.11815778706
+          },
+          {
+            "timestamp": "2024-10-26 00:00:00",
+            "actual": null,
+            "forecasted": 30935.4544240072
+          },
+          {
+            "timestamp": "2024-10-26 00:10:00",
+            "actual": null,
+            "forecasted": 32466.465935491804
+          },
+          {
+            "timestamp": "2024-10-26 00:20:00",
+            "actual": null,
+            "forecasted": 32897.18628667917
+          },
+          {
+            "timestamp": "2024-10-26 00:30:00",
+            "actual": null,
+            "forecasted": 33910.57255988213
+          },
+          {
+            "timestamp": "2024-10-26 00:40:00",
+            "actual": null,
+            "forecasted": 34730.28466041682
+          },
+          {
+            "timestamp": "2024-10-26 00:50:00",
+            "actual": null,
+            "forecasted": 35637.998075721654
+          },
+          {
+            "timestamp": "2024-10-26 01:00:00",
+            "actual": null,
+            "forecasted": 35495.509502973546
+          },
+          {
+            "timestamp": "2024-10-26 01:10:00",
+            "actual": null,
+            "forecasted": 33746.818735235465
+          },
+          {
+            "timestamp": "2024-10-26 01:20:00",
+            "actual": null,
+            "forecasted": 32801.67085357058
+          },
+          {
+            "timestamp": "2024-10-26 01:30:00",
+            "actual": null,
+            "forecasted": 33785.66395503852
+          },
+          {
+            "timestamp": "2024-10-26 01:40:00",
+            "actual": null,
+            "forecasted": 34523.49295573478
+          },
+          {
+            "timestamp": "2024-10-26 01:50:00",
+            "actual": null,
+            "forecasted": 35726.957217829404
+          },
+          {
+            "timestamp": "2024-10-26 02:00:00",
+            "actual": null,
+            "forecasted": 35276.47146840393
+          },
+          {
+            "timestamp": "2024-10-26 02:10:00",
+            "actual": null,
+            "forecasted": 35576.875326549554
+          },
+          {
+            "timestamp": "2024-10-26 02:20:00",
+            "actual": null,
+            "forecasted": 35410.359395161875
+          },
+          {
+            "timestamp": "2024-10-26 02:30:00",
+            "actual": null,
+            "forecasted": 35432.11469825642
+          },
+          {
+            "timestamp": "2024-10-26 02:40:00",
+            "actual": null,
+            "forecasted": 35956.45215291944
+          },
+          {
+            "timestamp": "2024-10-26 02:50:00",
+            "actual": null,
+            "forecasted": 35222.476736627985
+          },
+          {
+            "timestamp": "2024-10-26 03:00:00",
+            "actual": null,
+            "forecasted": 33571.90015834085
+          },
+          {
+            "timestamp": "2024-10-26 03:10:00",
+            "actual": null,
+            "forecasted": 33667.737342234694
+          },
+          {
+            "timestamp": "2024-10-26 03:20:00",
+            "actual": null,
+            "forecasted": 33710.71829713115
+          },
+          {
+            "timestamp": "2024-10-26 03:30:00",
+            "actual": null,
+            "forecasted": 33402.339969523564
+          },
+          {
+            "timestamp": "2024-10-26 03:40:00",
+            "actual": null,
+            "forecasted": 33102.634063081314
+          },
+          {
+            "timestamp": "2024-10-26 03:50:00",
+            "actual": null,
+            "forecasted": 32384.204159729197
+          },
+          {
+            "timestamp": "2024-10-26 04:00:00",
+            "actual": null,
+            "forecasted": 33488.30435432251
+          },
+          {
+            "timestamp": "2024-10-26 04:10:00",
+            "actual": null,
+            "forecasted": 33684.81240890696
+          },
+          {
+            "timestamp": "2024-10-26 04:20:00",
+            "actual": null,
+            "forecasted": 34275.13352460531
+          },
+          {
+            "timestamp": "2024-10-26 04:30:00",
+            "actual": null,
+            "forecasted": 33419.21703571261
+          },
+          {
+            "timestamp": "2024-10-26 04:40:00",
+            "actual": null,
+            "forecasted": 33590.2869782145
+          },
+          {
+            "timestamp": "2024-10-26 04:50:00",
+            "actual": null,
+            "forecasted": 33545.70716941599
+          },
+          {
+            "timestamp": "2024-10-26 05:00:00",
+            "actual": null,
+            "forecasted": 33771.44752034284
+          },
+          {
+            "timestamp": "2024-10-26 05:10:00",
+            "actual": null,
+            "forecasted": 33856.72385346257
+          },
+          {
+            "timestamp": "2024-10-26 05:20:00",
+            "actual": null,
+            "forecasted": 33571.50663238044
+          },
+          {
+            "timestamp": "2024-10-26 05:30:00",
+            "actual": null,
+            "forecasted": 33378.27548579339
+          },
+          {
+            "timestamp": "2024-10-26 05:40:00",
+            "actual": null,
+            "forecasted": 33741.843973094394
+          },
+          {
+            "timestamp": "2024-10-26 05:50:00",
+            "actual": null,
+            "forecasted": 33365.544054721904
+          },
+          {
+            "timestamp": "2024-10-26 06:00:00",
+            "actual": null,
+            "forecasted": 32004.842658884816
+          },
+          {
+            "timestamp": "2024-10-26 06:10:00",
+            "actual": null,
+            "forecasted": 32542.141720181076
+          },
+          {
+            "timestamp": "2024-10-26 06:20:00",
+            "actual": null,
+            "forecasted": 32347.131044251026
+          },
+          {
+            "timestamp": "2024-10-26 06:30:00",
+            "actual": null,
+            "forecasted": 32663.862517244735
+          },
+          {
+            "timestamp": "2024-10-26 06:40:00",
+            "actual": null,
+            "forecasted": 32298.922876597386
+          },
+          {
+            "timestamp": "2024-10-26 06:50:00",
+            "actual": null,
+            "forecasted": 31915.975092000557
+          },
+          {
+            "timestamp": "2024-10-26 07:00:00",
+            "actual": null,
+            "forecasted": 30419.554264935672
+          },
+          {
+            "timestamp": "2024-10-26 07:10:00",
+            "actual": null,
+            "forecasted": 28934.563015765056
+          },
+          {
+            "timestamp": "2024-10-26 07:20:00",
+            "actual": null,
+            "forecasted": 28885.00101980735
+          },
+          {
+            "timestamp": "2024-10-26 07:30:00",
+            "actual": null,
+            "forecasted": 28000.829861958184
+          },
+          {
+            "timestamp": "2024-10-26 07:40:00",
+            "actual": null,
+            "forecasted": 28413.514844129633
+          },
+          {
+            "timestamp": "2024-10-26 07:50:00",
+            "actual": null,
+            "forecasted": 28094.998891780837
+          },
+          {
+            "timestamp": "2024-10-26 08:00:00",
+            "actual": null,
+            "forecasted": 30049.595312038524
+          },
+          {
+            "timestamp": "2024-10-26 08:10:00",
+            "actual": null,
+            "forecasted": 31201.403723065327
+          },
+          {
+            "timestamp": "2024-10-26 08:20:00",
+            "actual": null,
+            "forecasted": 31740.67041416365
+          },
+          {
+            "timestamp": "2024-10-26 08:30:00",
+            "actual": null,
+            "forecasted": 32117.158432995206
+          },
+          {
+            "timestamp": "2024-10-26 08:40:00",
+            "actual": null,
+            "forecasted": 29372.319809125092
+          },
+          {
+            "timestamp": "2024-10-26 08:50:00",
+            "actual": null,
+            "forecasted": 28355.329927127405
+          },
+          {
+            "timestamp": "2024-10-26 09:00:00",
+            "actual": null,
+            "forecasted": 30910.63011342264
+          },
+          {
+            "timestamp": "2024-10-26 09:10:00",
+            "actual": null,
+            "forecasted": 31239.709391551583
+          },
+          {
+            "timestamp": "2024-10-26 09:20:00",
+            "actual": null,
+            "forecasted": 27483.895150361797
+          },
+          {
+            "timestamp": "2024-10-26 09:30:00",
+            "actual": null,
+            "forecasted": 26011.73433250427
+          },
+          {
+            "timestamp": "2024-10-26 09:40:00",
+            "actual": null,
+            "forecasted": 31208.073864344027
+          },
+          {
+            "timestamp": "2024-10-26 09:50:00",
+            "actual": null,
+            "forecasted": 31945.063837992613
+          },
+          {
+            "timestamp": "2024-10-26 10:00:00",
+            "actual": null,
+            "forecasted": 31997.78394165778
+          },
+          {
+            "timestamp": "2024-10-26 10:10:00",
+            "actual": null,
+            "forecasted": 31953.54568369284
+          },
+          {
+            "timestamp": "2024-10-26 10:20:00",
+            "actual": null,
+            "forecasted": 29895.414810755872
+          },
+          {
+            "timestamp": "2024-10-26 10:30:00",
+            "actual": null,
+            "forecasted": 29900.973674322464
+          },
+          {
+            "timestamp": "2024-10-26 10:40:00",
+            "actual": null,
+            "forecasted": 28980.687228332732
+          },
+          {
+            "timestamp": "2024-10-26 10:50:00",
+            "actual": null,
+            "forecasted": 27528.323983791845
+          },
+          {
+            "timestamp": "2024-10-26 11:00:00",
+            "actual": null,
+            "forecasted": 27857.26466158253
+          },
+          {
+            "timestamp": "2024-10-26 11:10:00",
+            "actual": null,
+            "forecasted": 27817.58536474388
+          },
+          {
+            "timestamp": "2024-10-26 11:20:00",
+            "actual": null,
+            "forecasted": 27860.855895347053
+          },
+          {
+            "timestamp": "2024-10-26 11:30:00",
+            "actual": null,
+            "forecasted": 27559.231859223546
+          },
+          {
+            "timestamp": "2024-10-26 11:40:00",
+            "actual": null,
+            "forecasted": 27730.106276248254
+          },
+          {
+            "timestamp": "2024-10-26 11:50:00",
+            "actual": null,
+            "forecasted": 27822.30025125072
+          },
+          {
+            "timestamp": "2024-10-26 12:00:00",
+            "actual": null,
+            "forecasted": 27996.81540216076
+          },
+          {
+            "timestamp": "2024-10-26 12:10:00",
+            "actual": null,
+            "forecasted": 29628.314633888993
+          },
+          {
+            "timestamp": "2024-10-26 12:20:00",
+            "actual": null,
+            "forecasted": 30050.77093990768
+          },
+          {
+            "timestamp": "2024-10-26 12:30:00",
+            "actual": null,
+            "forecasted": 29748.523202262008
+          },
+          {
+            "timestamp": "2024-10-26 12:40:00",
+            "actual": null,
+            "forecasted": 31264.048600952236
+          },
+          {
+            "timestamp": "2024-10-26 12:50:00",
+            "actual": null,
+            "forecasted": 30899.67821169416
+          },
+          {
+            "timestamp": "2024-10-26 13:00:00",
+            "actual": null,
+            "forecasted": 30478.137657910396
+          },
+          {
+            "timestamp": "2024-10-26 13:10:00",
+            "actual": null,
+            "forecasted": 30536.81510111465
+          },
+          {
+            "timestamp": "2024-10-26 13:20:00",
+            "actual": null,
+            "forecasted": 29242.045391186035
+          },
+          {
+            "timestamp": "2024-10-26 13:30:00",
+            "actual": null,
+            "forecasted": 30889.956387967726
+          },
+          {
+            "timestamp": "2024-10-26 13:40:00",
+            "actual": null,
+            "forecasted": 28763.04262216382
+          },
+          {
+            "timestamp": "2024-10-26 13:50:00",
+            "actual": null,
+            "forecasted": 28116.207218540465
+          },
+          {
+            "timestamp": "2024-10-26 14:00:00",
+            "actual": null,
+            "forecasted": 28093.90246410497
+          },
+          {
+            "timestamp": "2024-10-26 14:10:00",
+            "actual": null,
+            "forecasted": 27982.55689236239
+          },
+          {
+            "timestamp": "2024-10-26 14:20:00",
+            "actual": null,
+            "forecasted": 28770.3191399224
+          },
+          {
+            "timestamp": "2024-10-26 14:30:00",
+            "actual": null,
+            "forecasted": 30081.871865810528
+          },
+          {
+            "timestamp": "2024-10-26 14:40:00",
+            "actual": null,
+            "forecasted": 31372.27319007795
+          },
+          {
+            "timestamp": "2024-10-26 14:50:00",
+            "actual": null,
+            "forecasted": 28787.22095617185
+          },
+          {
+            "timestamp": "2024-10-26 15:00:00",
+            "actual": null,
+            "forecasted": 27547.777531268875
+          },
+          {
+            "timestamp": "2024-10-26 15:10:00",
+            "actual": null,
+            "forecasted": 27595.099646760074
+          },
+          {
+            "timestamp": "2024-10-26 15:20:00",
+            "actual": null,
+            "forecasted": 27381.04874936173
+          },
+          {
+            "timestamp": "2024-10-26 15:30:00",
+            "actual": null,
+            "forecasted": 26290.687313298316
+          },
+          {
+            "timestamp": "2024-10-26 15:40:00",
+            "actual": null,
+            "forecasted": 27138.854558278737
+          },
+          {
+            "timestamp": "2024-10-26 15:50:00",
+            "actual": null,
+            "forecasted": 28215.893036827027
+          },
+          {
+            "timestamp": "2024-10-26 16:00:00",
+            "actual": null,
+            "forecasted": 28454.61726944147
+          },
+          {
+            "timestamp": "2024-10-26 16:10:00",
+            "actual": null,
+            "forecasted": 31712.232594760204
+          },
+          {
+            "timestamp": "2024-10-26 16:20:00",
+            "actual": null,
+            "forecasted": 31557.901118109094
+          },
+          {
+            "timestamp": "2024-10-26 16:30:00",
+            "actual": null,
+            "forecasted": 32430.234322067343
+          },
+          {
+            "timestamp": "2024-10-26 16:40:00",
+            "actual": null,
+            "forecasted": 33688.888743855394
+          },
+          {
+            "timestamp": "2024-10-26 16:50:00",
+            "actual": null,
+            "forecasted": 33652.706630551744
+          },
+          {
+            "timestamp": "2024-10-26 17:00:00",
+            "actual": null,
+            "forecasted": 32020.47479703557
+          },
+          {
+            "timestamp": "2024-10-26 17:10:00",
+            "actual": null,
+            "forecasted": 29893.635281412873
+          },
+          {
+            "timestamp": "2024-10-26 17:20:00",
+            "actual": null,
+            "forecasted": 26141.56819936815
+          },
+          {
+            "timestamp": "2024-10-26 17:30:00",
+            "actual": null,
+            "forecasted": 25359.33511530225
+          },
+          {
+            "timestamp": "2024-10-26 17:40:00",
+            "actual": null,
+            "forecasted": 25119.17537918441
+          },
+          {
+            "timestamp": "2024-10-26 17:50:00",
+            "actual": null,
+            "forecasted": 25927.19060117248
+          },
+          {
+            "timestamp": "2024-10-26 18:00:00",
+            "actual": null,
+            "forecasted": 27179.306057001966
+          },
+          {
+            "timestamp": "2024-10-26 18:10:00",
+            "actual": null,
+            "forecasted": 28286.126283233603
+          },
+          {
+            "timestamp": "2024-10-26 18:20:00",
+            "actual": null,
+            "forecasted": 27897.773085444685
+          },
+          {
+            "timestamp": "2024-10-26 18:30:00",
+            "actual": null,
+            "forecasted": 28843.787219223697
+          },
+          {
+            "timestamp": "2024-10-26 18:40:00",
+            "actual": null,
+            "forecasted": 32747.81472213289
+          },
+          {
+            "timestamp": "2024-10-26 18:50:00",
+            "actual": null,
+            "forecasted": 32144.942850804004
+          },
+          {
+            "timestamp": "2024-10-26 19:00:00",
+            "actual": null,
+            "forecasted": 32181.81549079291
+          }
+        ],
+        "stats": {
+          "min_forecast": 25119.17537918441,
+          "max_forecast": 35956.45215291944,
+          "mean_forecast": 31324.519443845842,
+          "std_forecast": 2633.570886293538,
+          "median_forecast": 31949.304760842726,
+          "mape": 2.4844788168866683
+        }
+      },
+      {
+        "horizon_index": 7,
+        "current_position": 43171,
+        "forecast_start": "2024-10-26 19:10:00",
+        "forecast_end": "2024-10-27 19:00:00",
+        "historical": [
+          {
+            "timestamp": "2024-10-23 19:10:00",
+            "actual": 29768.5332,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 19:20:00",
+            "actual": 29519.58008,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 19:30:00",
+            "actual": 31000.19922,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 19:40:00",
+            "actual": 31240.70703,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 19:50:00",
+            "actual": 32857.26172,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 20:00:00",
+            "actual": 33294.04688,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 20:10:00",
+            "actual": 33308.71094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 20:20:00",
+            "actual": 32548.41406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 20:30:00",
+            "actual": 31310.48242,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 20:40:00",
+            "actual": 31852.15039,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 20:50:00",
+            "actual": 30336.93359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 21:00:00",
+            "actual": 31509.85742,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 21:10:00",
+            "actual": 28346.25,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 21:20:00",
+            "actual": 31331.66406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 21:30:00",
+            "actual": 33859.69531,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 21:40:00",
+            "actual": 34070.26563,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 21:50:00",
+            "actual": 33824.39844,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 22:00:00",
+            "actual": 34574.48438,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 22:10:00",
+            "actual": 33945.78516,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 22:20:00",
+            "actual": 31872.48242,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 22:30:00",
+            "actual": 31537.0293,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 22:40:00",
+            "actual": 30053.51953,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 22:50:00",
+            "actual": 27514.12695,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 23:00:00",
+            "actual": 27606.5957,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 23:10:00",
+            "actual": 26839.60742,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 23:20:00",
+            "actual": 26465.08594,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 23:30:00",
+            "actual": 26764.90625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 23:40:00",
+            "actual": 27725.6582,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-23 23:50:00",
+            "actual": 28355.36719,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 00:00:00",
+            "actual": 29452.83984,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 00:10:00",
+            "actual": 29974.83398,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 00:20:00",
+            "actual": 28647.89648,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 00:30:00",
+            "actual": 29740.95703,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 00:40:00",
+            "actual": 31387.91406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 00:50:00",
+            "actual": 31796.17969,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 01:00:00",
+            "actual": 30696.3125,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 01:10:00",
+            "actual": 31812.35352,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 01:20:00",
+            "actual": 33862.875,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 01:30:00",
+            "actual": 34976.92188,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 01:40:00",
+            "actual": 34613.94922,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 01:50:00",
+            "actual": 34873.28906,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 02:00:00",
+            "actual": 34661.48047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 02:10:00",
+            "actual": 35545.44531,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 02:20:00",
+            "actual": 35385.5,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 02:30:00",
+            "actual": 35872.22656,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 02:40:00",
+            "actual": 33907.30859,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 02:50:00",
+            "actual": 32308.90039,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 03:00:00",
+            "actual": 32546.1543,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 03:10:00",
+            "actual": 31378.88281,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 03:20:00",
+            "actual": 30367.37305,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 03:30:00",
+            "actual": 30939.38086,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 03:40:00",
+            "actual": 30440.55273,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 03:50:00",
+            "actual": 33049.37109,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 04:00:00",
+            "actual": 32867.28516,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 04:10:00",
+            "actual": 33583.07031,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 04:20:00",
+            "actual": 31496.49023,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 04:30:00",
+            "actual": 31719.23047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 04:40:00",
+            "actual": 32930.19141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 04:50:00",
+            "actual": 32220.4707,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 05:00:00",
+            "actual": 30823.14648,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 05:10:00",
+            "actual": 30976.4375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 05:20:00",
+            "actual": 32825.00781,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 05:30:00",
+            "actual": 32770.32813,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 05:40:00",
+            "actual": 32237.32617,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 05:50:00",
+            "actual": 31621.25586,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 06:00:00",
+            "actual": 29477.72266,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 06:10:00",
+            "actual": 29664.21289,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 06:20:00",
+            "actual": 31102.44727,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 06:30:00",
+            "actual": 30358.26367,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 06:40:00",
+            "actual": 31310.1875,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 06:50:00",
+            "actual": 30937.41016,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 07:00:00",
+            "actual": 29574.91016,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 07:10:00",
+            "actual": 27043.38477,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 07:20:00",
+            "actual": 23004.4375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 07:30:00",
+            "actual": 22599.59375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 07:40:00",
+            "actual": 23766.56445,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 07:50:00",
+            "actual": 24475.50391,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 08:00:00",
+            "actual": 25802.5293,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 08:10:00",
+            "actual": 25379.88281,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 08:20:00",
+            "actual": 26281.5,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 08:30:00",
+            "actual": 25891.39648,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 08:40:00",
+            "actual": 25990.7832,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 08:50:00",
+            "actual": 26380.33398,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 09:00:00",
+            "actual": 24867.11133,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 09:10:00",
+            "actual": 16735.45508,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 09:20:00",
+            "actual": 16918.19922,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 09:30:00",
+            "actual": 18219.94531,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 09:40:00",
+            "actual": 22166.14258,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 09:50:00",
+            "actual": 26686.8457,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 10:00:00",
+            "actual": 27010.5293,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 10:10:00",
+            "actual": 25483.39844,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 10:20:00",
+            "actual": 20006.54102,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 10:30:00",
+            "actual": 19165.57227,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 10:40:00",
+            "actual": 19094.70117,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 10:50:00",
+            "actual": 18759.61523,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 11:00:00",
+            "actual": 19361.88672,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 11:10:00",
+            "actual": 18897.86133,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 11:20:00",
+            "actual": 17861.29297,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 11:30:00",
+            "actual": 18290.42383,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 11:40:00",
+            "actual": 16085.83496,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 11:50:00",
+            "actual": 17111.70703,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 12:00:00",
+            "actual": 18752.49609,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 12:10:00",
+            "actual": 20376.0332,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 12:20:00",
+            "actual": 21055.19922,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 12:30:00",
+            "actual": 20296.25586,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 12:40:00",
+            "actual": 20429.10938,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 12:50:00",
+            "actual": 24706.77539,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 13:00:00",
+            "actual": 26685.57813,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 13:10:00",
+            "actual": 26669.59375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 13:20:00",
+            "actual": 21382.26758,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 13:30:00",
+            "actual": 21336.38086,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 13:40:00",
+            "actual": 23920.98633,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 13:50:00",
+            "actual": 24067.73242,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 14:00:00",
+            "actual": 23601.55664,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 14:10:00",
+            "actual": 19880.67383,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 14:20:00",
+            "actual": 18342.83984,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 14:30:00",
+            "actual": 19256.72461,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 14:40:00",
+            "actual": 19192.16406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 14:50:00",
+            "actual": 22910.95117,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 15:00:00",
+            "actual": 24019.5957,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 15:10:00",
+            "actual": 23666.06836,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 15:20:00",
+            "actual": 23298.10742,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 15:30:00",
+            "actual": 22838.46094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 15:40:00",
+            "actual": 23398.83984,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 15:50:00",
+            "actual": 21527.9082,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 16:00:00",
+            "actual": 23927.84961,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 16:10:00",
+            "actual": 26930.00586,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 16:20:00",
+            "actual": 28234.38672,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 16:30:00",
+            "actual": 25467.48047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 16:40:00",
+            "actual": 25653.91797,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 16:50:00",
+            "actual": 26187.05469,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 17:00:00",
+            "actual": 22880.26367,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 17:10:00",
+            "actual": 23050.78906,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 17:20:00",
+            "actual": 25744.00977,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 17:30:00",
+            "actual": 27108.95508,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 17:40:00",
+            "actual": 27947.49219,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 17:50:00",
+            "actual": 27649.20508,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 18:00:00",
+            "actual": 26789.35742,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 18:10:00",
+            "actual": 26930.34961,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 18:20:00",
+            "actual": 28586.08398,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 18:30:00",
+            "actual": 29452.81641,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 18:40:00",
+            "actual": 30031.96094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 18:50:00",
+            "actual": 30652.4668,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 19:00:00",
+            "actual": 31554.55078,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 19:10:00",
+            "actual": 30273.89063,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 19:20:00",
+            "actual": 33059.07422,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 19:30:00",
+            "actual": 33073.44141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 19:40:00",
+            "actual": 33461.27734,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 19:50:00",
+            "actual": 33033.62891,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 20:00:00",
+            "actual": 30867.7168,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 20:10:00",
+            "actual": 29416.16016,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 20:20:00",
+            "actual": 28981.24023,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 20:30:00",
+            "actual": 29839.26953,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 20:40:00",
+            "actual": 30506.55078,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 20:50:00",
+            "actual": 30533.05664,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 21:00:00",
+            "actual": 31316.17383,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 21:10:00",
+            "actual": 36169.98828,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 21:20:00",
+            "actual": 36426.6875,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 21:30:00",
+            "actual": 36070.42578,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 21:40:00",
+            "actual": 34742.69922,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 21:50:00",
+            "actual": 35589.22656,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 22:00:00",
+            "actual": 34819.71094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 22:10:00",
+            "actual": 35566.26172,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 22:20:00",
+            "actual": 35879.29688,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 22:30:00",
+            "actual": 35255.59375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 22:40:00",
+            "actual": 34133.19141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 22:50:00",
+            "actual": 31722.83984,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 23:00:00",
+            "actual": 32501.22656,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 23:10:00",
+            "actual": 30890.64258,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 23:20:00",
+            "actual": 28766.9707,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 23:30:00",
+            "actual": 27397.59961,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 23:40:00",
+            "actual": 28503.66406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-24 23:50:00",
+            "actual": 28254.14258,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 00:00:00",
+            "actual": 30176.06641,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 00:10:00",
+            "actual": 30282.66016,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 00:20:00",
+            "actual": 31999.7168,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 00:30:00",
+            "actual": 34370.02344,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 00:40:00",
+            "actual": 34294.98828,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 00:50:00",
+            "actual": 34841.68359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 01:00:00",
+            "actual": 34487.66406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 01:10:00",
+            "actual": 34799.92188,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 01:20:00",
+            "actual": 35350.24609,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 01:30:00",
+            "actual": 34014.46875,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 01:40:00",
+            "actual": 34853.45703,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 01:50:00",
+            "actual": 35892.90625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 02:00:00",
+            "actual": 34897.49609,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 02:10:00",
+            "actual": 34233.67188,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 02:20:00",
+            "actual": 32713.85352,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 02:30:00",
+            "actual": 32430.0625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 02:40:00",
+            "actual": 33545.68359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 02:50:00",
+            "actual": 33401.04297,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 03:00:00",
+            "actual": 33421.0625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 03:10:00",
+            "actual": 34491.00391,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 03:20:00",
+            "actual": 33661.67188,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 03:30:00",
+            "actual": 34372.98828,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 03:40:00",
+            "actual": 32250.48242,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 03:50:00",
+            "actual": 31899.94336,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 04:00:00",
+            "actual": 32925.23047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 04:10:00",
+            "actual": 34384.07813,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 04:20:00",
+            "actual": 34982.69141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 04:30:00",
+            "actual": 36025.32422,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 04:40:00",
+            "actual": 36006.54297,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 04:50:00",
+            "actual": 35687.99219,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 05:00:00",
+            "actual": 36536.94531,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 05:10:00",
+            "actual": 35905.92969,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 05:20:00",
+            "actual": 36114.65234,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 05:30:00",
+            "actual": 34212.60938,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 05:40:00",
+            "actual": 34839.66797,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 05:50:00",
+            "actual": 37613.30469,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 06:00:00",
+            "actual": 36588.67969,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 06:10:00",
+            "actual": 35903.59766,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 06:20:00",
+            "actual": 34182.96094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 06:30:00",
+            "actual": 31410.37305,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 06:40:00",
+            "actual": 32469.18359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 06:50:00",
+            "actual": 32033.05078,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 07:00:00",
+            "actual": 30225.10938,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 07:10:00",
+            "actual": 27618.03711,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 07:20:00",
+            "actual": 27774.81641,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 07:30:00",
+            "actual": 27134.31445,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 07:40:00",
+            "actual": 25911.13086,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 07:50:00",
+            "actual": 26111.97852,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 08:00:00",
+            "actual": 27488.4043,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 08:10:00",
+            "actual": 30239.09961,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 08:20:00",
+            "actual": 31053.75586,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 08:30:00",
+            "actual": 29255.05078,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 08:40:00",
+            "actual": 28074.9043,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 08:50:00",
+            "actual": 29594.14063,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 09:00:00",
+            "actual": 31127.89648,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 09:10:00",
+            "actual": 31033.97266,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 09:20:00",
+            "actual": 32288.85938,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 09:30:00",
+            "actual": 33232.93359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 09:40:00",
+            "actual": 33272.35938,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 09:50:00",
+            "actual": 32923.69141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 10:00:00",
+            "actual": 31537.02734,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 10:10:00",
+            "actual": 28037.75977,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 10:20:00",
+            "actual": 26871.36914,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 10:30:00",
+            "actual": 28659.21094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 10:40:00",
+            "actual": 29299.83398,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 10:50:00",
+            "actual": 27668.80859,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 11:00:00",
+            "actual": 27768.41016,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 11:10:00",
+            "actual": 27939.30469,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 11:20:00",
+            "actual": 27872.80273,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 11:30:00",
+            "actual": 27734.87695,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 11:40:00",
+            "actual": 27278.99805,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 11:50:00",
+            "actual": 28296.25977,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 12:00:00",
+            "actual": 28568.36328,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 12:10:00",
+            "actual": 28803.00391,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 12:20:00",
+            "actual": 28516.98047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 12:30:00",
+            "actual": 27008.51563,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 12:40:00",
+            "actual": 26815.49609,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 12:50:00",
+            "actual": 26750.92578,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 13:00:00",
+            "actual": 26612.03516,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 13:10:00",
+            "actual": 27295.07813,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 13:20:00",
+            "actual": 27105.0293,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 13:30:00",
+            "actual": 29422.10742,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 13:40:00",
+            "actual": 30457.08984,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 13:50:00",
+            "actual": 26350.4707,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 14:00:00",
+            "actual": 23398.27344,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 14:10:00",
+            "actual": 25801.35938,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 14:20:00",
+            "actual": 26939.33789,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 14:30:00",
+            "actual": 27878.38086,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 14:40:00",
+            "actual": 29796.07031,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 14:50:00",
+            "actual": 30182.61719,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 15:00:00",
+            "actual": 29558.48633,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 15:10:00",
+            "actual": 28482.88281,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 15:20:00",
+            "actual": 22143.66602,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 15:30:00",
+            "actual": 19528.01758,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 15:40:00",
+            "actual": 23623.21094,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 15:50:00",
+            "actual": 26349.08203,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 16:00:00",
+            "actual": 27428.58594,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 16:10:00",
+            "actual": 29093.7207,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 16:20:00",
+            "actual": 30956.99414,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 16:30:00",
+            "actual": 32917.375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 16:40:00",
+            "actual": 32431.22266,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 16:50:00",
+            "actual": 31296.80273,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 17:00:00",
+            "actual": 31507.51758,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 17:10:00",
+            "actual": 33960.89844,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 17:20:00",
+            "actual": 33323.96875,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 17:30:00",
+            "actual": 31966.79688,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 17:40:00",
+            "actual": 32158.26953,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 17:50:00",
+            "actual": 32583.56641,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 18:00:00",
+            "actual": 30930.44922,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 18:10:00",
+            "actual": 33535.64453,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 18:20:00",
+            "actual": 33334.36328,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 18:30:00",
+            "actual": 32350.62695,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 18:40:00",
+            "actual": 28898.14258,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 18:50:00",
+            "actual": 28207.11914,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 19:00:00",
+            "actual": 33497.0625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 19:10:00",
+            "actual": 33109.48438,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 19:20:00",
+            "actual": 33859.92969,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 19:30:00",
+            "actual": 34759.07422,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 19:40:00",
+            "actual": 35235.04688,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 19:50:00",
+            "actual": 33891.42969,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 20:00:00",
+            "actual": 34048.43359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 20:10:00",
+            "actual": 33060.39844,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 20:20:00",
+            "actual": 33156.48828,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 20:30:00",
+            "actual": 32500.83398,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 20:40:00",
+            "actual": 31566.61328,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 20:50:00",
+            "actual": 32153.92969,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 21:00:00",
+            "actual": 32971.46875,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 21:10:00",
+            "actual": 35202.53516,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 21:20:00",
+            "actual": 35508.16797,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 21:30:00",
+            "actual": 34104.40625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 21:40:00",
+            "actual": 33254.375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 21:50:00",
+            "actual": 34669.11328,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 22:00:00",
+            "actual": 32684.83008,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 22:10:00",
+            "actual": 32822.00781,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 22:20:00",
+            "actual": 31547.25586,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 22:30:00",
+            "actual": 31665.97266,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 22:40:00",
+            "actual": 33188.55859,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 22:50:00",
+            "actual": 32945.19141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 23:00:00",
+            "actual": 33266.05859,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 23:10:00",
+            "actual": 30495.84961,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 23:20:00",
+            "actual": 29207.39063,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 23:30:00",
+            "actual": 30174.43359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 23:40:00",
+            "actual": 31138.14648,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-25 23:50:00",
+            "actual": 30335.09961,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 00:00:00",
+            "actual": 31937.72656,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 00:10:00",
+            "actual": 31934.64648,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 00:20:00",
+            "actual": 33422.01172,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 00:30:00",
+            "actual": 34637.15625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 00:40:00",
+            "actual": 35344.20313,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 00:50:00",
+            "actual": 35470.69141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 01:00:00",
+            "actual": 34155.78516,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 01:10:00",
+            "actual": 32706.64063,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 01:20:00",
+            "actual": 33731.33594,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 01:30:00",
+            "actual": 34757.88281,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 01:40:00",
+            "actual": 35054.61328,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 01:50:00",
+            "actual": 35239.71875,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 02:00:00",
+            "actual": 35224.46875,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 02:10:00",
+            "actual": 35515.58203,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 02:20:00",
+            "actual": 35347.17969,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 02:30:00",
+            "actual": 35177.96484,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 02:40:00",
+            "actual": 35829.68359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 02:50:00",
+            "actual": 33661.73438,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 03:00:00",
+            "actual": 34306.21484,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 03:10:00",
+            "actual": 33734.73047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 03:20:00",
+            "actual": 33510.03906,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 03:30:00",
+            "actual": 33101.76563,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 03:40:00",
+            "actual": 31865.92383,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 03:50:00",
+            "actual": 33058.90234,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 04:00:00",
+            "actual": 33496.49219,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 04:10:00",
+            "actual": 34220.20703,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 04:20:00",
+            "actual": 33822.46484,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 04:30:00",
+            "actual": 33700.16016,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 04:40:00",
+            "actual": 33377.51563,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 04:50:00",
+            "actual": 33755.88281,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 05:00:00",
+            "actual": 34111.33984,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 05:10:00",
+            "actual": 33388.06641,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 05:20:00",
+            "actual": 33583.35547,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 05:30:00",
+            "actual": 34301.20703,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 05:40:00",
+            "actual": 33918.75781,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 05:50:00",
+            "actual": 32372.26953,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 06:00:00",
+            "actual": 33019.35156,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 06:10:00",
+            "actual": 32914.15625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 06:20:00",
+            "actual": 33203.19141,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 06:30:00",
+            "actual": 33202.49609,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 06:40:00",
+            "actual": 32574.38672,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 06:50:00",
+            "actual": 30822.32031,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 07:00:00",
+            "actual": 29843.19922,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 07:10:00",
+            "actual": 29707.03906,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 07:20:00",
+            "actual": 28891.44727,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 07:30:00",
+            "actual": 28308.69922,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 07:40:00",
+            "actual": 27467.24609,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 07:50:00",
+            "actual": 28344.13672,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 08:00:00",
+            "actual": 30782.89258,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 08:10:00",
+            "actual": 31637.14648,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 08:20:00",
+            "actual": 32901.63281,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 08:30:00",
+            "actual": 31618.15039,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 08:40:00",
+            "actual": 27100.0625,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 08:50:00",
+            "actual": 30497.78906,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 09:00:00",
+            "actual": 32204.52344,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 09:10:00",
+            "actual": 30940.40039,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 09:20:00",
+            "actual": 24919.31641,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 09:30:00",
+            "actual": 29908.27734,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 09:40:00",
+            "actual": 31350.2207,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 09:50:00",
+            "actual": 32550.3457,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 10:00:00",
+            "actual": 33411.18359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 10:10:00",
+            "actual": 30891.9668,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 10:20:00",
+            "actual": 30906.05664,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 10:30:00",
+            "actual": 30476.53906,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 10:40:00",
+            "actual": 28655.48633,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 10:50:00",
+            "actual": 27921.54297,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 11:00:00",
+            "actual": 27805.80273,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 11:10:00",
+            "actual": 27236.61914,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 11:20:00",
+            "actual": 27478.82813,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 11:30:00",
+            "actual": 27328.75391,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 11:40:00",
+            "actual": 27852.64258,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 11:50:00",
+            "actual": 27811.66797,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 12:00:00",
+            "actual": 29738.01758,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 12:10:00",
+            "actual": 30373.23633,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 12:20:00",
+            "actual": 29426.51758,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 12:30:00",
+            "actual": 31711.91016,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 12:40:00",
+            "actual": 30615.80078,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 12:50:00",
+            "actual": 30016.52344,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 13:00:00",
+            "actual": 31061.42969,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 13:10:00",
+            "actual": 29958.23047,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 13:20:00",
+            "actual": 31285.91992,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 13:30:00",
+            "actual": 30273.50586,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 13:40:00",
+            "actual": 28129.71289,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 13:50:00",
+            "actual": 28225.91406,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 14:00:00",
+            "actual": 27519.95508,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 14:10:00",
+            "actual": 28498.61328,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 14:20:00",
+            "actual": 29732.07031,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 14:30:00",
+            "actual": 31935.9668,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 14:40:00",
+            "actual": 30336.08398,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 14:50:00",
+            "actual": 28483.9043,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 15:00:00",
+            "actual": 28301.93359,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 15:10:00",
+            "actual": 28532.95703,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 15:20:00",
+            "actual": 26088.67969,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 15:30:00",
+            "actual": 26165.54297,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 15:40:00",
+            "actual": 27222.4375,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 15:50:00",
+            "actual": 26974.73828,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 16:00:00",
+            "actual": 30805.38281,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 16:10:00",
+            "actual": 31127.16602,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 16:20:00",
+            "actual": 32066.76367,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 16:30:00",
+            "actual": 33726.00391,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 16:40:00",
+            "actual": 34437.26953,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 16:50:00",
+            "actual": 34083.28516,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 17:00:00",
+            "actual": 31992.99609,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 17:10:00",
+            "actual": 29033.29688,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 17:20:00",
+            "actual": 25033.48438,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 17:30:00",
+            "actual": 25376.85938,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 17:40:00",
+            "actual": 23337.53906,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 17:50:00",
+            "actual": 26582.08789,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 18:00:00",
+            "actual": 28091.75,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 18:10:00",
+            "actual": 27580.57422,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 18:20:00",
+            "actual": 25716.75586,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 18:30:00",
+            "actual": 32678.58398,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 18:40:00",
+            "actual": 32293.88086,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 18:50:00",
+            "actual": 32002.51367,
+            "forecasted": null
+          },
+          {
+            "timestamp": "2024-10-26 19:00:00",
+            "actual": 33650.23828,
+            "forecasted": null
+          }
+        ],
+        "forecast": [
+          {
+            "timestamp": "2024-10-26 19:10:00",
+            "actual": null,
+            "forecasted": 32779.291848953864
+          },
+          {
+            "timestamp": "2024-10-26 19:20:00",
+            "actual": null,
+            "forecasted": 29860.99490175294
+          },
+          {
+            "timestamp": "2024-10-26 19:30:00",
+            "actual": null,
+            "forecasted": 29170.79244229084
+          },
+          {
+            "timestamp": "2024-10-26 19:40:00",
+            "actual": null,
+            "forecasted": 30516.539851632228
+          },
+          {
+            "timestamp": "2024-10-26 19:50:00",
+            "actual": null,
+            "forecasted": 29437.21941751475
+          },
+          {
+            "timestamp": "2024-10-26 20:00:00",
+            "actual": null,
+            "forecasted": 29545.822682564638
+          },
+          {
+            "timestamp": "2024-10-26 20:10:00",
+            "actual": null,
+            "forecasted": 30249.791125623076
+          },
+          {
+            "timestamp": "2024-10-26 20:20:00",
+            "actual": null,
+            "forecasted": 30212.76998527175
+          },
+          {
+            "timestamp": "2024-10-26 20:30:00",
+            "actual": null,
+            "forecasted": 26156.35636045915
+          },
+          {
+            "timestamp": "2024-10-26 20:40:00",
+            "actual": null,
+            "forecasted": 26666.450155360053
+          },
+          {
+            "timestamp": "2024-10-26 20:50:00",
+            "actual": null,
+            "forecasted": 28273.788378122536
+          },
+          {
+            "timestamp": "2024-10-26 21:00:00",
+            "actual": null,
+            "forecasted": 29993.80620088334
+          },
+          {
+            "timestamp": "2024-10-26 21:10:00",
+            "actual": null,
+            "forecasted": 32196.217550941616
+          },
+          {
+            "timestamp": "2024-10-26 21:20:00",
+            "actual": null,
+            "forecasted": 30163.245114404654
+          },
+          {
+            "timestamp": "2024-10-26 21:30:00",
+            "actual": null,
+            "forecasted": 30848.27481124245
+          },
+          {
+            "timestamp": "2024-10-26 21:40:00",
+            "actual": null,
+            "forecasted": 30315.17583519664
+          },
+          {
+            "timestamp": "2024-10-26 21:50:00",
+            "actual": null,
+            "forecasted": 30965.1965715939
+          },
+          {
+            "timestamp": "2024-10-26 22:00:00",
+            "actual": null,
+            "forecasted": 30744.75025858733
+          },
+          {
+            "timestamp": "2024-10-26 22:10:00",
+            "actual": null,
+            "forecasted": 28327.815284977
+          },
+          {
+            "timestamp": "2024-10-26 22:20:00",
+            "actual": null,
+            "forecasted": 27459.781166510817
+          },
+          {
+            "timestamp": "2024-10-26 22:30:00",
+            "actual": null,
+            "forecasted": 30121.80361326529
+          },
+          {
+            "timestamp": "2024-10-26 22:40:00",
+            "actual": null,
+            "forecasted": 29767.479273524932
+          },
+          {
+            "timestamp": "2024-10-26 22:50:00",
+            "actual": null,
+            "forecasted": 29032.172303983774
+          },
+          {
+            "timestamp": "2024-10-26 23:00:00",
+            "actual": null,
+            "forecasted": 29326.73762288025
+          },
+          {
+            "timestamp": "2024-10-26 23:10:00",
+            "actual": null,
+            "forecasted": 26858.70862457325
+          },
+          {
+            "timestamp": "2024-10-26 23:20:00",
+            "actual": null,
+            "forecasted": 26905.409513548326
+          },
+          {
+            "timestamp": "2024-10-26 23:30:00",
+            "actual": null,
+            "forecasted": 27804.138656926745
+          },
+          {
+            "timestamp": "2024-10-26 23:40:00",
+            "actual": null,
+            "forecasted": 28893.611565821677
+          },
+          {
+            "timestamp": "2024-10-26 23:50:00",
+            "actual": null,
+            "forecasted": 30736.77331411933
+          },
+          {
+            "timestamp": "2024-10-27 00:00:00",
+            "actual": null,
+            "forecasted": 31632.854201034592
+          },
+          {
+            "timestamp": "2024-10-27 00:10:00",
+            "actual": null,
+            "forecasted": 33779.96401612763
+          },
+          {
+            "timestamp": "2024-10-27 00:20:00",
+            "actual": null,
+            "forecasted": 34302.18781563221
+          },
+          {
+            "timestamp": "2024-10-27 00:30:00",
+            "actual": null,
+            "forecasted": 34598.510388817325
+          },
+          {
+            "timestamp": "2024-10-27 00:40:00",
+            "actual": null,
+            "forecasted": 34558.04404005785
+          },
+          {
+            "timestamp": "2024-10-27 00:50:00",
+            "actual": null,
+            "forecasted": 34355.190069985976
+          },
+          {
+            "timestamp": "2024-10-27 01:00:00",
+            "actual": null,
+            "forecasted": 34642.511046202395
+          },
+          {
+            "timestamp": "2024-10-27 01:10:00",
+            "actual": null,
+            "forecasted": 34249.9132130543
+          },
+          {
+            "timestamp": "2024-10-27 01:20:00",
+            "actual": null,
+            "forecasted": 33899.98695904762
+          },
+          {
+            "timestamp": "2024-10-27 01:30:00",
+            "actual": null,
+            "forecasted": 34465.694139674844
+          },
+          {
+            "timestamp": "2024-10-27 01:40:00",
+            "actual": null,
+            "forecasted": 34582.875775660534
+          },
+          {
+            "timestamp": "2024-10-27 01:50:00",
+            "actual": null,
+            "forecasted": 35104.62684901141
+          },
+          {
+            "timestamp": "2024-10-27 02:00:00",
+            "actual": null,
+            "forecasted": 33158.49989942375
+          },
+          {
+            "timestamp": "2024-10-27 02:10:00",
+            "actual": null,
+            "forecasted": 31246.810183881305
+          },
+          {
+            "timestamp": "2024-10-27 02:20:00",
+            "actual": null,
+            "forecasted": 32849.668645710786
+          },
+          {
+            "timestamp": "2024-10-27 02:30:00",
+            "actual": null,
+            "forecasted": 34302.92536743223
+          },
+          {
+            "timestamp": "2024-10-27 02:40:00",
+            "actual": null,
+            "forecasted": 32598.460482628892
+          },
+          {
+            "timestamp": "2024-10-27 02:50:00",
+            "actual": null,
+            "forecasted": 33150.71848043294
+          },
+          {
+            "timestamp": "2024-10-27 03:00:00",
+            "actual": null,
+            "forecasted": 32914.73902951722
+          },
+          {
+            "timestamp": "2024-10-27 03:10:00",
+            "actual": null,
+            "forecasted": 31307.9997582165
+          },
+          {
+            "timestamp": "2024-10-27 03:20:00",
+            "actual": null,
+            "forecasted": 30924.6609226653
+          },
+          {
+            "timestamp": "2024-10-27 03:30:00",
+            "actual": null,
+            "forecasted": 30589.042678577793
+          },
+          {
+            "timestamp": "2024-10-27 03:40:00",
+            "actual": null,
+            "forecasted": 26556.606912283958
+          },
+          {
+            "timestamp": "2024-10-27 03:50:00",
+            "actual": null,
+            "forecasted": 28198.55314450844
+          },
+          {
+            "timestamp": "2024-10-27 04:00:00",
+            "actual": null,
+            "forecasted": 31718.15775922077
+          },
+          {
+            "timestamp": "2024-10-27 04:10:00",
+            "actual": null,
+            "forecasted": 32099.729440459167
+          },
+          {
+            "timestamp": "2024-10-27 04:20:00",
+            "actual": null,
+            "forecasted": 32511.122469477563
+          },
+          {
+            "timestamp": "2024-10-27 04:30:00",
+            "actual": null,
+            "forecasted": 32886.48436056076
+          },
+          {
+            "timestamp": "2024-10-27 04:40:00",
+            "actual": null,
+            "forecasted": 32590.807763952176
+          },
+          {
+            "timestamp": "2024-10-27 04:50:00",
+            "actual": null,
+            "forecasted": 32009.359544908428
+          },
+          {
+            "timestamp": "2024-10-27 05:00:00",
+            "actual": null,
+            "forecasted": 32478.039063736407
+          },
+          {
+            "timestamp": "2024-10-27 05:10:00",
+            "actual": null,
+            "forecasted": 30458.86726088035
+          },
+          {
+            "timestamp": "2024-10-27 05:20:00",
+            "actual": null,
+            "forecasted": 30061.222890416015
+          },
+          {
+            "timestamp": "2024-10-27 05:30:00",
+            "actual": null,
+            "forecasted": 30907.95710689908
+          },
+          {
+            "timestamp": "2024-10-27 05:40:00",
+            "actual": null,
+            "forecasted": 30320.113472247107
+          },
+          {
+            "timestamp": "2024-10-27 05:50:00",
+            "actual": null,
+            "forecasted": 29669.751185016277
+          },
+          {
+            "timestamp": "2024-10-27 06:00:00",
+            "actual": null,
+            "forecasted": 29301.846487132603
+          },
+          {
+            "timestamp": "2024-10-27 06:10:00",
+            "actual": null,
+            "forecasted": 29662.868193218106
+          },
+          {
+            "timestamp": "2024-10-27 06:20:00",
+            "actual": null,
+            "forecasted": 30652.54390855466
+          },
+          {
+            "timestamp": "2024-10-27 06:30:00",
+            "actual": null,
+            "forecasted": 29034.253784063694
+          },
+          {
+            "timestamp": "2024-10-27 06:40:00",
+            "actual": null,
+            "forecasted": 29722.94896484723
+          },
+          {
+            "timestamp": "2024-10-27 06:50:00",
+            "actual": null,
+            "forecasted": 28524.951991095702
+          },
+          {
+            "timestamp": "2024-10-27 07:00:00",
+            "actual": null,
+            "forecasted": 25132.760687339807
+          },
+          {
+            "timestamp": "2024-10-27 07:10:00",
+            "actual": null,
+            "forecasted": 24346.631943766417
+          },
+          {
+            "timestamp": "2024-10-27 07:20:00",
+            "actual": null,
+            "forecasted": 24146.98558152282
+          },
+          {
+            "timestamp": "2024-10-27 07:30:00",
+            "actual": null,
+            "forecasted": 24027.695240390767
+          },
+          {
+            "timestamp": "2024-10-27 07:40:00",
+            "actual": null,
+            "forecasted": 23953.170333510247
+          },
+          {
+            "timestamp": "2024-10-27 07:50:00",
+            "actual": null,
+            "forecasted": 25571.73518367169
+          },
+          {
+            "timestamp": "2024-10-27 08:00:00",
+            "actual": null,
+            "forecasted": 27311.466429543758
+          },
+          {
+            "timestamp": "2024-10-27 08:10:00",
+            "actual": null,
+            "forecasted": 28668.046940323693
+          },
+          {
+            "timestamp": "2024-10-27 08:20:00",
+            "actual": null,
+            "forecasted": 30044.783900296112
+          },
+          {
+            "timestamp": "2024-10-27 08:30:00",
+            "actual": null,
+            "forecasted": 29585.138153515352
+          },
+          {
+            "timestamp": "2024-10-27 08:40:00",
+            "actual": null,
+            "forecasted": 30230.392028278933
+          },
+          {
+            "timestamp": "2024-10-27 08:50:00",
+            "actual": null,
+            "forecasted": 30863.2931478952
+          },
+          {
+            "timestamp": "2024-10-27 09:00:00",
+            "actual": null,
+            "forecasted": 31189.15739317775
+          },
+          {
+            "timestamp": "2024-10-27 09:10:00",
+            "actual": null,
+            "forecasted": 30698.3958704579
+          },
+          {
+            "timestamp": "2024-10-27 09:20:00",
+            "actual": null,
+            "forecasted": 30427.79108503791
+          },
+          {
+            "timestamp": "2024-10-27 09:30:00",
+            "actual": null,
+            "forecasted": 30043.36077182292
+          },
+          {
+            "timestamp": "2024-10-27 09:40:00",
+            "actual": null,
+            "forecasted": 31254.4554775399
+          },
+          {
+            "timestamp": "2024-10-27 09:50:00",
+            "actual": null,
+            "forecasted": 33242.125403514576
+          },
+          {
+            "timestamp": "2024-10-27 10:00:00",
+            "actual": null,
+            "forecasted": 31313.77642231464
+          },
+          {
+            "timestamp": "2024-10-27 10:10:00",
+            "actual": null,
+            "forecasted": 30091.249663697356
+          },
+          {
+            "timestamp": "2024-10-27 10:20:00",
+            "actual": null,
+            "forecasted": 29128.007012871574
+          },
+          {
+            "timestamp": "2024-10-27 10:30:00",
+            "actual": null,
+            "forecasted": 28063.402964669924
+          },
+          {
+            "timestamp": "2024-10-27 10:40:00",
+            "actual": null,
+            "forecasted": 25765.525681623858
+          },
+          {
+            "timestamp": "2024-10-27 10:50:00",
+            "actual": null,
+            "forecasted": 22846.780758329627
+          },
+          {
+            "timestamp": "2024-10-27 11:00:00",
+            "actual": null,
+            "forecasted": 27429.383142323426
+          },
+          {
+            "timestamp": "2024-10-27 11:10:00",
+            "actual": null,
+            "forecasted": 28681.525823219356
+          },
+          {
+            "timestamp": "2024-10-27 11:20:00",
+            "actual": null,
+            "forecasted": 27507.026556814766
+          },
+          {
+            "timestamp": "2024-10-27 11:30:00",
+            "actual": null,
+            "forecasted": 28544.200113071383
+          },
+          {
+            "timestamp": "2024-10-27 11:40:00",
+            "actual": null,
+            "forecasted": 29943.60070335515
+          },
+          {
+            "timestamp": "2024-10-27 11:50:00",
+            "actual": null,
+            "forecasted": 29974.535803853294
+          },
+          {
+            "timestamp": "2024-10-27 12:00:00",
+            "actual": null,
+            "forecasted": 30458.302959503155
+          },
+          {
+            "timestamp": "2024-10-27 12:10:00",
+            "actual": null,
+            "forecasted": 29895.602911214937
+          },
+          {
+            "timestamp": "2024-10-27 12:20:00",
+            "actual": null,
+            "forecasted": 28911.245983859062
+          },
+          {
+            "timestamp": "2024-10-27 12:30:00",
+            "actual": null,
+            "forecasted": 30319.84864660079
+          },
+          {
+            "timestamp": "2024-10-27 12:40:00",
+            "actual": null,
+            "forecasted": 30512.936242837503
+          },
+          {
+            "timestamp": "2024-10-27 12:50:00",
+            "actual": null,
+            "forecasted": 27427.479862678407
+          },
+          {
+            "timestamp": "2024-10-27 13:00:00",
+            "actual": null,
+            "forecasted": 23524.45473721555
+          },
+          {
+            "timestamp": "2024-10-27 13:10:00",
+            "actual": null,
+            "forecasted": 23047.18694742761
+          },
+          {
+            "timestamp": "2024-10-27 13:20:00",
+            "actual": null,
+            "forecasted": 21905.986412289683
+          },
+          {
+            "timestamp": "2024-10-27 13:30:00",
+            "actual": null,
+            "forecasted": 24465.360458527313
+          },
+          {
+            "timestamp": "2024-10-27 13:40:00",
+            "actual": null,
+            "forecasted": 28219.335770229132
+          },
+          {
+            "timestamp": "2024-10-27 13:50:00",
+            "actual": null,
+            "forecasted": 29130.93247001125
+          },
+          {
+            "timestamp": "2024-10-27 14:00:00",
+            "actual": null,
+            "forecasted": 29146.24038237072
+          },
+          {
+            "timestamp": "2024-10-27 14:10:00",
+            "actual": null,
+            "forecasted": 30293.910583298082
+          },
+          {
+            "timestamp": "2024-10-27 14:20:00",
+            "actual": null,
+            "forecasted": 29749.458754545256
+          },
+          {
+            "timestamp": "2024-10-27 14:30:00",
+            "actual": null,
+            "forecasted": 29455.885913070953
+          },
+          {
+            "timestamp": "2024-10-27 14:40:00",
+            "actual": null,
+            "forecasted": 28594.014559645202
+          },
+          {
+            "timestamp": "2024-10-27 14:50:00",
+            "actual": null,
+            "forecasted": 23659.515816836618
+          },
+          {
+            "timestamp": "2024-10-27 15:00:00",
+            "actual": null,
+            "forecasted": 17929.969646188296
+          },
+          {
+            "timestamp": "2024-10-27 15:10:00",
+            "actual": null,
+            "forecasted": 19853.024589467954
+          },
+          {
+            "timestamp": "2024-10-27 15:20:00",
+            "actual": null,
+            "forecasted": 24351.215654953117
+          },
+          {
+            "timestamp": "2024-10-27 15:30:00",
+            "actual": null,
+            "forecasted": 25328.612865323572
+          },
+          {
+            "timestamp": "2024-10-27 15:40:00",
+            "actual": null,
+            "forecasted": 26823.29871315418
+          },
+          {
+            "timestamp": "2024-10-27 15:50:00",
+            "actual": null,
+            "forecasted": 25916.070399033255
+          },
+          {
+            "timestamp": "2024-10-27 16:00:00",
+            "actual": null,
+            "forecasted": 25956.412997490712
+          },
+          {
+            "timestamp": "2024-10-27 16:10:00",
+            "actual": null,
+            "forecasted": 26510.131248858554
+          },
+          {
+            "timestamp": "2024-10-27 16:20:00",
+            "actual": null,
+            "forecasted": 24623.35246911208
+          },
+          {
+            "timestamp": "2024-10-27 16:30:00",
+            "actual": null,
+            "forecasted": 25385.421678967374
+          },
+          {
+            "timestamp": "2024-10-27 16:40:00",
+            "actual": null,
+            "forecasted": 26379.549930170495
+          },
+          {
+            "timestamp": "2024-10-27 16:50:00",
+            "actual": null,
+            "forecasted": 26085.397937282756
+          },
+          {
+            "timestamp": "2024-10-27 17:00:00",
+            "actual": null,
+            "forecasted": 24962.059520737923
+          },
+          {
+            "timestamp": "2024-10-27 17:10:00",
+            "actual": null,
+            "forecasted": 24263.382640593718
+          },
+          {
+            "timestamp": "2024-10-27 17:20:00",
+            "actual": null,
+            "forecasted": 25300.311171252346
+          },
+          {
+            "timestamp": "2024-10-27 17:30:00",
+            "actual": null,
+            "forecasted": 30903.72237156407
+          },
+          {
+            "timestamp": "2024-10-27 17:40:00",
+            "actual": null,
+            "forecasted": 30642.6488344054
+          },
+          {
+            "timestamp": "2024-10-27 17:50:00",
+            "actual": null,
+            "forecasted": 31528.928697400937
+          },
+          {
+            "timestamp": "2024-10-27 18:00:00",
+            "actual": null,
+            "forecasted": 32180.41711238012
+          },
+          {
+            "timestamp": "2024-10-27 18:10:00",
+            "actual": null,
+            "forecasted": 32353.556159931733
+          },
+          {
+            "timestamp": "2024-10-27 18:20:00",
+            "actual": null,
+            "forecasted": 34092.78497957761
+          },
+          {
+            "timestamp": "2024-10-27 18:30:00",
+            "actual": null,
+            "forecasted": 33869.316684195794
+          },
+          {
+            "timestamp": "2024-10-27 18:40:00",
+            "actual": null,
+            "forecasted": 32903.160951260536
+          },
+          {
+            "timestamp": "2024-10-27 18:50:00",
+            "actual": null,
+            "forecasted": 33397.194431965705
+          },
+          {
+            "timestamp": "2024-10-27 19:00:00",
+            "actual": null,
+            "forecasted": 33271.78835090799
+          }
+        ],
+        "stats": {
+          "min_forecast": 17929.969646188296,
+          "max_forecast": 35104.62684901141,
+          "mean_forecast": 29440.75565114505,
+          "std_forecast": 3242.4063589850666,
+          "median_forecast": 29984.17100236832,
+          "mape": 3.5404627013659
+        }
       }
     ]
   }
