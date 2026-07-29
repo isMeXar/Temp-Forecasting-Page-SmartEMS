@@ -1,137 +1,101 @@
-# SmartEMS Forecasting Platform - Frontend
+# SmartEMS Forecasting Platform — Frontend
 
-A modern, professional energy forecasting web application built with React, Vite, and Tailwind CSS.
-
-## Features
-
-- 🎨 **Modern Green-Themed UI** - Professional SaaS-style interface
-- 📊 **Interactive Visualizations** - Recharts for time-series forecasting
-- 🔄 **Multiple Forecast Horizons** - 1 hour to 1 month ahead predictions
-- 📱 **Responsive Design** - Optimized for desktop and tablet
-- ⚡ **Fast Performance** - Built with Vite for lightning-fast dev experience
-- 🎭 **Smooth Animations** - Professional transitions and effects
-- 📈 **Real-time Metrics** - KPI cards with live updates
+React 19 + Vite + TailwindCSS 3 dashboard for real-time energy forecasting visualization. Communicates with the FastAPI backend via WebSocket for streaming predictions and REST for cache/health.
 
 ## Tech Stack
 
-- **React 19** - Latest React with hooks
-- **Vite** - Next-generation frontend tooling
-- **Tailwind CSS** - Utility-first CSS framework
-- **Recharts** - Composable charting library
-- **Lucide React** - Beautiful icon set
-
-## Getting Started
-
-### Prerequisites
-- Node.js 18+ and npm
-
-### Installation
-
-```bash
-cd frontend
-npm install
-```
-
-### Development
-
-```bash
-npm run dev
-```
-
-The app will be available at `http://localhost:5173`
-
-### Build for Production
-
-```bash
-npm run build
-npm run preview
-```
+- **React 19** — Latest with hooks, concurrent rendering
+- **Vite 6** — Fast dev server and rolldown-based build
+- **TailwindCSS 3** — Utility-first CSS with custom theme (surface/ink/accent colors)
+- **ECharts** (`echarts-for-react`) — High-performance time-series charts with zoom, slider, tooltip
+- **Lucide React** — Consistent icon library
 
 ## Project Structure
 
 ```
 frontend/
 ├── src/
+│   ├── App.jsx                         # Root: header + global stats + ForecastSite × N
+│   ├── main.jsx                        # Entry point
+│   ├── index.css                       # Tailwind directives + custom utilities
 │   ├── components/
-│   │   ├── Header.jsx              # Platform header with status
-│   │   ├── MetricCard.jsx          # Reusable KPI card
-│   │   ├── HorizonSelector.jsx     # Forecast horizon selector
-│   │   ├── ForecastChart.jsx       # Interactive time-series chart
-│   │   ├── ForecastSection.jsx     # Collapsible forecast section
-│   │   └── LoadingSkeleton.jsx     # Loading placeholder
-│   ├── utils/
-│   │   └── mockData.js             # Mock data generation
-│   ├── App.jsx                     # Main app component
-│   ├── main.jsx                    # App entry point
-│   └── index.css                   # Global styles
-├── public/                          # Static assets
+│   │   ├── ForecastSite.jsx            # ** Per-site container **
+│   │   │                                # Manages WebSocket, cache loading, chartData merge,
+│   │   │                                #   metrics computation (MAE, trend), collapsible UI
+│   │   ├── ForecastChart.jsx           # ** ECharts wrapper **
+│   │   │                                # Zoom logic, toolbar (horizon selector, date filter,
+│   │   │                                #   start/stop/clear, PNG export, reset view), responsive
+│   │   ├── GlobalStats.jsx             # System stat cards (models, sites, posts, processes, status)
+│   │   ├── Header.jsx                  # App header + live badges + dark/light toggle
+│   │   ├── HorizonSelector.jsx         # Horizon button group (1H/1D/3D/1W/1M)
+│   │   └── ErrorBoundary.jsx           # Catches render errors per site
+│   └── context/
+│       └── ThemeContext.jsx             # Dark mode provider, toggles `dark` class on <html>
+├── tailwind.config.js                  # Custom colors, shadows, fonts
+├── vite.config.js
 └── package.json
 ```
 
-## Features Overview
+## Component Architecture
 
-### Collapsible Forecast Sections
-Each energy site has its own collapsible section with:
-- Site name, location, and capacity
-- Status indicator
-- Expandable content with smooth animations
-
-### Forecast Horizons
-Switch between different prediction timeframes:
-- 1 Hour Ahead
-- 1 Day Ahead (default)
-- 3 Days Ahead
-- 1 Week Ahead
-- 1 Month Ahead
-
-### Interactive Charts
-- Historical vs. forecasted data visualization
-- Zoom and pan capabilities
-- Hover tooltips with detailed information
-- Responsive design
-
-### KPI Metrics
-- Current Consumption
-- Forecasted Average
-- Forecast Accuracy
-- Data Points
-
-## Mock Data
-The application uses realistic synthetic energy data with:
-- Daily seasonality (higher during business hours)
-- Weekly patterns (lower on weekends)
-- Random variations for realism
-- Separate datasets for each forecast horizon
-
-## Future Integration
-This frontend is designed to integrate with the FastAPI backend. To connect:
-
-1. Update API endpoint in components
-2. Replace mock data with actual API calls
-3. Add authentication if required
-4. Implement error handling for API failures
-
-## Customization
-
-### Colors
-Edit `tailwind.config.js` to customize the green theme:
-
-```js
-colors: {
-  primary: {
-    // Your custom green shades
-  }
-}
+### App.jsx
+```
+<Header />
+<GlobalStats />           ← fetches /api/health every 15s
+<ForecastSite site="ft" label="Foum Tizi" … />
+<ForecastSite site="of" label="Oulad Fares" … />
+<footer />
 ```
 
-### Sites
-Edit `src/utils/mockData.js` to add/remove energy sites:
+### ForecastSite — State & Data Flow
 
-```js
-export const sites = [
-  // Add your sites here
-];
+```
+User clicks Start
+  └─► WebSocket connects to /ws/forecast/{site}/{horizon}
+       ├─ "init" message → sets progress.total
+       ├─ "horizon_update" messages (one per horizon window) →
+       │     setForecastData(newData)         ← latest window
+       │     setAllHistorical(prev + new)     ← cumulative actuals
+       │     setPrevForecasts(prev + old)     ← previous window forecasts
+       └─ "complete" → streaming done
+
+chartData computed from:
+  allHistorical (actuals) + prevForecasts (earlier forecasts) + forecastData.forecast (latest)
+
+Metrics computed from chartData:
+  MAE        ← |actual - prevForecast| averaged over overlapping points
+  Trend      ← first-half vs second-half average of forecasted values (>1% diff)
 ```
 
-## License
-Proprietary - SmartEMS Platform
+### ForecastChart — Zoom Logic
+
+- On first load / horizon change: `zoomRef` sets default view = forecast start − 2×horizon to forecast end
+- On new data arriving (auto-tracking): same default recomputed, updates `zoomRef` — *unless* user has interacted
+- On user zoom/pan: `interacted = true` flag set, auto-tracking stops
+- Reset button: clears `interacted`, calls `getDefaultZoom()`, forces re-render via `zoomEpoch` state
+- Date range filter: sets absolute `startValue/endValue`, sets `interacted = true`
+- Slider is hidden on mobile (`< 768px`)
+
+### Responsive Breakpoints
+
+| Breakpoint | Layout |
+|------------|--------|
+| `< 768px`  | Chart + metrics stack vertically, slider hidden, smaller fonts/tighter margins |
+| `≥ 768px`  | 80/20 horizontal split, slider visible |
+| `≥ 1024px` | Global stats in 4 columns, info grid in 6 columns |
+
+## Development
+
+```bash
+npm install
+npm run dev       # → http://localhost:5173
+npm run build     # Production build to dist/
+npm run preview   # Preview production build
+```
+
+## Configuration
+
+- **Backend URL**: Update `WS_BASE` and `API_BASE` in `ForecastSite.jsx` and `GlobalStats.jsx` (default `localhost:8001`)
+- **Accent colors**: Defined per-site via `accent` prop (`"cyan"`, `"emerald"`, etc.) mapped in `ForecastChart.jsx`
+- **Horizons**: Defined in `HorizonSelector.jsx` and `ForecastChart.jsx` (steps, axis interval, window size)
+- **New site**: Add a `<ForecastSite>` in `App.jsx` + add config in `backend/SITES_CONFIG`

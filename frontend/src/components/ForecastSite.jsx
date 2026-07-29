@@ -6,25 +6,36 @@ import { TrendingUp, PlayCircle, ChevronDown, ChevronRight } from 'lucide-react'
 
 const WS_BASE = 'ws://localhost:8001';
 
+/**
+ * ForecastSite — Self-contained forecasting widget for one energy site.
+ *
+ * Manages:
+ *  - WebSocket connection for streaming horizon-by-horizon forecasts
+ *  - Cache loading/resume via REST endpoints
+ *  - Merged chartData (actuals + previous forecasts + current forecast)
+ *  - Derived metrics (MAE, trend direction, data interval)
+ *  - Collapsible container + info section
+ */
 const ForecastSite = ({ site, label, modelName = 'XGBoost', accent = 'cyan' }) => {
   const [open, setOpen] = useState(true);
   const [horizon, setHorizon] = useState('1d');
   const [loading, setLoading] = useState(false);
   const [streaming, setStreaming] = useState(false);
-  const [forecastData, setForecastData] = useState(null);
-  const [allHistorical, setAllHistorical] = useState([]);
-  const [prevForecasts, setPrevForecasts] = useState([]);
+  const [forecastData, setForecastData] = useState(null);  // latest horizon window
+  const [allHistorical, setAllHistorical] = useState([]);   // cumulative actuals
+  const [prevForecasts, setPrevForecasts] = useState([]);   // prior horizon windows
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState({ current: 0, total: 0 });
   const [cacheStatus, setCacheStatus] = useState(null);
   const wsRef = useRef(null);
   const forecastDataRef = useRef(null);
 
+  // Keep a ref in sync so the WS message handler always reads the latest value
   useEffect(() => {
     forecastDataRef.current = forecastData;
   }, [forecastData]);
 
-  // Check cache status
+  // Poll cache status whenever site or horizon changes
   useEffect(() => {
     const check = async () => {
       try {
@@ -36,7 +47,7 @@ const ForecastSite = ({ site, label, modelName = 'XGBoost', accent = 'cyan' }) =
     check();
   }, [site, horizon]);
 
-  // Load cached forecasts on mount/horizon change
+  // Preload cached forecasts for display without re-fetching
   useEffect(() => {
     const load = async () => {
       try {
@@ -71,6 +82,7 @@ const ForecastSite = ({ site, label, modelName = 'XGBoost', accent = 'cyan' }) =
   }, [site, horizon]);
 
   const startForecast = () => {
+    // Open a WebSocket to stream forecasts for the current (site, horizon)
     if (streaming) return;
     if (!cacheStatus?.can_resume) setLoading(true);
     setStreaming(true);
@@ -93,6 +105,8 @@ const ForecastSite = ({ site, label, modelName = 'XGBoost', accent = 'cyan' }) =
         setLoading(false);
       } else if (data.type === 'horizon_update') {
         setProgress(prev => ({ ...prev, current: data.horizon_index + 1 }));
+
+        // Build the "latest" object to feed the chart
         const newData = {
           horizon,
           horizon_index: data.horizon_index,
@@ -102,13 +116,17 @@ const ForecastSite = ({ site, label, modelName = 'XGBoost', accent = 'cyan' }) =
           forecast: data.forecast,
           stats: data.stats
         };
+
+        // Archive the previous forecastData before replacing it
         const last = forecastDataRef.current;
         if (last) {
+          // Accumulate unique historical points (deduplicated by timestamp)
           setAllHistorical(prev => {
             const m = new Map(prev.map(d => [d.timestamp, d]));
             last.historical.forEach(d => { if (!m.has(d.timestamp)) m.set(d.timestamp, d); });
             return Array.from(m.values()).sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
           });
+          // Keep previous horizon's forecast segments for prevForecast overlay
           setPrevForecasts(prev => [...prev, last.forecast]);
         }
         setForecastData(newData);
@@ -132,15 +150,21 @@ const ForecastSite = ({ site, label, modelName = 'XGBoost', accent = 'cyan' }) =
     setLoading(false);
   };
 
-  // Merge chart data
+  // ---------------------------------------------------------------------------
+  // chartData — merge allHistorical (actuals) + prevForecasts + latest forecast
+  // into a single sorted array for the ECharts chart.
+  // ---------------------------------------------------------------------------
   const chartData = forecastData ? (() => {
     const dataMap = new Map();
+    // 1. Accumulated historical actuals from all previous horizon windows
     allHistorical.forEach(d => {
       if (d.actual != null) dataMap.set(d.timestamp, { ...(dataMap.get(d.timestamp) || {}), timestamp: d.timestamp, actual: d.actual });
     });
+    // 2. Latest window historical actuals
     forecastData.historical.forEach(d => {
       if (d.actual != null && !dataMap.has(d.timestamp)) dataMap.set(d.timestamp, { timestamp: d.timestamp, actual: d.actual });
     });
+    // 3. Previous forecast segments for the "prevForecast" line
     prevForecasts.forEach(seg => {
       seg.forEach(d => {
         const e = dataMap.get(d.timestamp) || { timestamp: d.timestamp };
@@ -148,6 +172,7 @@ const ForecastSite = ({ site, label, modelName = 'XGBoost', accent = 'cyan' }) =
         dataMap.set(d.timestamp, e);
       });
     });
+    // 4. Current horizon's forecast + simulated confidence band
     forecastData.forecast.forEach(d => {
       const e = dataMap.get(d.timestamp) || { timestamp: d.timestamp };
       e.forecasted = d.forecasted;
@@ -169,6 +194,9 @@ const ForecastSite = ({ site, label, modelName = 'XGBoost', accent = 'cyan' }) =
 
   const stats = forecastData?.stats || {};
 
+  // MAE: average absolute error between actual and prevForecast where they overlap.
+  // We use prevForecast (not forecasted) because actual and forecasted never
+  // coexist at the same timestamp — actual is historical, forecasted is future.
   const mae = useMemo(() => {
     const errs = [];
     for (const d of chartData) {
@@ -178,6 +206,8 @@ const ForecastSite = ({ site, label, modelName = 'XGBoost', accent = 'cyan' }) =
     return errs.reduce((a, b) => a + b, 0) / errs.length;
   }, [chartData]);
 
+  // Trend: compare average of first half vs second half of forecasted points.
+  // If the relative difference exceeds 1%, classify as increasing / decreasing.
   const trend = useMemo(() => {
     const pts = chartData.filter(d => d.forecasted != null);
     if (pts.length < 4) return null;
@@ -190,6 +220,7 @@ const ForecastSite = ({ site, label, modelName = 'XGBoost', accent = 'cyan' }) =
     return Math.abs(diff) / mean > 0.01 ? (diff > 0 ? 'increasing' : 'decreasing') : 'stable';
   }, [chartData]);
 
+  // Data interval computed from the first two chartData timestamps
   const dataInterval = useMemo(() => {
     if (chartData.length < 2) return null;
     const ts1 = new Date(chartData[0].timestamp).getTime();

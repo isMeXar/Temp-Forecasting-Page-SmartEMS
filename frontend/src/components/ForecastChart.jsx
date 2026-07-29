@@ -3,11 +3,14 @@ import ReactECharts from 'echarts-for-react';
 import { RotateCcw, Search, Download } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
+// ECharts layout constants
 const SLIDER_HEIGHT = 42;
 
+// Number of steps per horizon (used for default zoom extent)
 const HORIZON_STEPS = {
   "1h": 6, "1d": 144, "3d": 432, "1w": 1008, "1m": 4320
 };
+// Tick interval for x-axis labels (in ms)
 const AXIS_INTERVAL = {
   "1h": 10 * 60 * 1000,
   "1d": 3 * 3600000,
@@ -15,12 +18,14 @@ const AXIS_INTERVAL = {
   "1w": 12 * 3600000,
   "1m": 86400000,
 };
+// Default window size (data points shown when no forecast exists yet)
 const WINDOW_SIZE = {
   "1h": 150, "1d": 432, "3d": 1296, "1w": 3024, "1m": 12960
 };
 const SLIDER_TO_LEGEND_GAP = 10;
 const LEGEND_HEIGHT = 24;
 
+// Compute chart grid bottom — on mobile we hide the slider, so less space needed
 const getGridBottom = (isMobile) => {
   const legendBottom = isMobile ? 4 : SLIDER_HEIGHT + SLIDER_TO_LEGEND_GAP;
   return legendBottom + LEGEND_HEIGHT + 6;
@@ -66,18 +71,32 @@ const accentColors = {
   violet: { main: '#8b5cf6', band: 'rgba(139,92,246,0.15)' },
 };
 
+/**
+ * ForecastChart — ECharts wrapper for time-series energy forecasts.
+ *
+ * Zoom behaviour:
+ *   - On first load / horizon change: default view = 2× horizon before forecast start
+ *   - On new data arriving (auto-tracking): same default recomputed, updates zoomRef
+ *     UNLESS user has interacted (interacted flag)
+ *   - On user zoom/pan: interacted = true, auto-tracking stops
+ *   - Reset button: clears interacted, recomputes default
+ *
+ * Responsive (isMobile < 768px):
+ *   - Hides slider, reduces margins, smaller fonts, no animation
+ */
 const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, horizon = '1d', toolbarLeft, toolbarCenter }) => {
   const c = accentColors[accent] || accentColors.cyan;
   const { isDark } = useTheme();
   const actualColor = isDark ? '#f1f5f9' : '#000000';
-  const zoomRef = useRef(null);
+  const zoomRef = useRef(null);           // { horizon, interacted, startValue, endValue }
   const dataExtentRef = useRef({ min: 0, max: 0 });
   const chartRef = useRef(null);
-  const [zoomEpoch, setZoomEpoch] = useState(0);
+  const [zoomEpoch, setZoomEpoch] = useState(0);  // increment to force re-render
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
 
+  // Track window width for responsive breakpoints
   useEffect(() => {
     const onResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', onResize);
@@ -95,6 +114,8 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
     };
   }
 
+  // Compute the default zoom: 2× horizon duration before forecast start → forecast end.
+  // This gives context before the forecast while keeping the forecast in focus.
   const getDefaultZoom = () => {
     if (!data.length) return null;
     const forecastIdx = data.findIndex(d => d.forecasted !== null);
@@ -115,6 +136,8 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
     };
   };
 
+  // Sync zoom with latest data: auto-track if user hasn't interacted.
+  // Triggers re-render when data.length, horizon, or zoomEpoch changes.
   const zoomConfig = useMemo(() => {
     if (!data.length) return {};
 
@@ -170,6 +193,8 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
     a.click();
   };
 
+  // dataZoom event handler — converts percentage or absolute zoom from the slider
+  // into absolute timestamps and stores them in zoomRef + marks as interacted.
   const onEvents = useMemo(() => ({
     dataZoom: (params) => {
       const batch = params.batch ? params.batch[0] : params;
@@ -198,7 +223,11 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
     },
   }), []);
 
+  // Build the full ECharts option. Two branches:
+  //   1. Empty data → axes/grid/legend with no series (always renders)
+  //   2. Data available → series for actual, prevForecast, forecast, confidence band
   const option = useMemo(() => {
+    // --- Empty state: show just axes and legend ---
     if (!data || data.length === 0) {
       return {
         tooltip: { trigger: 'axis' },

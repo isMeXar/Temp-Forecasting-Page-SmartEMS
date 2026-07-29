@@ -33,8 +33,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-LOOKBACK = 4320
+LOOKBACK = 4320  # Number of past 10-min readings to use as model input (30 days)
 
+# Number of forecast steps per horizon: e.g. 1 day = 144 × 10 min = 1440 min
 HORIZON_MAP = {
     "1h": 6,
     "1d": 144,
@@ -43,6 +44,7 @@ HORIZON_MAP = {
     "1m": 4320
 }
 
+# How many historical points to send to the frontend for chart context
 CONTEXT_MAP = {
     "1h": 144,
     "1d": 432,
@@ -51,6 +53,7 @@ CONTEXT_MAP = {
     "1m": 21600
 }
 
+# Per-site configuration: model file, CSV column name, display label
 SITES_CONFIG = {
     "ft": {
         "model_path": "Models/xgb_NoCeemd&lookback_10_ft.joblib",
@@ -71,13 +74,23 @@ CACHE_DIR.mkdir(exist_ok=True)
 # Runtime site data: populated on startup
 sites = {}
 
+# ---------------------------------------------------------------------------
+# Feature engineering
+# ---------------------------------------------------------------------------
 def generate_features(df):
+    """Derive time-based features from the DataFrame index (timestamp).
+
+    Returns a 2D array scaled to [0,1] with columns:
+      hour, dayofweek, weekend, winter, cycle (TOU period), season (quarter)
+    """
     hour = df.index.hour.values
     dow = df.index.dayofweek.values
     month = df.index.month.values
     weekend = (dow >= 5).astype(int)
     winter = np.isin(month, [10, 11, 12, 1, 2, 3]).astype(int)
 
+    # Time-of-use cycle: peak (2), mid-peak (1), off-peak (0)
+    # Varies by winter vs summer hours
     cycle = np.select(
         [
             (winter == 1) & (hour >= 17) & (hour < 22),
@@ -103,7 +116,16 @@ def generate_features(df):
         np.column_stack([hour, dow, weekend, winter, cycle, season])
     )
 
+# ---------------------------------------------------------------------------
+# Site loading
+# ---------------------------------------------------------------------------
 def load_site(site_key):
+    """Load model + scaler + data for one site.
+
+    Each .joblib file contains a 3-tuple: (model, MinMaxScaler, split_idx).
+    split_idx is the row index separating training data from test data.
+    The CSV is read, interpolated, and stored alongside derived features.
+    """
     config = SITES_CONFIG[site_key]
     model_path = Path(config["model_path"])
     data_path = Path("Data/CourbeDeCharge_10min_24.csv")
@@ -121,8 +143,8 @@ def load_site(site_key):
     col = config["data_column"]
     df[col] = df[col].astype(float).interpolate(method="time")
 
-    y = df[col].values
-    feats = generate_features(df)
+    y = df[col].values        # Raw load values
+    feats = generate_features(df)  # Pre-computed features for every row
 
     sites[site_key] = {
         "model": model,
@@ -136,10 +158,16 @@ def load_site(site_key):
 
     print(f"? Loaded {config['label']} ({site_key}) — training ended: {df.index[split_idx-1]}, total points after training: {len(y) - split_idx}")
 
+# ---------------------------------------------------------------------------
+# Cache layer (JSON file per site)
+# ---------------------------------------------------------------------------
+# Format: { "1d": { "forecasts": [{horizon_index, forecast_start, ...}, ...] }, ... }
+
 def get_cache_file(site):
     return CACHE_DIR / f"forecasts_{site}.json"
 
 def load_cache(site):
+    """Load the full JSON cache for a site. Returns {} if missing or empty."""
     file = get_cache_file(site)
     if file.exists() and file.stat().st_size > 0:
         with open(file, 'r') as f:
@@ -152,6 +180,11 @@ def save_cache(cache, site):
         json.dump(cache, f, indent=2)
 
 def save_forecast_to_cache(site, horizon, horizon_index, data):
+    """Store one horizon's forecast data.
+
+    If horizon_index already exists in the list, replace it in-place
+    (supports re-forecasting the same index). Otherwise append.
+    """
     cache = load_cache(site)
     if horizon not in cache:
         cache[horizon] = {"forecasts": []}
@@ -164,10 +197,12 @@ def save_forecast_to_cache(site, horizon, horizon_index, data):
     print(f"? Saved {site}/{horizon}[{horizon_index}] to cache")
 
 def load_forecasts_from_cache(site, horizon):
+    """Return sorted list of cached forecasts for a (site, horizon)."""
     cache = load_cache(site)
     return cache.get(horizon, {}).get("forecasts", [])
 
 def clear_cache(site=None, horizon=None):
+    """Clear cache files. Scope: all / per-site / per-horizon."""
     if site:
         cache = load_cache(site)
         if horizon:
@@ -293,6 +328,17 @@ async def get_horizons():
 
 @app.websocket("/ws/forecast/{site}/{horizon}")
 async def websocket_forecast(websocket: WebSocket, site: str, horizon: str):
+    """Stream recursive forecasts for one (site, horizon) over WebSocket.
+
+    Protocol:
+      1. Send "init" with metadata (horizon steps, total count, resume info)
+      2. If cache exists, replay cached forecasts as "horizon_update" (from_cache=True)
+      3. For each remaining horizon window, blind-recursively forecast N steps:
+           - Use 30-day lookback of actuals
+           - Predict one step at a time, feeding back the prediction (not actual)
+           - Send "horizon_update" with forecast array + stats
+      4. Send "complete" when done
+    """
     await websocket.accept()
 
     if site not in sites:
@@ -362,6 +408,7 @@ async def websocket_forecast(websocket: WebSocket, site: str, horizon: str):
             forecast_start = current_position
             forecast_end = min(current_position + horizon_steps, len(y))
 
+            # Build the historical context array for chart display
             hist_start = max(0, current_position - context_steps)
             historical = []
 
@@ -373,17 +420,23 @@ async def websocket_forecast(websocket: WebSocket, site: str, horizon: str):
                     "forecasted": None
                 })
 
+            # Initial lookback: 30 days of actuals before forecast start
             memory = y[forecast_start - LOOKBACK:forecast_start].tolist()
             preds = []
 
+            # --- Blind recursive forecast ---
+            # For each step, predict using the last 4320 values from the
+            # lookback buffer. The prediction is then appended to the buffer
+            # for use in the next step — ground truth is NOT fed back.
             for t in range(forecast_start, forecast_end):
+                # Scale the lookback window
                 values = scaler.transform(np.array(memory[-LOOKBACK:]).reshape(-1, 1)).flatten()
                 cal = feats[t - LOOKBACK:t].flatten()
                 X = np.concatenate([values, cal]).reshape(1, -1)
                 p = model.predict(X)[0]
                 p = scaler.inverse_transform([[p]])[0, 0]
                 preds.append(float(p))
-                memory.append(p)
+                memory.append(p)  # Feed prediction back, NOT y[t]
 
             forecast = [
                 {
@@ -419,6 +472,8 @@ async def websocket_forecast(websocket: WebSocket, site: str, horizon: str):
                 **response_data
             })
 
+            # Advance lookback by the full horizon window, pulling in real
+            # actuals from the just-forecasted period for the next iteration
             current_position = forecast_end
             horizon_index += 1
             await asyncio.sleep(1)
