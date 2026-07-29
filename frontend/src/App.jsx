@@ -36,6 +36,49 @@ function App() {
     checkCache();
   }, [horizon]);
 
+  // Fetch and show cached forecasts on mount / horizon change
+  useEffect(() => {
+    const loadCached = async () => {
+      try {
+        const response = await fetch(`http://localhost:8001/api/cache/forecasts/${horizon}`);
+        const data = await response.json();
+        if (data.forecasts && data.forecasts.length > 0) {
+          const histMap = new Map();
+          const prevForecasts = [];
+
+          for (let i = 0; i < data.forecasts.length; i++) {
+            const fc = data.forecasts[i];
+            if (fc.historical) {
+              fc.historical.forEach(h => {
+                if (h.actual != null) histMap.set(h.timestamp, h);
+              });
+            }
+            if (i < data.forecasts.length - 1) {
+              if (fc.forecast) prevForecasts.push(fc.forecast);
+            }
+          }
+
+          const last = data.forecasts[data.forecasts.length - 1];
+
+          setAllHistorical(Array.from(histMap.values()));
+          setPrevForecasts(prevForecasts);
+          setForecastData({
+            horizon: horizon,
+            horizon_index: last.horizon_index,
+            forecast_start: last.forecast_start,
+            forecast_end: last.forecast_end,
+            historical: last.historical,
+            forecast: last.forecast,
+            stats: last.stats
+          });
+        }
+      } catch (err) {
+        console.error('Failed to load cached forecasts:', err);
+      }
+    };
+    loadCached();
+  }, [horizon]);
+
   const startForecast = () => {
     if (streaming) return;
     
@@ -306,12 +349,6 @@ function App() {
                   accent="cyan"
                   chartHeight={320}
                   horizon={horizon}
-                  emptyMessage={
-                    <div className="text-center">
-                      <PlayCircle className="w-12 h-12 text-ink-muted/50 mx-auto mb-3" />
-                      <p className="text-sm text-ink-muted">Select a horizon and click "Start Forecast"</p>
-                    </div>
-                  }
                   toolbarLeft={
                     <HorizonSelector
                       selectedHorizon={horizon}
@@ -357,88 +394,92 @@ function App() {
 
             {/* Forecast Metrics Panel - 20% */}
             <div className="flex-[20]">
-              {forecastData ? (
-                <div className="rounded-xl bg-surface-card/60 border border-surface-border/30 h-full flex flex-col">
-                  {/* Header */}
-                  <div className="px-4 py-2.5 border-b border-surface-border/30">
-                    <div className="flex items-center gap-2">
-                      <TrendingUp className="w-4 h-4 text-accent-cyan flex-shrink-0" />
-                      <h3 className="text-base font-bold text-ink tracking-tight">Metrics</h3>
-                    </div>
+              <div className="rounded-xl bg-surface-card/60 border border-surface-border/30 h-full flex flex-col">
+                {/* Header */}
+                <div className="px-4 py-2.5 border-b border-surface-border/30">
+                  <div className="flex items-center gap-2">
+                    <TrendingUp className="w-4 h-4 text-accent-cyan flex-shrink-0" />
+                    <h3 className="text-base font-bold text-ink tracking-tight">Metrics</h3>
+                  </div>
+                </div>
+                
+                {/* Metrics List */}
+                <div className="flex-1 px-3 py-5 flex flex-col justify-center space-y-3 overflow-y-auto">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-ink-muted font-medium">Average</span>
+                    <span className="text-xs font-bold font-mono-num text-ink">{stats.mean_forecast != null ? `${stats.mean_forecast.toFixed(1)} MW` : '—'}</span>
                   </div>
                   
-                  {/* Metrics List */}
-                  <div className="flex-1 px-3 py-5 flex flex-col justify-center space-y-3 overflow-y-auto">
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-ink-muted font-medium">Average</span>
-                      <span className="text-xs font-bold font-mono-num text-ink">{stats.mean_forecast?.toFixed(1)} MW</span>
-                    </div>
-                    
-                    <div className="h-px bg-surface-border/20"></div>
-                    
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-ink-muted font-medium">Maximum</span>
-                      <span className="text-xs font-bold font-mono-num text-accent-emerald">{stats.max_forecast?.toFixed(1)} MW</span>
-                    </div>
-                    
-                    <div className="h-px bg-surface-border/20"></div>
-                    
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-ink-muted font-medium">Minimum</span>
-                      <span className="text-xs font-bold font-mono-num text-accent-violet">{stats.min_forecast?.toFixed(1)} MW</span>
-                    </div>
-                    
-                    <div className="h-px bg-surface-border/20"></div>
-                    
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-ink-muted font-medium">Range</span>
-                      <span className="text-xs font-bold font-mono-num text-ink">{(stats.max_forecast - stats.min_forecast)?.toFixed(1)} MW</span>
-                    </div>
-                    
-                    <div className="h-px bg-surface-border/20"></div>
-                    
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-ink-muted font-medium">Std Dev</span>
-                      <span className="text-xs font-bold font-mono-num text-ink">
-                        {stats.std_forecast ? stats.std_forecast.toFixed(1) : '—'} MW
-                      </span>
-                    </div>
-                    
-                    <div className="h-px bg-surface-border/20"></div>
-                    
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-ink-muted font-medium">MAPE</span>
-                      <span className="text-xs font-bold font-mono-num text-accent-amber">
-                        {stats.mape ? stats.mape.toFixed(2) : '—'}%
-                      </span>
-                    </div>
-                    
-                    <div className="h-px bg-surface-border/20"></div>
-                    
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-ink-muted font-medium">MAE</span>
-                      <span className="text-xs font-bold font-mono-num text-ink">
-                        {mae != null ? `${mae.toFixed(0)} kW` : '—'}
-                      </span>
-                    </div>
-                    
-                    <div className="h-px bg-surface-border/20"></div>
-                    
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-ink-muted font-medium">Trend</span>
-                      <span className="text-xs font-bold font-mono-num flex items-center gap-1">
-                        {trend === 'increasing' ? (
-                          <><TrendingUp className="w-3.5 h-3.5 text-accent-emerald" /><span className="text-accent-emerald">↗ Increasing</span></>
-                        ) : trend === 'decreasing' ? (
-                          <><TrendingDown className="w-3.5 h-3.5 text-red-400" /><span className="text-red-400">↘ Decreasing</span></>
-                        ) : (
-                          <span className="text-ink-muted">—</span>
-                        )}
-                      </span>
-                    </div>
+                  <div className="h-px bg-surface-border/20"></div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-ink-muted font-medium">Maximum</span>
+                    <span className="text-xs font-bold font-mono-num text-accent-emerald">{stats.max_forecast != null ? `${stats.max_forecast.toFixed(1)} MW` : '—'}</span>
                   </div>
+                  
+                  <div className="h-px bg-surface-border/20"></div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-ink-muted font-medium">Minimum</span>
+                    <span className="text-xs font-bold font-mono-num text-accent-violet">{stats.min_forecast != null ? `${stats.min_forecast.toFixed(1)} MW` : '—'}</span>
+                  </div>
+                  
+                  <div className="h-px bg-surface-border/20"></div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-ink-muted font-medium">Range</span>
+                    <span className="text-xs font-bold font-mono-num text-ink">{
+                      stats.max_forecast != null && stats.min_forecast != null
+                        ? `${(stats.max_forecast - stats.min_forecast).toFixed(1)} MW`
+                        : '—'
+                    }</span>
+                  </div>
+                  
+                  <div className="h-px bg-surface-border/20"></div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-ink-muted font-medium">Std Dev</span>
+                    <span className="text-xs font-bold font-mono-num text-ink">
+                      {stats.std_forecast != null ? `${stats.std_forecast.toFixed(1)} MW` : '—'}
+                    </span>
+                  </div>
+                  
+                  <div className="h-px bg-surface-border/20"></div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-ink-muted font-medium">MAPE</span>
+                    <span className="text-xs font-bold font-mono-num text-accent-amber">
+                      {stats.mape != null ? `${stats.mape.toFixed(2)}%` : '—'}
+                    </span>
+                  </div>
+                  
+                  <div className="h-px bg-surface-border/20"></div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-ink-muted font-medium">MAE</span>
+                    <span className="text-xs font-bold font-mono-num text-ink">
+                      {mae != null ? `${mae.toFixed(0)} kW` : '—'}
+                    </span>
+                  </div>
+                  
+                  <div className="h-px bg-surface-border/20"></div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-ink-muted font-medium">Trend</span>
+                    <span className="text-xs font-bold font-mono-num flex items-center gap-1">
+                      {trend === 'increasing' ? (
+                        <><TrendingUp className="w-3.5 h-3.5 text-accent-emerald" /><span className="text-accent-emerald">↗ Increasing</span></>
+                      ) : trend === 'decreasing' ? (
+                        <><TrendingDown className="w-3.5 h-3.5 text-red-400" /><span className="text-red-400">↘ Decreasing</span></>
+                      ) : (
+                        <span className="text-ink-muted">—</span>
+                      )}
+                    </span>
+                  </div>
+                </div>
 
-                  {/* Footer - Period Info */}
+                {/* Footer - Period Info */}
+                {forecastData && (
                   <div className="px-3 py-1.5 border-t border-surface-border/20 space-y-0.5">
                     <div className="flex justify-between items-center">
                       <span className="text-[10px] text-ink-muted font-medium">Start</span>
@@ -463,14 +504,9 @@ function App() {
                       </span>
                     </div>
                   </div>
-                </div>
-              ) : (
-                <div className="rounded-xl bg-surface-card/60 border border-surface-border/30 h-full flex items-center justify-center p-4">
-                  <p className="text-[10px] text-ink-muted text-center leading-relaxed">
-                    Metrics will<br/>appear here<br/>once forecasting<br/>starts
-                  </p>
-                </div>
-              )}
+                )}
+              
+              </div>
             </div>
           </div>
 

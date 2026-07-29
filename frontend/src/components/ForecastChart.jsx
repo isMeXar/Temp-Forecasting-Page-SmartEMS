@@ -63,7 +63,7 @@ const accentColors = {
   violet: { main: '#8b5cf6', band: 'rgba(139,92,246,0.15)' },
 };
 
-const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, horizon = '1d', toolbarLeft, toolbarCenter, emptyMessage }) => {
+const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, horizon = '1d', toolbarLeft, toolbarCenter }) => {
   const c = accentColors[accent] || accentColors.cyan;
   const { isDark } = useTheme();
   const actualColor = isDark ? '#f1f5f9' : '#000000';
@@ -187,7 +187,44 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
   }), []);
 
   const option = useMemo(() => {
-    if (!data || data.length === 0) return {};
+    if (!data || data.length === 0) {
+      return {
+        tooltip: { trigger: 'axis' },
+        legend: {
+          bottom: LEGEND_BOTTOM,
+          icon: 'roundRect',
+          itemWidth: 14,
+          itemHeight: 3,
+          textStyle: { color: '#94a3b8', fontSize: 11, fontFamily: 'DM Sans, sans-serif' },
+          inactiveColor: '#475569',
+          data: ['Actual', 'Previous Forecast', 'Forecast', 'Forecast Start'],
+        },
+        grid: { left: 44, right: 24, top: 30, bottom: GRID_BOTTOM, containLabel: true },
+        xAxis: {
+          type: 'time',
+          axisLine: { show: false },
+          axisTick: { show: false },
+          axisLabel: { color: '#64748b', fontSize: 9, fontFamily: 'JetBrains Mono, monospace', margin: 8 },
+          splitLine: { show: false },
+        },
+        yAxis: {
+          type: 'value',
+          name: 'Power (kW)',
+          nameTextStyle: { color: '#64748b', fontSize: 10, fontFamily: 'JetBrains Mono, monospace', rotate: 90 },
+          nameLocation: 'middle',
+          nameGap: 48,
+          axisLine: { show: false },
+          axisTick: { show: false },
+          axisLabel: { color: '#64748b', fontSize: 9, fontFamily: 'JetBrains Mono, monospace' },
+          splitLine: { lineStyle: { color: 'rgba(148,163,184,0.08)', type: 'dashed' } },
+        },
+        series: [],
+        dataZoom: [
+          { type: 'inside', xAxisIndex: 0, zoomOnMouseWheel: true, moveOnMouseMove: true, moveOnMouseWheel: false, minValueSpan: 3600000 },
+          { type: 'slider', xAxisIndex: 0, bottom: 0, height: SLIDER_HEIGHT, borderColor: 'rgba(148,163,184,0.2)', backgroundColor: 'rgba(148,163,184,0.05)', fillerColor: 'rgba(6,182,212,0.15)', handleStyle: { color: '#06b6d4', borderColor: '#06b6d4', borderWidth: 1.5 }, textStyle: { color: '#64748b', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' }, labelStyle: { color: '#475569', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' }, brushSelect: false },
+        ],
+      };
+    }
 
     try {
       const timestampsMs = data.map(d => TS2MS(d.timestamp));
@@ -479,10 +516,6 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
               </div>
               <p className="mt-4 text-xs text-ink-muted font-medium">Loading forecast data...</p>
             </div>
-          </div>
-        ) : !data || data.length === 0 ? (
-          <div className="h-full flex items-center justify-center">
-            {emptyMessage || <p className="text-xs text-ink-muted">No data available</p>}
           </div>
         ) : (
           <ReactECharts

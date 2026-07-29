@@ -231,6 +231,12 @@ async def clear_all_cache():
     clear_cache()
     return {"message": "All cache cleared"}
 
+@app.get("/api/cache/forecasts/{horizon}")
+async def get_cached_forecasts(horizon: str):
+    """Return all cached forecasts for a horizon without starting a new forecast"""
+    forecasts = load_forecasts_from_cache(horizon)
+    return {"horizon": horizon, "forecasts": forecasts, "count": len(forecasts)}
+
 @app.websocket("/ws/forecast/{horizon}")
 async def websocket_forecast(websocket: WebSocket, horizon: str):
     """
