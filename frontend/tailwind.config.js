@@ -36,6 +36,8 @@ export default {
       boxShadow: {
         card: 'var(--shadow-card)',
         'card-hover': 'var(--shadow-card-hover)',
+        panel: 'var(--shadow-panel)',
+        floating: 'var(--shadow-floating)',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out forwards',

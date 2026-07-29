@@ -3,8 +3,7 @@ import Header from './components/Header';
 import ForecastChart from './components/ForecastChart';
 import ErrorBoundary from './components/ErrorBoundary';
 import HorizonSelector from './components/HorizonSelector';
-import MetricCard from './components/MetricCard';
-import { Zap, TrendingUp, TrendingDown, Calendar, PlayCircle } from 'lucide-react';
+import { TrendingUp, TrendingDown, PlayCircle, ChevronDown, ChevronRight } from 'lucide-react';
 
 const WS_BASE = 'ws://localhost:8001';
 
@@ -18,6 +17,7 @@ function App() {
   const [error, setError] = useState(null);
   const [progress, setProgress] = useState({ current: 0, total: 0 });
   const [cacheStatus, setCacheStatus] = useState(null);
+  const [foumTiziOpen, setFoumTiziOpen] = useState(true);
   const wsRef = useRef(null);
   // Refs to avoid stale closures in WebSocket handler
   const forecastDataRef = useRef(null);
@@ -264,8 +264,31 @@ function App() {
       : 'stable';
   }, [chartData]);
 
+  const dataInterval = useMemo(() => {
+    if (chartData.length < 2) return null;
+    const ts1 = new Date(chartData[0].timestamp).getTime();
+    const ts2 = new Date(chartData[1].timestamp).getTime();
+    const diffMin = Math.abs(ts2 - ts1) / 60000;
+    if (diffMin < 1) return { value: Math.round(diffMin * 60), unit: 'seconds' };
+    if (diffMin >= 1440) return { value: Math.round(diffMin / 1440), unit: 'days' };
+    if (diffMin >= 60) return { value: Math.round(diffMin / 60), unit: 'hours' };
+    return { value: Math.round(diffMin), unit: 'minutes' };
+  }, [chartData]);
+
+  const horizonLabel = {
+    '1h': '1 Hour',
+    '1d': '1 Day',
+    '3d': '3 Days',
+    '1w': '1 Week',
+    '1m': '1 Month',
+  }[horizon] || horizon.toUpperCase();
+
+  const intervalLabel = dataInterval
+    ? `${dataInterval.value} ${dataInterval.unit}`
+    : '—';
+
   return (
-    <div className="min-h-screen bg-surface bg-grid overflow-x-hidden">
+    <div className="min-h-screen bg-surface overflow-x-hidden">
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-ambient-cyan" />
         <div className="absolute inset-0 bg-ambient-emerald" />
@@ -276,30 +299,6 @@ function App() {
 
       <main className="relative z-10 max-w-[1600px] mx-auto px-4 md:px-6 pb-8">
         <div className="py-6 space-y-6">
-          {/* Header */}
-          <div className="flex items-center justify-between animate-fade-in">
-            <div className="flex items-center gap-3">
-              {/* <div className="p-2 rounded-xl bg-accent-cyan/10 border border-accent-cyan/20">
-                <Activity className="w-5 h-5 text-accent-cyan" />
-              </div> */}
-              <div>
-                <h2 className="text-xl font-heading font-bold text-ink">Foum Tizi Energy Forecast</h2>
-                <p className="text-xs text-ink-muted">
-                  XGBoost real-time streaming • 10-min intervals
-                </p>
-              </div>
-            </div>
-            
-            {streaming && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-accent-cyan/10 border border-accent-cyan/20 rounded-lg">
-                <div className="w-2 h-2 bg-accent-cyan rounded-full animate-pulse" />
-                <span className="text-xs font-semibold text-accent-cyan">
-                  Forecasting {progress.current}/{progress.total}
-                </span>
-              </div>
-            )}
-          </div>
-
           {/* Error Display */}
           {error && (
             <div className="animate-fade-in bg-red-500/10 border border-red-500/20 rounded-xl p-4">
@@ -308,234 +307,247 @@ function App() {
             </div>
           )}
 
-          {/* Stats Cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 animate-fade-in" style={{ animationDelay: '0.1s' }}>
-            <MetricCard
-              icon={Zap}
-              label="Horizon"
-              value={horizon.toUpperCase()}
-              accent="cyan"
-            />
-            <MetricCard
-              icon={TrendingUp}
-              label="Current Mean"
-              value={meanForecast.toFixed(1)}
-              unit="MW"
-              accent="emerald"
-            />
-            <MetricCard
-              icon={Calendar}
-              label="Progress"
-              value={progress.total > 0 ? `${progress.current}/${progress.total}` : '—'}
-              accent="violet"
-            />
-            <MetricCard
-              icon={PlayCircle}
-              label="Status"
-              value={streaming ? 'Live' : forecastData ? 'Done' : 'Ready'}
-              accent={streaming ? 'amber' : forecastData ? 'emerald' : 'cyan'}
-            />
-          </div>
-
-          {/* Chart and Metrics Grid - 80/20 split */}
-          <div className="flex gap-4 items-stretch">
-            {/* Chart Area - 80% */}
-            <div className="flex-[80] min-h-0">
-              <ErrorBoundary>
-                <ForecastChart
-                  data={chartData}
-                  loading={loading && !cacheStatus?.can_resume}
-                  accent="cyan"
-                  chartHeight={320}
-                  horizon={horizon}
-                  toolbarLeft={
-                    <HorizonSelector
-                      selectedHorizon={horizon}
-                      onHorizonChange={setHorizon}
-                      loading={streaming}
-                    />
-                  }
-                  toolbarCenter={
-                    !streaming ? (
-                      <>
-                        <button
-                          onClick={startForecast}
-                          disabled={loading}
-                          className="px-4 py-1.5 rounded-lg bg-accent-cyan/15 hover:bg-accent-cyan/25 border border-accent-cyan/30 text-accent-cyan font-semibold text-xs transition-all duration-200 flex items-center gap-1.5 disabled:opacity-50"
-                        >
-                          <PlayCircle className="w-3.5 h-3.5" />
-                          {cacheStatus?.can_resume ? 'Resume' : 'Start'}
-                        </button>
-                        {cacheStatus?.can_resume && (
-                          <button
-                            onClick={async () => {
-                              await fetch(`http://localhost:8001/api/cache/clear/${horizon}`, { method: 'POST' });
-                              setCacheStatus({ ...cacheStatus, can_resume: false, cached_count: 0 });
-                            }}
-                            className="px-3 py-1.5 rounded-lg bg-surface-hover/50 hover:bg-surface-hover border border-surface-border/40 text-ink-muted hover:text-ink font-semibold text-xs transition-all duration-200"
-                          >
-                            Clear
-                          </button>
-                        )}
-                      </>
-                    ) : (
-                      <button
-                        onClick={stopForecast}
-                        className="px-4 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 border border-red-500/30 text-red-400 font-semibold text-xs transition-all duration-200"
-                      >
-                        Stop
-                      </button>
-                    )
-                  }
-                />
-              </ErrorBoundary>
+          {/* Foum Tizi Section */}
+          <div>
+            <div
+              className="flex items-center justify-between cursor-pointer select-none"
+              onClick={() => setFoumTiziOpen(!foumTiziOpen)}
+            >
+              <div className="flex items-center gap-3">
+                <div className={`p-1 rounded-lg transition-all duration-300 ${foumTiziOpen ? 'bg-accent-cyan/10' : 'bg-surface-hover/30'}`}>
+                  {foumTiziOpen ? (
+                    <ChevronDown className="w-4 h-4 text-accent-cyan transition-transform duration-300" />
+                  ) : (
+                    <ChevronRight className="w-4 h-4 text-ink-muted transition-transform duration-300" />
+                  )}
+                </div>
+                <div className="inline-block">
+                  <h2 className="text-base font-heading font-bold text-ink">Foum Tizi Energy Forecast</h2>
+                  <div className="mt-1.5 h-0.5 rounded-full bg-accent-emerald" style={{ width: 'calc(100% + 20px)' }} />
+                </div>
+              </div>
+              {streaming && (
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-accent-cyan/10 border border-accent-cyan/20 rounded-lg">
+                  <div className="w-2 h-2 bg-accent-cyan rounded-full animate-pulse" />
+                  <span className="text-xs font-semibold text-accent-cyan">
+                    Forecasting {progress.current}/{progress.total}
+                  </span>
+                </div>
+              )}
             </div>
 
-            {/* Forecast Metrics Panel - 20% */}
-            <div className="flex-[20]">
-              <div className="rounded-xl bg-surface-card/60 border border-surface-border/30 h-full flex flex-col">
-                {/* Header */}
-                <div className="px-4 py-2.5 border-b border-surface-border/30">
-                  <div className="flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4 text-accent-cyan flex-shrink-0" />
-                    <h3 className="text-base font-bold text-ink tracking-tight">Metrics</h3>
+            {foumTiziOpen && (
+              <div className="mt-5 space-y-5">
+                {/* Chart and Metrics Grid - 80/20 split */}
+                <div className="flex gap-4 items-stretch">
+                  {/* Chart Area - 80% */}
+                  <div className="flex-[80] min-h-0">
+                    <ErrorBoundary>
+                      <ForecastChart
+                        data={chartData}
+                        loading={loading && !cacheStatus?.can_resume}
+                        accent="cyan"
+                        chartHeight={320}
+                        horizon={horizon}
+                        toolbarLeft={
+                          <HorizonSelector
+                            selectedHorizon={horizon}
+                            onHorizonChange={setHorizon}
+                            loading={streaming}
+                          />
+                        }
+                        toolbarCenter={
+                          !streaming ? (
+                            <>
+                              <button
+                                onClick={startForecast}
+                                disabled={loading}
+                                className="px-4 py-1.5 rounded-lg bg-accent-cyan/15 hover:bg-accent-cyan/25 border border-accent-cyan/30 text-accent-cyan font-semibold text-xs transition-all duration-200 flex items-center gap-1.5 disabled:opacity-50"
+                              >
+                                <PlayCircle className="w-3.5 h-3.5" />
+                                {cacheStatus?.can_resume ? 'Resume' : 'Start'}
+                              </button>
+                              {cacheStatus?.can_resume && (
+                                <button
+                                  onClick={async () => {
+                                    await fetch(`http://localhost:8001/api/cache/clear/${horizon}`, { method: 'POST' });
+                                    setCacheStatus({ ...cacheStatus, can_resume: false, cached_count: 0 });
+                                  }}
+                                  className="px-3 py-1.5 rounded-lg bg-surface-hover/50 hover:bg-surface-hover border border-surface-border/40 text-ink-muted hover:text-ink font-semibold text-xs transition-all duration-200"
+                                >
+                                  Clear
+                                </button>
+                              )}
+                            </>
+                          ) : (
+                            <button
+                              onClick={stopForecast}
+                              className="px-4 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 border border-red-500/30 text-red-400 font-semibold text-xs transition-all duration-200"
+                            >
+                              Stop
+                            </button>
+                          )
+                        }
+                      />
+                    </ErrorBoundary>
                   </div>
-                </div>
-                
-                {/* Metrics List */}
-                <div className="flex-1 px-3 py-5 flex flex-col justify-center space-y-3 overflow-y-auto">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-ink-muted font-medium">Average</span>
-                    <span className="text-xs font-bold font-mono-num text-ink">{stats.mean_forecast != null ? `${stats.mean_forecast.toFixed(1)} MW` : '—'}</span>
-                  </div>
-                  
-                  <div className="h-px bg-surface-border/20"></div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-ink-muted font-medium">Maximum</span>
-                    <span className="text-xs font-bold font-mono-num text-accent-emerald">{stats.max_forecast != null ? `${stats.max_forecast.toFixed(1)} MW` : '—'}</span>
-                  </div>
-                  
-                  <div className="h-px bg-surface-border/20"></div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-ink-muted font-medium">Minimum</span>
-                    <span className="text-xs font-bold font-mono-num text-accent-violet">{stats.min_forecast != null ? `${stats.min_forecast.toFixed(1)} MW` : '—'}</span>
-                  </div>
-                  
-                  <div className="h-px bg-surface-border/20"></div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-ink-muted font-medium">Range</span>
-                    <span className="text-xs font-bold font-mono-num text-ink">{
-                      stats.max_forecast != null && stats.min_forecast != null
-                        ? `${(stats.max_forecast - stats.min_forecast).toFixed(1)} MW`
-                        : '—'
-                    }</span>
-                  </div>
-                  
-                  <div className="h-px bg-surface-border/20"></div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-ink-muted font-medium">Std Dev</span>
-                    <span className="text-xs font-bold font-mono-num text-ink">
-                      {stats.std_forecast != null ? `${stats.std_forecast.toFixed(1)} MW` : '—'}
-                    </span>
-                  </div>
-                  
-                  <div className="h-px bg-surface-border/20"></div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-ink-muted font-medium">MAPE</span>
-                    <span className="text-xs font-bold font-mono-num text-accent-amber">
-                      {stats.mape != null ? `${stats.mape.toFixed(2)}%` : '—'}
-                    </span>
-                  </div>
-                  
-                  <div className="h-px bg-surface-border/20"></div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-ink-muted font-medium">MAE</span>
-                    <span className="text-xs font-bold font-mono-num text-ink">
-                      {mae != null ? `${mae.toFixed(0)} kW` : '—'}
-                    </span>
-                  </div>
-                  
-                  <div className="h-px bg-surface-border/20"></div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs text-ink-muted font-medium">Trend</span>
-                    <span className="text-xs font-bold font-mono-num flex items-center gap-1">
-                      {trend === 'increasing' ? (
-                        <><TrendingUp className="w-3.5 h-3.5 text-accent-emerald" /><span className="text-accent-emerald">↗ Increasing</span></>
-                      ) : trend === 'decreasing' ? (
-                        <><TrendingDown className="w-3.5 h-3.5 text-red-400" /><span className="text-red-400">↘ Decreasing</span></>
-                      ) : (
-                        <span className="text-ink-muted">—</span>
+
+                  {/* Forecast Metrics Panel - 20% */}
+                  <div className="flex-[20]">
+                    <div className="rounded-xl bg-surface-card/70 shadow-card h-full flex flex-col">
+                      {/* Header */}
+                      <div className="px-4 py-2.5 border-b border-surface-border/30">
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="w-4 h-4 text-accent-cyan flex-shrink-0" />
+                          <h3 className="text-base font-bold text-ink tracking-tight">Metrics</h3>
+                        </div>
+                      </div>
+                      
+                      {/* Metrics List */}
+                      <div className="flex-1 px-3 py-5 flex flex-col justify-center space-y-3 overflow-y-auto">
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-ink-muted font-medium">Average</span>
+                          <span className="text-xs font-bold font-mono-num text-ink">{stats.mean_forecast != null ? `${stats.mean_forecast.toFixed(1)} MW` : '—'}</span>
+                        </div>
+                        
+                        <div className="h-px bg-surface-border/20"></div>
+                        
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-ink-muted font-medium">Maximum</span>
+                          <span className="text-xs font-bold font-mono-num text-accent-emerald">{stats.max_forecast != null ? `${stats.max_forecast.toFixed(1)} MW` : '—'}</span>
+                        </div>
+                        
+                        <div className="h-px bg-surface-border/20"></div>
+                        
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-ink-muted font-medium">Minimum</span>
+                          <span className="text-xs font-bold font-mono-num text-accent-violet">{stats.min_forecast != null ? `${stats.min_forecast.toFixed(1)} MW` : '—'}</span>
+                        </div>
+                        
+                        <div className="h-px bg-surface-border/20"></div>
+                        
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-ink-muted font-medium">Range</span>
+                          <span className="text-xs font-bold font-mono-num text-ink">{
+                            stats.max_forecast != null && stats.min_forecast != null
+                              ? `${(stats.max_forecast - stats.min_forecast).toFixed(1)} MW`
+                              : '—'
+                          }</span>
+                        </div>
+                        
+                        <div className="h-px bg-surface-border/20"></div>
+                        
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-ink-muted font-medium">Std Dev</span>
+                          <span className="text-xs font-bold font-mono-num text-ink">
+                            {stats.std_forecast != null ? `${stats.std_forecast.toFixed(1)} MW` : '—'}
+                          </span>
+                        </div>
+                        
+                        <div className="h-px bg-surface-border/20"></div>
+                        
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-ink-muted font-medium">MAPE</span>
+                          <span className="text-xs font-bold font-mono-num text-accent-amber">
+                            {stats.mape != null ? `${stats.mape.toFixed(2)}%` : '—'}
+                          </span>
+                        </div>
+                        
+                        <div className="h-px bg-surface-border/20"></div>
+                        
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-ink-muted font-medium">MAE</span>
+                          <span className="text-xs font-bold font-mono-num text-ink">
+                            {mae != null ? `${mae.toFixed(0)} kW` : '—'}
+                          </span>
+                        </div>
+                        
+                        <div className="h-px bg-surface-border/20"></div>
+                        
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-ink-muted font-medium">Trend</span>
+                          <span className="text-xs font-bold font-mono-num flex items-center gap-1">
+                            {trend === 'increasing' ? (
+                              <><TrendingUp className="w-3.5 h-3.5 text-accent-emerald" /><span className="text-accent-emerald">Increasing</span></>
+                            ) : trend === 'decreasing' ? (
+                              <><TrendingDown className="w-3.5 h-3.5 text-red-400" /><span className="text-red-400">Decreasing</span></>
+                            ) : (
+                              <span className="text-ink-muted">—</span>
+                            )}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Footer - Period Info */}
+                      {forecastData && (
+                        <div className="px-3 py-1.5 border-t border-surface-border/20 space-y-0.5">
+                          <div className="flex justify-between items-center">
+                            <span className="text-[10px] text-ink-muted font-medium">Start</span>
+                            <span className="text-[11px] font-mono-num text-ink">
+                              {new Date(forecastData.forecast_start).toLocaleString('en-US', { 
+                                month: 'short', 
+                                day: 'numeric', 
+                                hour: '2-digit', 
+                                minute: '2-digit' 
+                              })}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-[10px] text-ink-muted font-medium">End</span>
+                            <span className="text-[11px] font-mono-num text-ink">
+                              {new Date(forecastData.forecast_end).toLocaleString('en-US', { 
+                                month: 'short', 
+                                day: 'numeric', 
+                                hour: '2-digit', 
+                                minute: '2-digit' 
+                              })}
+                            </span>
+                          </div>
+                        </div>
                       )}
-                    </span>
+                    
+                    </div>
                   </div>
                 </div>
 
-                {/* Footer - Period Info */}
+                 {/* Info Section */}
                 {forecastData && (
-                  <div className="px-3 py-1.5 border-t border-surface-border/20 space-y-0.5">
-                    <div className="flex justify-between items-center">
-                      <span className="text-[10px] text-ink-muted font-medium">Start</span>
-                      <span className="text-[11px] font-mono-num text-ink">
-                        {new Date(forecastData.forecast_start).toLocaleString('en-US', { 
-                          month: 'short', 
-                          day: 'numeric', 
-                          hour: '2-digit', 
-                          minute: '2-digit' 
-                        })}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-[10px] text-ink-muted font-medium">End</span>
-                      <span className="text-[11px] font-mono-num text-ink">
-                        {new Date(forecastData.forecast_end).toLocaleString('en-US', { 
-                          month: 'short', 
-                          day: 'numeric', 
-                          hour: '2-digit', 
-                          minute: '2-digit' 
-                        })}
-                      </span>
+                  <div className="animate-fade-in bg-surface-card/50 shadow-card rounded-xl p-4">
+                    <div className="grid grid-cols-2 md:grid-cols-6 gap-4 text-xs">
+                      <div>
+                        <p className="text-ink-muted mb-1">Model</p>
+                        <p className="text-ink font-semibold">XGBoost</p>
+                      </div>
+                      <div>
+                        <p className="text-ink-muted mb-1">Horizon</p>
+                        <p className="text-ink font-semibold">{horizonLabel}</p>
+                      </div>
+                      <div>
+                        <p className="text-ink-muted mb-1">Interval</p>
+                        <p className="text-ink font-semibold font-mono-num">{intervalLabel}</p>
+                      </div>
+                      <div>
+                        <p className="text-ink-muted mb-1">Forecast Start</p>
+                        <p className="text-ink font-semibold font-mono-num">
+                          {new Date(forecastData.forecast_start).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-ink-muted mb-1">Forecast End</p>
+                        <p className="text-ink font-semibold font-mono-num">
+                          {new Date(forecastData.forecast_end).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-ink-muted mb-1">Forecast Range</p>
+                        <p className="text-ink font-semibold">{stats.min_forecast?.toFixed(1)} - {stats.max_forecast?.toFixed(1)} MW</p>
+                      </div>
                     </div>
                   </div>
                 )}
-              
               </div>
-            </div>
+            )}
           </div>
-
-          {/* Info Section */}
-          {forecastData && (
-            <div className="animate-fade-in bg-surface-card/40 border border-surface-border/30 rounded-xl p-4">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
-                <div>
-                  <p className="text-ink-muted mb-1">Horizon</p>
-                  <p className="text-ink font-semibold">{horizon.toUpperCase()} #{forecastData.horizon_index + 1}</p>
-                </div>
-                <div>
-                  <p className="text-ink-muted mb-1">Period Start</p>
-                  <p className="text-ink font-semibold font-mono-num">
-                    {new Date(forecastData.forecast_start).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-ink-muted mb-1">Period End</p>
-                  <p className="text-ink font-semibold font-mono-num">
-                    {new Date(forecastData.forecast_end).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-ink-muted mb-1">Forecast Range</p>
-                  <p className="text-ink font-semibold">{stats.min_forecast?.toFixed(1)} - {stats.max_forecast?.toFixed(1)} MW</p>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
 
         <footer className="relative mt-8 pt-6 border-t border-surface-border/40 text-center">

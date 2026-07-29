@@ -12,8 +12,10 @@
     --color-ink: 15 23 42;
     --color-ink-faded: 71 85 105;
     --color-ink-muted: 148 163 184;
-    --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-    --shadow-card-hover: 0 10px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.04);
+    --shadow-card: 0 4px 24px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-card-hover: 0 12px 40px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.06);
+    --shadow-panel: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-floating: 0 16px 48px rgba(0,0,0,0.1), 0 4px 16px rgba(0,0,0,0.06);
   }
   .dark {
     --color-surface: 13 17 31;
@@ -26,6 +28,8 @@
     --color-ink-muted: 100 116 139;
     --shadow-card: 0 8px 32px rgba(0,0,0,0.4);
     --shadow-card-hover: 0 12px 48px rgba(0,0,0,0.5);
+    --shadow-panel: 0 8px 32px rgba(0,0,0,0.5);
+    --shadow-floating: 0 16px 48px rgba(0,0,0,0.6);
   }
 
   * { border-color: rgb(var(--color-surface-border) / 0.4); }
@@ -41,14 +45,10 @@
 
 @layer components {
   .glass-panel {
-    @apply bg-surface-card/80 backdrop-blur-xl border border-surface-border/40 rounded-2xl shadow-card;
+    @apply bg-surface-card/80 backdrop-blur-xl rounded-2xl shadow-panel;
   }
   .glass-panel-hover {
-    @apply glass-panel transition-all duration-300 hover:-translate-y-[1px];
-  }
-  .glass-panel-hover:hover {
-    border-color: rgb(var(--color-surface-border) / 0.7);
-    box-shadow: var(--shadow-card-hover);
+    @apply glass-panel transition-all duration-300 hover:-translate-y-[1px] hover:shadow-floating;
   }
   .glow-cyan { box-shadow: 0 0 24px rgba(6, 182, 212, 0.15), 0 0 60px rgba(6, 182, 212, 0.05); }
   .glow-emerald { box-shadow: 0 0 24px rgba(16, 185, 129, 0.15), 0 0 60px rgba(16, 185, 129, 0.05); }

@@ -1,4 +1,4 @@
-import { Activity, Cpu, Gauge, Moon, Sun } from 'lucide-react';
+import { Activity, Cpu, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 const Header = () => {
@@ -23,12 +23,6 @@ const Header = () => {
       label: 'Updated',
       value: lastUpdate,
       color: 'text-ink-faded',
-    },
-    {
-      icon: Gauge,
-      label: 'Accuracy',
-      value: '95.2%',
-      color: 'text-accent-cyan',
     },
   ];
 
