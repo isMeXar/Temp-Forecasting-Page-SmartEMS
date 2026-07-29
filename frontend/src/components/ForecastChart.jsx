@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { RotateCcw, Search, Download } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
@@ -20,8 +20,11 @@ const WINDOW_SIZE = {
 };
 const SLIDER_TO_LEGEND_GAP = 10;
 const LEGEND_HEIGHT = 24;
-const LEGEND_BOTTOM = SLIDER_HEIGHT + SLIDER_TO_LEGEND_GAP;
-const GRID_BOTTOM = LEGEND_BOTTOM + LEGEND_HEIGHT + 6;
+
+const getGridBottom = (isMobile) => {
+  const legendBottom = isMobile ? 4 : SLIDER_HEIGHT + SLIDER_TO_LEGEND_GAP;
+  return legendBottom + LEGEND_HEIGHT + 6;
+};
 
 const TS2MS = (ts) => new Date(ts).getTime();
 
@@ -73,6 +76,15 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
   const [zoomEpoch, setZoomEpoch] = useState(0);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+  useEffect(() => {
+    const onResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const isMobile = windowWidth < 768;
 
   const splitIndex = useMemo(() => data.findIndex(d => d.forecasted !== null), [data]);
 
@@ -191,38 +203,38 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
       return {
         tooltip: { trigger: 'axis' },
         legend: {
-          bottom: LEGEND_BOTTOM,
+          bottom: isMobile ? 4 : SLIDER_HEIGHT + SLIDER_TO_LEGEND_GAP,
           icon: 'roundRect',
-          itemWidth: 14,
-          itemHeight: 3,
-          textStyle: { color: '#94a3b8', fontSize: 11, fontFamily: 'DM Sans, sans-serif' },
+          itemWidth: isMobile ? 10 : 14,
+          itemHeight: isMobile ? 2 : 3,
+          textStyle: { color: '#94a3b8', fontSize: isMobile ? 9 : 11, fontFamily: 'DM Sans, sans-serif' },
           inactiveColor: '#475569',
           data: ['Actual', 'Previous Forecast', 'Forecast', 'Forecast Start'],
         },
-        grid: { left: 44, right: 24, top: 30, bottom: GRID_BOTTOM, containLabel: true },
+        grid: { left: isMobile ? 8 : 44, right: isMobile ? 8 : 24, top: 30, bottom: getGridBottom(isMobile), containLabel: true },
         xAxis: {
           type: 'time',
           axisLine: { show: false },
           axisTick: { show: false },
-          axisLabel: { color: '#64748b', fontSize: 9, fontFamily: 'JetBrains Mono, monospace', margin: 8 },
+          axisLabel: { color: '#64748b', fontSize: isMobile ? 7 : 9, fontFamily: 'JetBrains Mono, monospace', margin: 4 },
           splitLine: { show: false },
         },
         yAxis: {
           type: 'value',
           name: 'Power (kW)',
-          nameTextStyle: { color: '#64748b', fontSize: 10, fontFamily: 'JetBrains Mono, monospace', rotate: 90 },
+          nameTextStyle: { color: '#64748b', fontSize: isMobile ? 8 : 10, fontFamily: 'JetBrains Mono, monospace', rotate: 90 },
           nameLocation: 'middle',
-          nameGap: 48,
+          nameGap: isMobile ? 28 : 48,
           axisLine: { show: false },
           axisTick: { show: false },
-          axisLabel: { color: '#64748b', fontSize: 9, fontFamily: 'JetBrains Mono, monospace' },
+          axisLabel: { color: '#64748b', fontSize: isMobile ? 7 : 9, fontFamily: 'JetBrains Mono, monospace' },
           splitLine: { lineStyle: { color: 'rgba(148,163,184,0.08)', type: 'dashed' } },
         },
         series: [],
         dataZoom: [
           { type: 'inside', xAxisIndex: 0, zoomOnMouseWheel: true, moveOnMouseMove: true, moveOnMouseWheel: false, minValueSpan: 3600000 },
-          { type: 'slider', xAxisIndex: 0, bottom: 0, height: SLIDER_HEIGHT, borderColor: 'rgba(148,163,184,0.2)', backgroundColor: 'rgba(148,163,184,0.05)', fillerColor: 'rgba(6,182,212,0.15)', handleStyle: { color: '#06b6d4', borderColor: '#06b6d4', borderWidth: 1.5 }, textStyle: { color: '#64748b', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' }, labelStyle: { color: '#475569', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' }, brushSelect: false },
-        ],
+          isMobile ? null : { type: 'slider', xAxisIndex: 0, bottom: 0, height: SLIDER_HEIGHT, borderColor: 'rgba(148,163,184,0.2)', backgroundColor: 'rgba(148,163,184,0.05)', fillerColor: 'rgba(6,182,212,0.15)', handleStyle: { color: '#06b6d4', borderColor: '#06b6d4', borderWidth: 1.5 }, textStyle: { color: '#64748b', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' }, labelStyle: { color: '#475569', fontSize: 10, fontFamily: 'JetBrains Mono, monospace' }, brushSelect: false },
+        ].filter(Boolean),
       };
     }
 
@@ -337,7 +349,7 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
       });
 
       return {
-        animationDuration: 500,
+        animationDuration: isMobile ? 0 : 500,
         animationEasing: 'cubicOut',
         animationDurationUpdate: 0,
         tooltip: {
@@ -367,19 +379,19 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
           },
         },
         legend: {
-          bottom: LEGEND_BOTTOM,
+          bottom: isMobile ? 4 : SLIDER_HEIGHT + SLIDER_TO_LEGEND_GAP,
           icon: 'roundRect',
-          itemWidth: 14,
-          itemHeight: 3,
-          textStyle: { color: '#94a3b8', fontSize: 11, fontFamily: 'DM Sans, sans-serif' },
+          itemWidth: isMobile ? 10 : 14,
+          itemHeight: isMobile ? 2 : 3,
+          textStyle: { color: '#94a3b8', fontSize: isMobile ? 9 : 11, fontFamily: 'DM Sans, sans-serif' },
           inactiveColor: '#475569',
           data: ['Actual', 'Previous Forecast', 'Forecast', 'Forecast Start'],
         },
         grid: {
-          left: 44,
-          right: 24,
-          top: 30,
-          bottom: GRID_BOTTOM,
+          left: isMobile ? 8 : 44,
+          right: isMobile ? 8 : 24,
+          top: 24,
+          bottom: getGridBottom(isMobile),
           containLabel: true,
         },
         xAxis: {
@@ -388,9 +400,9 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
           axisTick: { show: false },
           axisLabel: {
             color: '#64748b',
-            fontSize: 9,
+            fontSize: isMobile ? 7 : 9,
             fontFamily: 'JetBrains Mono, monospace',
-            margin: 8,
+            margin: isMobile ? 2 : 8,
             formatter: smartAxisFormatter(),
             interval: AXIS_INTERVAL[horizon] || 'auto',
             hideOverlap: false,
@@ -400,14 +412,14 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
         yAxis: {
           type: 'value',
           name: 'Power (kW)',
-          nameTextStyle: { color: '#64748b', fontSize: 10, fontFamily: 'JetBrains Mono, monospace', rotate: 90 },
+          nameTextStyle: { color: '#64748b', fontSize: isMobile ? 8 : 10, fontFamily: 'JetBrains Mono, monospace', rotate: 90 },
           nameLocation: 'middle',
-          nameGap: 48,
+          nameGap: isMobile ? 28 : 48,
           axisLine: { show: false },
           axisTick: { show: false },
           axisLabel: {
             color: '#64748b',
-            fontSize: 9,
+            fontSize: isMobile ? 7 : 9,
             fontFamily: 'JetBrains Mono, monospace',
           },
           splitLine: {
@@ -424,7 +436,7 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
             minValueSpan: 3600000,
             ...zoomConfig,
           },
-          {
+          ...(isMobile ? [] : [{
             type: 'slider',
             xAxisIndex: 0,
             bottom: 0,
@@ -445,7 +457,7 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
             labelFormatter: (v) => formatShort(new Date(v)),
             minValueSpan: 3600000,
             ...zoomConfig,
-          },
+          }]),
         ],
         series: fcSeries,
       };
@@ -459,23 +471,23 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
     <div className="rounded-2xl bg-surface-card/60 shadow-card dark:border dark:border-surface-border/10 overflow-hidden">
       {/* Toolbar */}
       {(toolbarLeft || toolbarCenter) && (
-        <div className="flex items-center px-4 py-2 border-b border-surface-border/30 bg-surface-card/20 gap-2">
-          <div className="flex items-center gap-3 flex-1 min-w-0">{toolbarLeft}</div>
-          <div className="flex items-center gap-1.5 flex-1 justify-center">
+        <div className="flex flex-wrap items-center px-3 md:px-4 py-2 border-b border-surface-border/30 bg-surface-card/20 gap-1.5 md:gap-2">
+          <div className="flex items-center gap-3 flex-[1_1_auto] min-w-0">{toolbarLeft}</div>
+          <div className="flex items-center gap-1.5 flex-[1_1_auto] justify-center order-last md:order-none md:flex-1">
             <input
               type="date"
               value={startDate}
               onChange={e => setStartDate(e.target.value)}
               onKeyDown={handleDateKeyDown}
-              className="px-2 py-1 rounded-lg bg-surface-hover/30 border border-surface-border/40 text-ink text-xs font-mono-num w-28"
+              className="px-2 py-1 rounded-lg bg-surface-hover/30 border border-surface-border/40 text-ink text-xs font-mono-num w-24 md:w-28"
             />
-            <span className="text-ink-muted text-xs font-mono-num">→</span>
+            <span className="text-ink-muted text-xs font-mono-num hidden xs:inline">→</span>
             <input
               type="date"
               value={endDate}
               onChange={e => setEndDate(e.target.value)}
               onKeyDown={handleDateKeyDown}
-              className="px-2 py-1 rounded-lg bg-surface-hover/30 border border-surface-border/40 text-ink text-xs font-mono-num w-28"
+              className="px-2 py-1 rounded-lg bg-surface-hover/30 border border-surface-border/40 text-ink text-xs font-mono-num w-24 md:w-28"
             />
             <button
               onClick={applyDateRange}
@@ -485,7 +497,7 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
               <Search className="w-3.5 h-3.5" />
             </button>
           </div>
-          <div className="flex items-center gap-2 flex-1 justify-end">
+          <div className="flex items-center gap-2 flex-[1_1_auto] justify-end">
             {toolbarCenter}
             <button
               onClick={saveAsPng}
@@ -506,7 +518,7 @@ const ForecastChart = ({ data, loading, accent = 'cyan', chartHeight = 400, hori
       )}
 
       {/* Chart area */}
-      <div className="relative pb-3" style={{ height: chartHeight + 80 }}>
+      <div className="relative" style={{ height: isMobile ? chartHeight + 40 : chartHeight + 80 }}>
         {loading ? (
           <div className="h-full flex items-center justify-center">
             <div className="text-center">

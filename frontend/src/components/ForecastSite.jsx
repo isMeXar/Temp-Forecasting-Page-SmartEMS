@@ -244,8 +244,8 @@ const ForecastSite = ({ site, label, modelName = 'XGBoost', accent = 'cyan' }) =
           )}
 
           {/* Chart and Metrics Grid - 80/20 split */}
-          <div className="flex gap-4 items-stretch">
-            <div className="flex-[80] min-h-0">
+          <div className="flex flex-col lg:flex-row gap-4 items-stretch">
+            <div className="w-full lg:flex-[80] min-h-0">
               <ErrorBoundary>
                 <ForecastChart
                   data={chartData}
@@ -290,7 +290,7 @@ const ForecastSite = ({ site, label, modelName = 'XGBoost', accent = 'cyan' }) =
               </ErrorBoundary>
             </div>
 
-            <div className="flex-[20]">
+            <div className="w-full lg:flex-[20] lg:min-w-[200px]">
               <div className="rounded-xl bg-surface-card/70 shadow-card dark:border dark:border-surface-border/10 h-full flex flex-col">
                 <div className="px-4 py-2.5 border-b border-surface-border/30">
                   <div className="flex items-center gap-2">
